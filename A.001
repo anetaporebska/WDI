@@ -1,0 +1,29 @@
+#include <iostream>
+
+using namespace std;
+
+//A.001
+// program wsczutujący 10 róznych liczb z przedziału 0-9 i odpowiadający na pytanie: Jakie liczby nie zostały podane?
+
+//Rozwiązanie: deklaruję tablicę 10 elementową i ustawiam zawartość komórki o indeksie równym tej liczbie na "1" 
+// Następnie sprawdzam zawartość tablicy i wypisuję tylko te indeksy tablicy, które zawierają 0, 
+//bo to oznacza że taka liczba nie została wprowadzona
+
+
+int main()
+{
+    int t[10]={};
+    int n;
+    
+    for(int i=0; i<10; i++){
+        cin>>n;
+        t[n]=1;
+    }
+
+    for(int i=0; i<10; i++){
+        if(t[i]==0) cout<<i<<" ";
+    }
+
+
+    return 0;
+}
