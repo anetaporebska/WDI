@@ -1,0 +1,37 @@
+#include <iostream>
+using namespace std;
+
+//A.002 Algorytm dzielenia pisemnego dwóch liczb przez siebie.
+
+
+int main(){
+
+    int tab[1000];                          //tyle uzyskam miejsc po przecinku: 1000
+    int k;                                  //licznik
+    int n;                                  //mianownik
+    cin>>k>>n;
+    int przed=0;                            //zmienna przechowująca liczbę całkowitą przed przecinkiem
+
+    for(int i=0; i<1000; i++) tab[i]=0;     //zerowanie tablicy
+
+
+    if(k/n>0) {przed=k/n;}                  //jesli wystąpi jakaś liczba przed przecinkiem to przypisujemy jej wartość
+
+    for(int i=0; i<1000; i++){
+
+        tab[i]=k/n;                         //"normalne" dzielenie pisemne
+        k=(k-tab[i]*n)*10;
+    }
+
+
+    cout<<przed<<".";
+    for(int i=1; i<1000; i++)               //wypisuję wszyskie poza pierwszym, bo to mam zapisane w zmniennej przed
+    {
+        cout<<tab[i];
+    }
+
+
+
+    return 0;
+}
+
