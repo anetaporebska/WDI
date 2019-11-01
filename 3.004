@@ -1,0 +1,54 @@
+#include <iostream>
+
+using namespace std;
+//3.004 Napisać program obliczający i wypisujący wartość n! dla n z zakresu od 1 do 1000.
+
+//metoda oparta na zasadzie mnożenia pisemnego
+//za każdym razem zaczynamy od mnożenia tablicy o indeksie 0 i po kolei przechodzimy do kolejnych indeksów; 
+//w mnożeniu pisemnym mnoży się od tyłu liczbę, więc ja będę ją musiała wypisać tablicę od tyłu
+
+int mnozenie(int x, int tab[], int rozmiar)
+{
+int reszta=0;                          // resztę dodajemy do kolejnego rzędu wielkości 
+                                      //np.jeśli mamy 4*6=24 to reszta wynosi 2 i jest ona dodawana przy mnożeniu następnej cyfry
+
+for(int i=0; i<rozmiar; i++){
+    int wyn=tab[i]*x +reszta;              //wyn to wynik mnożenia (np.24) plus reszta z poprzedniego mnożenia
+    tab[i]=wyn%10;                          //do tablicy zapisujemy tylko ostatnią cyfrę wyniku
+    reszta=wyn/10;                          //reszta to wszystko oprócz ostatniej cyfry, która jest zapisana już w tablicy
+}
+
+while(reszta>0){                            //jesli po wykonaniu mnożenia zostaje nam jeszcze jakaś reszta to musimy zwiększyć
+                                                //ilość zajmowanego miejsca w tablicy i wrzucić tam kolejne cyfry reszty
+    tab[rozmiar]=reszta%10;                 //rozmiar jest o 1 większy od ostatniego indeksu tablicy
+    reszta=reszta/10;
+    rozmiar++;
+}
+return rozmiar;                             //zwracamy nowy rozmiar, potrzebujemy go żeby znów z funcji silnia wejsc do mnożenia
+}
+
+void silnia(int n)
+{
+int tab[10000]={0};
+tab[0]=1;
+int rozmiar=1;                              //rozmiar jest o 1 większy od indeksu w tablicy
+
+for(int x=2; x<=n; x++){
+    rozmiar=mnozenie(x,tab,rozmiar);
+}
+
+for(int i=rozmiar-1; i>=0; i--){              //wypisywanie silni od tyłu, bo tak mnożyliśmy
+    cout<<tab[i];
+}
+}
+
+
+
+int main()
+{
+int n;
+cin>>n;
+silnia(n);
+return 0;
+
+}
