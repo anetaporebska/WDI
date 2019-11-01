@@ -1,0 +1,32 @@
+#include <iostream>
+
+using namespace std;
+
+//3.002. Napisać program wczytujący dwie liczby naturalne i odpowiadjący na pytanie czy są one 
+//zbudowane z takich samych cyfr, np. 123 i 321, 1255 i 5125
+
+
+
+int main(){
+    
+    int tab[10]={};                 //inicjuję tablicę w której będę zliczać cyfry wprowadzonych liczb; 
+
+    int a,b;
+    cin>>a>>b;
+    bool same=false;
+
+    for(int i=0; i<10; i++){
+        tab[a%10]++;                 //zwiększam dla cyfr liczby a komórki o indeksie każdej cyfry
+        tab[b%10]--;                 //zmniejszam dla cyfr liczby b
+        a/=10;
+        b/=10;
+    }
+
+    for(int i=0; i<10; i++){
+        if(tab[i]==0) same=true;    //jesli wszyskie są równe zero to oznacza że takich samych cyfr w a i b było tyle samo
+        else {cout<<"nie"; return 0;}
+    }
+    cout<<"tak";
+
+    return 0;
+}
