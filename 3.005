@@ -1,0 +1,45 @@
+#include <iostream>
+
+using namespace std;
+
+//3.005 Obliczanie stałej e z rozwinięcia w szereg e=1/0!+1/1!+1/2!+1/3!+... z dokładnością do np. 1000 cyfr po przecinku
+
+
+
+
+int main()
+{
+int tab[1000]={};                                   //do przechowywania 1/silnia; jak mamy 1/2 to dzielimy to następnie 
+                                                    //przez 3 i mamy kolejną wartośc do dodania do sumy...
+tab[0]=5;                                           //zaczniemy od i=3; 
+int suma[1000]={};
+suma[0]=5;
+int reszta=0;
+
+for(int i=3; i<=1000; i++){
+    
+    
+    for(int j=0; j<1000; j++){                     //j - indeksy tablicy
+        tab[j+1]=tab[j+1]+10*(tab[j]%i);            //wyznaczam następną wartość za pomocą poprzedniej; 
+                                                    //dodaję resztę pomnożoną przez 10 jak w dzielniu pisemnym
+        tab[j]=tab[j]/i;                            //dopiero teraz liczę ile ta wartość faktycznie wynosi
+        
+    }
+    
+    
+    for(int k=999; k>=0; k--){                      //dodawanie pisemne, dodaje wartość tablicy (1/silnia) do sumy
+        int jed=suma[k]+tab[k]+reszta;
+        suma[k]=jed%10;
+        reszta=jed/10;                              //bardzo małe liczby, więc reszta mi nigy nie przekroczy poza tablicę
+    }
+ 
+    
+}
+
+cout<<"2.";
+for(int i=0; i<1000; i++) cout<<suma[i];
+
+
+
+    return 0;
+}
