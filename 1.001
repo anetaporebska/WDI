@@ -1,0 +1,25 @@
+#include <iostream>
+
+using namespace std;
+
+//1.001 Napisać program wypisujący elementy ciągu Fibonacciego mniejsze od miliona;
+
+
+
+int main()
+{
+
+int fib1=1;
+int fib2=1;
+
+cout<<fib1<<" "<<fib2<<" ";
+
+while(fib2+fib1<1000000)
+{
+    fib2=fib1+fib2;
+    fib1=fib2-fib1;
+    cout<<fib2<<" ";
+}
+
+    return 0;
+}
