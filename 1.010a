@@ -1,0 +1,27 @@
+#include <iostream>
+
+using namespace std;
+
+
+//1.010. Napisać program wyszukujący liczby doskonałe mniejsze od miliona
+
+//Liczba doskonała- l.naturalna, która jest sumą wszystkich swoich dzielników właściwych
+
+//rozwiązanie 1 - nie za fajne 
+int main(){
+
+int suma=1;
+
+for(int i=2; i<1000000; i++){
+    for(int k=2; k<i; k++){
+        if(i%k==0) suma+=k;
+    }
+    if(i==suma) cout<<suma<<endl;
+    suma=1;
+}
+    
+    return 0;
+}
+
+
+//rozwiązanie 2
