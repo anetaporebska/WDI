@@ -1,0 +1,39 @@
+
+using namespace std;
+
+//2.003 Napisz program wczytujący liczbę naturalną z klawiatury i odpowiadający na pytanie, 
+//czy liczba naturalna jest palindromem, a następnie czy jest palindromem w systemie dwójkowym
+
+
+int main(){
+    
+   int n;               //sprawdzana liczba
+   cin>>n;
+   int pom=n;
+   int s=0;
+   
+   while(n>0){
+       
+    s=s*10+n%10;
+    n/=10;
+   }
+    n=pom;
+    
+    if(n==s){cout<<"tak w dziesiętnym"<<endl;}
+    else cout<<"nie w dziesięnym"<<endl;
+    
+    s=0;
+    while(n>0){
+            
+        s=s*2+n%2;
+        n/=2;
+    
+    }
+    
+    n=pom;
+    
+    if(n==s){cout<<"tak w dwójkowym"<<endl;}
+    else cout<<"nie w dwójkowym"<<endl;
+    
+    return 0;
+}
