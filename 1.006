@@ -1,0 +1,24 @@
+#include <iostream>
+#include <cmath>
+
+using namespace std;
+
+
+//1.006. Napisać program rozwiązujący równanie x^x=2019 metodą bisekcji
+
+int main(){
+    
+    double lewy=0, prawy=6, srodek;
+    
+    for(int i=1; i<=100; i++){
+        srodek=(prawy+lewy)/2;
+        if(pow(srodek,srodek)<2019) lewy=srodek;
+        else prawy=srodek;
+    }
+    
+    cout<<srodek;
+    
+    
+    
+    return 0;
+}
