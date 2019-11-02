@@ -1,0 +1,27 @@
+#include <iostream>
+
+using namespace std;
+
+
+//2.004 Liczba dwu-trzy-piątkowa w rozkładzie na czynniki pierwsze nie posiada innych czynników niż 2,3,5.
+//Jedynka też jest taką liczbą. Napisz program, który wylicza ile takich liczb znajduje się w przedziale od 1 do n włąćznie.
+
+
+
+int main(){
+    
+    int n, ile=0;
+    cin>>n;
+    
+    
+    for(int i=1; i<=n; i*=2)
+        for(int k=i; k<=n; k*=3)
+            for(int j=k; j<=n; j*=5)
+                ile++;
+    
+    cout<<ile;
+    
+    
+    
+    return 0;
+}
