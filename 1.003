@@ -1,0 +1,39 @@
+
+#include <iostream>
+
+using namespace std;
+
+//1.003 Napisać program sprawdzający czy istnieje spójny podciąg ciągu Fibonacciego o zadanej sumie;
+
+
+int main(){
+    
+    int n;
+    cin>>n;                 //zadana suma
+    
+    int fib1=1;
+    int fib2=1;
+    int suma=2;
+    
+    while(suma<n){                      //sumuję kolejne liczby ciągu Fib dopóki suma nie przekroczy szukanej wartości
+        fib2=fib1+fib2;
+        fib1=fib2-fib1;
+        suma+=fib2;                                 
+    }
+    
+    fib1=1;
+    fib2=1;
+    while(suma>n){                      //odejmuję "z drugiej strony"; odejmuję od najmniejszych wyrazów, bo podciąg ma być SPÓJNY
+        suma-=fib1;
+        fib2=fib2+fib1;
+        fib1=fib2-fib1;
+    }
+    
+    if(suma==n) cout<<"tak";
+    else cout<<"nie";
+    
+    
+    
+    
+    return 0;
+}
