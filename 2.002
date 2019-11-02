@@ -1,5 +1,6 @@
 
 #include <iostream>
+#include <cmath>
 
 using namespace std;
 
@@ -14,9 +15,9 @@ int main(){
    int wyraz;
    
    
-   for(int i=1; wyraz<n; i++){
+   for(int i=1; i<sqrt(n)+1; i++){
        wyraz=i*i+i+1;
-       if(n==wyraz){cout<<"tak"; return 0;}
+       if(n%wyraz==0){cout<<"tak"; return 0;}
    }
    cout<<"nie";
     return 0;
