@@ -1,0 +1,18 @@
+#include <iostream>
+
+using namespace std;
+
+
+//1.008 Napisać program sprawdzający czy zadana liczba jest pierwsza;
+
+int main(){
+int n;
+cin>>n;
+
+for(int i=2; i*i<n; i++){
+    if(n%i==0){cout<<"nie"; return 0;}
+}
+  cout<<"tak";
+    
+    return 0;
+}
