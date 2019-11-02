@@ -1,0 +1,22 @@
+#include <iostream>
+
+using namespace std;
+
+
+//A.003 Napisz program sprawdzający czy podane z klawiatury słowo jest palindromem
+
+int main(){
+    
+   string slowo;
+   cin>>slowo;
+   
+   for(int i=0; i<slowo.length()/2; i++){
+       if(slowo[i]!=slowo[slowo.length()-1-i]) {cout<<"nie"; return 0;}
+   }
+   
+   cout<<"tak";
+   
+   
+    
+    return 0;
+}
