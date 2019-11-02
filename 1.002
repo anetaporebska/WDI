@@ -1,0 +1,45 @@
+
+#include <iostream>
+
+using namespace std;
+
+//1.002 Znaleźć wyrazy początkowe zamiast 1,1 o najmniejszej sumie, aby w ciągu analogicznym 
+//do ciągu Fiboanacciego wystąpił wyraz równy numerowi bieżącego roku.
+
+//zaczynam od najmniejszej sumy=1; następnie sprawdzam wszyskie kombinacje dające tą sumę , 
+//jeśli żadna z nich nie daję pożądanego wyniku, zwiększam sumę o 1;
+
+
+bool znajdz_w_fib(int a, int b, int szukana){
+    while(a<=szukana){
+        if(a==szukana) return true;
+        a=a+b;
+        b=a-b;
+    }
+    return false;
+}
+
+
+int main()
+{
+   int szukana;
+   cin>>szukana;                                    //2019
+   int suma=1;
+   
+   while(true){
+       int a=0;
+       int b=suma;
+       
+       while(b>0){
+           if(znajdz_w_fib(a,b,szukana)){
+               cout<<"znaleziono przy sumie "<<a+b<<"; wyrazy to: "<<b<<" "<<a;             //a jest tym "większym" wyrazem, 
+               return 0;                                                                    //drugim z kolei
+           }
+           a++;
+           b--;
+       }
+       suma++;
+   }
+   
+    return 0;
+}
