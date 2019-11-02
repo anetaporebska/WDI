@@ -1,0 +1,59 @@
+
+#include <iostream>
+#include <time.h>
+
+using namespace std;
+
+//4.002 Dana jest tablica int t[MAX][MAX] wypełniona liczbami naturalnymi. Proszę napisać funkcję, 
+//która odpowiada na pytanie, czy w każdym wierszu tabliczy występuje co najmniej jedna liczba złożona 
+//wyłącznie z nieparzystych cyfr.
+
+const int MAX=5;
+
+bool czy_niep(int tab[MAX][MAX]){
+    int nieparz[MAX];
+    bool niep=true;
+    
+    for(int i=0; i<MAX; i++){
+        for(int j=0; j<MAX; j++){
+            while(tab[i][j]>0){
+                if(tab[i][j]%2==0) niep=false;
+                tab[i][j]/=10;
+            }
+            if(niep==true) {nieparz[i]=1; break;}
+            niep=true;
+        }
+    }
+    
+    for(int i=0; i<MAX; i++){
+        if(nieparz[i]!=1) return false; 
+    }
+    
+    return true;
+}
+
+
+
+int main(){
+    
+    int tab[MAX][MAX];
+    srand(time(NULL));
+    
+    for(int i=0; i<MAX; i++)
+        for(int j=0; j<MAX; j++){
+            tab[i][j]=rand()%100+1;
+        }
+    
+    for(int i=0; i<MAX; i++){
+        for(int j=0; j<MAX; j++){
+            cout<<tab[i][j]<<" ";
+        }
+        cout<<endl;
+    
+    }
+    
+    if(czy_niep(tab))cout<<"tak";
+    else cout<<"nie";    
+    
+    return 0;
+}
