@@ -1,0 +1,25 @@
+
+#include <iostream>
+
+using namespace std;
+
+
+//1.017 Napisać program wyznaczający wartość, do której zmierza iloraz dwóch kolejnych wyrazów ciągu
+//Fibonacciego. Wyznaczyć ten iloraz dla różnych wartości początkowych wyrazów ciągu.
+
+int main(){
+    
+   int fib1;
+   int fib2;
+   cin>>fib1>>fib2;
+   
+   for(int i=1; i<=30; i++){            //dla większych wyrazy ciągu wychodzą poza inta
+        
+        fib2=fib1+fib2;
+        fib1=fib2-fib1;
+   }
+   
+   cout<<(double)fib1/fib2;
+   
+    return 0;
+}
