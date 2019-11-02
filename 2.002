@@ -1,0 +1,23 @@
+
+#include <iostream>
+
+using namespace std;
+
+
+//2.002 Napisz program wczytujący liczbę naturalną z klawiatury i odpowiadający na pytanie, 
+//czy liczba ta jest wielokrotnością dowolnego wyrazu ciągu danego wzorem a(n)=n*n+n+1;
+
+int main(){
+    
+   int n;
+   cin>>n;
+   int wyraz;
+   
+   
+   for(int i=1; wyraz<n; i++){
+       wyraz=i*i+i+1;
+       if(n==wyraz){cout<<"tak"; return 0;}
+   }
+   cout<<"nie";
+    return 0;
+}
