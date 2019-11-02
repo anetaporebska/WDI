@@ -1,0 +1,27 @@
+
+#include <iostream>
+
+using namespace std;
+
+
+//2.007 Napisać program wczytujący liczbę naturalną z klawiatury i rozkładający ją na iloczyn
+//dwóch liczb o najmniejszej różnicy. np.30=5*6, 120=10*12;
+
+
+int main(){
+    
+    int n;
+    cin>>n;         //liczba, której rozkładu szukamy
+    
+    int roz=n-1;            //różnica czynników
+    int naj=n;              //dzielnik, przy którym różnica jest najmniejsza
+    
+    for(int i=1; i*i<=n; i++){
+        if((n%i==0)&&(n/i-i<roz)){roz=n/i-i; naj=i;}
+    }
+    
+    cout<<naj<<"*"<<n/naj;
+    
+    
+    return 0;
+}
