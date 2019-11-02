@@ -1,0 +1,32 @@
+
+#include <iostream>
+
+using namespace std;
+
+
+//2.014. Napisz program wczytujący liczbę naturalną z klawiatury i odpowiadający na pytanie, czy czy liczba ta zawiera cyfrę 
+//równą liczbie swoich cyfr.
+
+
+int main(){
+    
+   int n;
+   cin>>n;
+   int pom=n;
+   int liczb=0;
+   
+   while(n>0){
+       liczb++;
+       n/=10;
+   }
+   
+   n=pom;
+   while(n>0){
+       if(n%10==liczb) {cout<<"tak"; return 0;}
+       n/=10;
+   }
+   
+   cout<<"nie";
+    
+    return 0;
+}
