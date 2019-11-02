@@ -1,0 +1,27 @@
+#include <iostream>
+
+using namespace std;
+
+
+//2.015. Napisz program wczytujący liczbę naturalną z klawiatury i odpowiadający na pytanie, 
+// czy liczba zakończona jest unikalną cyfrą;
+
+int main(){
+    
+   int n;
+   cin>>n;
+    
+    int uni=n%10;
+    
+    if(n==uni){cout<<"tak"; return 0;}
+    
+    n/=10;
+    
+    while(n>0){
+        
+        if(n%10==uni){cout<<"nie"; return 0;}
+        n/=10;
+    }
+    cout<<"tak";
+    return 0;
+}
