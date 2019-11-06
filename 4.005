@@ -1,0 +1,67 @@
+#include <iostream>
+#include <time.h>
+using namespace std;
+
+//4.005 Dana jest tablica int t[MAX][MAX] wypełniona liczbami całkowitymi. Proszę napisać
+//funkcję która zwraca wiersz i kolumnę dowolnego elementu, dla którego iloraz sumy elementów
+//w kolumnie, w którym leży element do sumy elementów wiersza, w którym leży element jest największy.
+
+
+const int N=10;
+
+void iloraz_wyrazu(int tab [N][N]){
+    
+    float sumak=0;
+    float sumaw=0;
+    float iloraz=0;
+    float najw=0;
+    int wier=0;
+    int kol=0;
+    
+    
+    for(int k=0; k<N; k++){             //wiersz
+        for(int m=0; m<N; m++){         //kolumna
+            
+            sumak=0;
+            sumaw=0;
+            for(int i=0; i<N; i++){
+                sumak+=tab[i][m];
+                sumaw+=tab[k][i];
+            }
+    
+            iloraz=sumak/sumaw;
+            if(iloraz>najw) {najw=iloraz; wier=k; kol=m;}
+        
+    
+    }
+    }
+    
+    cout<<wier<<" "<<kol;
+}
+
+
+int main(){
+    int tab[N][N];
+    srand(time(NULL));
+    
+    for(int i=0; i<N; i++){
+        for(int j=0; j<N; j++){
+            tab[i][j]=rand()%200-100;
+        }
+        
+    }
+    
+    for(int i=0; i<N; i++){
+        for(int j=0; j<N; j++){
+            cout<<tab[i][j]<<" ";
+        }
+        cout<<endl;
+    }
+    
+    iloraz_wyrazu(tab);
+    
+    
+    
+    
+    return 0;
+}
