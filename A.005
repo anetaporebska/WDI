@@ -1,0 +1,56 @@
+#include <iostream>
+#include <time.h>
+using namespace std;
+
+//A.005 Insert sort (przez wstawianie)
+
+
+const int N=20;
+
+void swap(int &a, int &b){
+    int c=a;
+    a=b;
+    b=c;
+}
+//In the insertion sort technique, we start from the second element and compare it with the first element 
+//and put it in a proper place. Then we perform this process for the subsequent elements. 
+//We compare each element with all its previous elements and put or insert the element in its proper position
+
+//pierwszy element uznajemy za najmniejszy, poźniej sprawdzamy drugi i jeśli jest on mniejszy od pierwszego 
+//to przesuwamy go na pierwszą pozycję (czyli zamieniamy oba miejscami)
+//następnie sprawdzamy trzeci element: jeśli jest on większy od drugiego to git, zostawiawmy go w spokoju
+//jeśli z kolei jest mniejszy od drugiego elementu to zamieniamy te dwa miejscami i teraz prórównujemy
+//ten trzeci element(który jest już teraz na drugiej pozycji) z pierwszym i postępujemy analogicznie
+
+void insert_sort(int tab[N]){
+    for(int i=1; i<N; i++){
+        int j=i;
+        while(j>0 && tab[j]<tab[j-1]){
+            swap(tab[j], tab[j-1]);
+            j--;
+        }
+    }
+    
+}
+
+
+
+int main(){
+    
+    int tab[N];
+    
+    srand(time(NULL));
+    
+    for(int i=0; i<N; i++) tab[i]=rand()%100+1;
+    
+    for(int i=0; i<N; i++) cout<<tab[i]<<" ";
+
+    insert_sort(tab);
+    cout<<endl;
+      
+    for(int i=0; i<N; i++) cout<<tab[i]<<" ";
+
+    
+    return 0;
+    
+}
