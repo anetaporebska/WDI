@@ -1,0 +1,39 @@
+#include <iostream>
+
+using namespace std;
+
+//3.001 Napisać program zamieniający liczbę naturalną z systemu 10 na podstawę 2-16.
+
+const int N=100;
+
+int main(){
+    
+    int n; //liczba
+    int k; //podstawa
+    int tab[N]={};
+    
+    cin>>n>>k;
+    
+    
+    int i=0;
+    
+    
+    while(n>0){
+        tab[i]=n%k;
+        n/=k;
+        i++;
+    }
+
+    for(int j=i-1; j>=0; j--){
+        if(tab[j]==10) cout<<"A";
+        else if(tab[j]==11) cout<<"B";
+        else if(tab[j]==12) cout<<"C";
+        else if(tab[j]==13) cout<<"D";
+        else if(tab[j]==14) cout<<"E";
+        else if(tab[j]==15) cout<<"F";
+        else cout<<tab[j];
+    }
+    
+    
+    return 0;
+}
