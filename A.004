@@ -1,0 +1,87 @@
+#include <iostream>
+#include <time.h>
+using namespace std;
+
+
+//A.004 Sortowanie bąbelkowe
+
+const int N=10;
+
+void swap(int &a, int &b){
+    int c=a;
+    a=b;
+    b=c;
+}
+
+
+void bubble_sort(int tab[N]){                   //sortujemy rosnąco
+    
+    bool sorted=false;                                          
+    
+    while(!sorted){
+        sorted=true;
+        for(int i=0; i<N-1; i++){
+            if(tab[i]>tab[i+1]){
+                swap(tab[i],tab[i+1]);
+                sorted=false;
+            }
+        }
+        
+        
+    }
+    
+    
+}
+
+//w każdym przejściu pętli wewnętrzej porównywane są ze sobą dwie kolejne wartości i w razi potrzeby
+//zamieniamy je miejscami (swap)
+//w jednym cyklu pętli wewnętrznej, największa liczba w zbiorze będzie się przemieszczała na ostatnią pozycję
+//czynności te powtarzamy dla zbioru pominiętnego o elementy już poukładane
+void bubble2(int tab[N]){
+    
+    for(int i=0; i<N; i++){
+        for(int j=0; j<N-i; j++){
+            if(tab[j]>tab[j+1]) {swap(tab[j],tab[j+1]);}
+        }
+        
+    }
+    
+    
+    
+}
+
+
+int main(){
+    
+    int tab[N];
+    
+    srand(time(NULL));
+    
+    for(int i=0; i<N; i++) tab[i]=rand()%100+1;
+    
+    for(int i=0; i<N; i++) cout<<tab[i]<<" ";
+    
+    bubble_sort(tab);
+    
+    cout<<endl;
+    
+    for(int i=0; i<N; i++) cout<<tab[i]<<" ";
+
+
+//**************
+    
+    cout<<endl;
+    for(int i=0; i<N; i++) tab[i]=rand()%100+1;
+    
+    for(int i=0; i<N; i++) cout<<tab[i]<<" ";
+    
+    bubble2(tab);
+    
+    cout<<endl;
+    
+    for(int i=0; i<N; i++) cout<<tab[i]<<" ";
+    
+    
+    
+    return 0;
+}
