@@ -41,6 +41,34 @@ void iloraz_wyrazu(int tab [N][N]){
 }
 
 
+void iloraz(int tab[N][N]){
+    
+    
+    int sumak=0;
+    int sumaw=0;
+    int najw=0;
+    int najm=1000;
+    int k;
+    int w;
+    
+    
+    for(int i=0; i<N; i++){
+        for(int j=0; j<N; j++){
+            sumak+=tab[j][i];
+            sumaw+=tab[i][j];
+        }
+        if(sumak>najw) {najw=sumak; k=i;}
+        if(sumaw<najm) {najm=sumaw; w=i;}
+        sumak=0;
+        sumaw=0;
+        
+    }
+    
+    cout<<endl<<w<<" "<<k;
+    
+}
+
+
 int main(){
     int tab[N][N];
     srand(time(NULL));
@@ -60,6 +88,8 @@ int main(){
     }
     
     iloraz_wyrazu(tab);
+    
+    iloraz(tab);
     
     
     
