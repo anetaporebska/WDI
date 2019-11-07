@@ -1,0 +1,38 @@
+#include <iostream>
+using namespace std;
+
+
+
+
+//A.007 Proszę napisać program poszukujący trójkątów Pitagorejskich 
+
+//(a,b,c to górne przedziały w jakich mają się zawierać długości boków)
+
+
+
+void trojk(int a, int b, int c){
+
+    for(int i=1; i<=c; i++){
+        for(int j=1; j<=a; j++){
+            for(int k=1; k<=b; k++){
+                if(k*k+j*j==i*i) {cout<<j<<" "<<k<<" "<<i<<endl;}
+            }
+            
+        }
+    }
+    
+    
+    
+}
+
+
+int main(){
+    int a,b,c;
+    cin>>a>>b>>c;
+    
+    
+    trojk(a,b,c);
+    
+    return 0;
+}
+
