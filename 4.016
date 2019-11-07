@@ -1,0 +1,60 @@
+#include <iostream>
+#include <time.h>
+using namespace std;
+
+//4.016 Dana jest tablica int t[MAX][MAX], wypełniona liczbami naturalnymi. Proszę napisać funkcję, która
+//odpowiada na pytanie, czy w tablicy każdy wiersz zawiera co najmniej jedną liczbę złożoną wyłącznie
+//z cyfr będących liczbami pierwszymi.
+
+
+const int N=30;
+
+
+bool pierwsza(int tab[N][N]){
+    bool pierw=false;
+    
+    for(int i=0; i<N; i++){
+        for(int j=0; j<N; j++){
+            while(tab[i][j]>0){
+                int cyfra=tab[i][j]%10;
+                if(cyfra==2 || cyfra==3 || cyfra==5 || cyfra==7) pierw=true;
+                else {pierw=false; break;}
+                tab[i][j]/=10;
+            }
+            if(pierw==true) break;
+        }
+        if(pierw==false) return false;
+    }
+    
+   return true; 
+    
+    
+    
+}
+
+
+int main(){
+    int tab[N][N];
+    srand(time(NULL));
+    
+    for(int i=0; i<N; i++){
+        for(int j=0; j<N; j++){
+            tab[i][j]=rand()%100+1;
+        }
+        
+    }
+    
+    for(int i=0; i<N; i++){
+        for(int j=0; j<N; j++){
+            cout<<tab[i][j]<<" ";
+        }
+        cout<<endl;
+    }
+    
+    if(pierwsza(tab)) cout<<"tak";
+    else cout<<"nie";
+    
+ return 0;   
+}
+
+    
