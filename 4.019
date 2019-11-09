@@ -1,0 +1,66 @@
+#include <iostream>
+#include <time.h>
+
+using namespace std;
+
+//4.019 Dana jest tablica wypełniona liczbami naturalnymi int t[MAX][MAX];
+//Proszę napisać funkcję, która zwraca liczbę par elementóœ, o określonym iloczynie
+//takich, że elementy są odległe o jeden ruch skoczka szachowego.
+
+
+const int MAX=4;
+
+
+bool ispossible(int x, int y){                  //sprawdzamy czy w ogóle dana kombinacja jest możliwa
+                                                //to znaczy czy nie wychodzimy poza tablicę
+    return(x<MAX && y<MAX && x>=0 && y>=0);
+}
+
+
+//będziemy sprawdzać tylko czery możliwości, bo zaczynamy od góry i sprawdzamy tylko w dół, żeby się nie powtarzało
+
+int count(int tab[MAX][MAX], int iloczyn){
+    
+    int counter=0;
+    for(int i=0; i<MAX; i++){
+        for(int j=0; j<MAX; j++){
+            if(ispossible(i+1,j+2)&&tab[i+1][j+2]*tab[i][j]==iloczyn) counter++;
+            if(ispossible(i+2,j+1)&&tab[i+2][j+1]*tab[i][j]==iloczyn) counter++;
+            if(ispossible(i+1,j-2)&&tab[i+1][j-2]*tab[i][j]==iloczyn) counter++;
+            if(ispossible(i+2,j-1)&&tab[i+2][j-1]*tab[i][j]==iloczyn) counter++;
+        }
+    }
+    
+    
+    return counter;
+}
+
+
+
+
+
+int main(){
+    int tab[MAX][MAX];
+    srand(time(NULL));
+    int iloczyn=24;
+    
+    for(int i=0; i<MAX; i++){
+        for(int j=0; j<MAX; j++){
+            tab[i][j]=rand()%12+1;
+        }
+    }
+    
+    for(int i=0; i<MAX; i++){
+        for(int j=0; j<MAX; j++){
+            cout<<tab[i][j]<<" ";
+        }
+        cout<<endl;
+    }
+    
+    cout<<count(tab,iloczyn);
+    
+    
+    return 0;
+    
+    
+}
