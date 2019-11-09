@@ -1,0 +1,86 @@
+#include <iostream>
+#include <time.h>
+using namespace std;
+
+//A.008 wyszukiwanie binarne
+
+const int N=20;
+
+void swap(int &a, int &b){
+    int c=a;
+    a=b;
+    b=c;
+}
+
+
+int najm(int i, int tab[N]){
+    
+    int naj=i;
+    for(int k=i+1; k<N; k++){
+        if(tab[k]<tab[naj]) naj=k;
+    }
+    
+    return naj;                   //zwraca indeks w którym mamy najmniejszą wartość
+}
+
+
+void select_sort(int tab[N]){
+    
+    
+    for(int i=0; i<N; i++){
+        
+        int k=najm(i,tab);
+        swap(tab[i],tab[k]);
+        
+    }
+    
+}
+
+
+int binary_search(int tab[N], int a){             //musimy mieć posortwowaną tablicę
+                                                    //a -szukana
+    
+    int i=0;
+    int j=N-1;
+    
+    while(i<=j){
+        int s=(i+j)/2;
+        if(a==tab[s]) {cout<<s; return s;}
+        
+        if(a<tab[s]) j=s-1;
+        else i=s+1;
+        
+    }
+    
+   return -1;
+    
+}
+
+
+
+
+int main(){
+    
+    int tab[N];
+    
+    srand(time(NULL));
+    
+    for(int i=0; i<N; i++) tab[i]=rand()%100+1;
+    
+    for(int i=0; i<N; i++) cout<<tab[i]<<" ";           //wypisuje tablice przed posortowaniem
+
+    select_sort(tab);
+    cout<<endl;
+      
+    for(int i=0; i<N; i++) cout<<tab[i]<<" ";          //wypisuje posortowaną tablicę
+    
+    int szukana;
+    cin>>szukana;
+    
+    binary_search(tab,szukana);
+    
+
+    
+    return 0;
+    
+}
