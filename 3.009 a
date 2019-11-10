@@ -1,0 +1,65 @@
+#include <iostream>
+
+using namespace std;
+
+//3.009. Dana jest tablica int t[N] zawierająca liczby naturalne. W tablicy możemy przeskoczyć
+//z pola o indeksie k o n pól w prawo, jeżeli wartość n jest czynnikiem pierwszym liczby t[k].
+//Napisać funkcję sprawdzającą czy jest możliwe przejście z pola 0 na pole N-1.
+
+
+//Czynnik pierwszy – dowolna liczba pierwsza, która dzieli bez reszty daną liczbę naturalną złożoną.
+//2,3,5,7,11,13,17,19,23 ....
+
+const int N=10;
+
+bool czy_w_obrebie(int indeks){             //funkcja sprawdzająca czy jest możliwy przeskok
+    return(indeks<N);
+}
+
+bool czy_pierwsza(int liczba){              //sprawdza czy dana liczba jest pierwsza
+    if(liczba==2) return true;
+    for(int i=2; i*i<liczba; i++){
+        if(liczba%i==0) return false;
+    }
+    
+    return true;
+}
+
+
+
+int o_ile_pol(int n, int wartosc){          //zwraca informację o tym o ile pól można przeskoczyć
+
+for(int i=2; i*i<wartosc; i++){
+    if(wartosc%i==0 && czy_pierwsza(i) && i>n) return i;
+}
+return  
+}
+
+
+bool przeskok(int t[N]){
+
+int wartosc=t[0];
+int n=0;
+
+
+while(k<N){
+    n=o_ile_pol(n,wartosc);
+    k+=n;
+    if(!czy_w_obrebie) n
+    
+    
+}
+
+
+}
+
+int main(){
+    
+    
+    int t[N];
+    for(int i=0; i<N; i++) {t[i]=rand()%50+1; cout<<t[i]<<" ";}
+    
+    if(przeskok(t)) cout<<"tak";
+    else cout<<"nie";
+    
+}
