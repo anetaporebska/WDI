@@ -1,0 +1,104 @@
+#include <iostream>
+
+
+using namespace std;
+
+//4.007 Dane są dwie tablice mogące pomieścić taką samą  liczbę elementów;
+// int t1[MAX][MAX] , int t2[MAX2] , MAX2=MAX*MAX
+// W każdym wierszu tablicy t1 znajdują się uporządkowane niemalejąco (w obrębie wiersza) liczby naturalne.
+//Proszę napisać funkcję przepisującą wszyskie liczby z tablicy t1 do tablicy t2, tak aby liczby w tablicy t2 
+//były uporządkowane niemalejąco.
+const int MAX=5;
+const int MAX2=MAX*MAX;
+
+
+int ile_razy(int t1[MAX][MAX], int liczba){
+    int licz=0;
+    
+    for(int i=0; i<MAX; i++){
+        for(int j=0; j<MAX; j++){
+            if(t1[i][j]==liczba) licz++;
+        }
+    }
+    
+    return licz;
+    
+    
+}
+
+
+
+int najmniejsza(int poprzednia, int t1[MAX][MAX]){
+   
+   int najm=1000;
+   
+   for(int i=0; i<MAX; i++){
+       for(int j=0; j<MAX; j++){
+           if(t1[i][j]>poprzednia && t1[i][j]<najm) najm=t1[i][j];
+           if(t1[i][j]>najm) break;
+       }
+   }
+   
+   return najm;
+   
+   
+}    
+
+    
+    
+    void przepisz(int t1[MAX][MAX], int t2[MAX2]){
+        
+        int poprzednia=0;
+        int i=0;
+        
+        while(i<MAX2){
+            
+            int t=najmniejsza(poprzednia,t1);
+            int l=ile_razy(t1,t);
+            while(l>0){
+                t2[i]=t;
+                i++;
+                l--;
+                
+            }
+            poprzednia=t2[i-1];
+            
+            
+        }
+        
+        
+        
+    }
+    
+    
+    
+    
+    int main(){
+        
+        int t1[MAX][MAX]={1,5,8,8,12,4,6,6,7,9,10,13,13,13,13,5,6,7,8,9,2,2,2,3,4};
+        int t2[MAX2]={};
+        
+        
+        for(int i=0; i<MAX; i++){
+            for(int j=0; j<MAX; j++){
+                cout<<t1[i][j]<<" ";
+            }
+            cout<<endl;
+            
+        }
+        
+        
+        przepisz(t1,t2);
+        cout<<endl;
+        for(int i=0; i<MAX2; i++){
+            cout<<t2[i]<<" ";
+        }
+        
+        
+        
+        
+        return 0;
+    }
+
+
+
