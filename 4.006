@@ -1,0 +1,92 @@
+#include <iostream>
+#include<bits/stdc++.h> 
+
+using namespace std;
+
+//4.006 Dane są dwie tablice mogące pomieścić taką samą  liczbę elementów;
+// int t1[MAX][MAX] , int t2[MAX2] , MAX2=MAX*MAX
+// W każdym wierszu tablicy t1 znajdują się uporządkowane rosnąco (w obrębie wiersza) liczby naturalne
+// Proszę napisać funkcję przepisującą  wszystkie singletony (liczby  naturalne występujące dokładnie raz)
+// z tablicy t1 do t2, tak aby liczby w tablicy t2 były uporządkowane rosnąco.
+//Pozostałe elementy tablicy t2 powinny zawierać zera.
+
+const int MAX=5;
+const int MAX2=MAX*MAX;
+
+bool czy_jedyna(int sprawdzana, int t1[MAX][MAX], int i, int j){      //przechodzę przez wszystkie komórki tablicy
+    
+    for(int m=0; m<MAX; m++){
+        for(int n=0; n<MAX; n++){
+            if(m==i && n==j) continue;
+            if(t1[m][n]==sprawdzana) return false;
+            
+        }
+    }
+    
+    return true;
+    
+}
+
+int najmniejsza(int poprzednia, int t1[MAX][MAX]){
+    
+    int najm=100;
+    
+    
+    for(int i=0; i<MAX; i++){
+        for(int j=0; j<MAX; j++){
+            if(t1[i][j]>poprzednia && t1[i][j]<najm && czy_jedyna(t1[i][j],t1,i,j)) {najm=t1[i][j]; break;}
+            if(t1[i][j]>najm) break;
+        }
+    }
+    if(najm==100) return 0;
+    return najm;
+}    
+
+    
+    
+    void przepisz(int t1[MAX][MAX], int t2[MAX2]){
+        
+        int poprzednia=0;
+        
+        for(int i=0; i<MAX2; i++){
+            int k=najmniejsza(poprzednia,t1);
+            t2[i]=k;
+            poprzednia=t2[i];
+            if(k==0) break;
+        }
+        
+    }
+    
+    
+    
+    
+    int main(){
+        
+        int t1[MAX][MAX]={1,5,8,8,12,4,6,6,7,9,10,13,13,13,13,5,6,7,8,9,2,2,2,3,4};
+        int t2[MAX2]={};
+        
+        
+        for(int i=0; i<MAX; i++){
+            for(int j=0; j<MAX; j++){
+                cout<<t1[i][j]<<" ";
+            }
+            cout<<endl;
+            
+        }
+        
+        
+        przepisz(t1,t2);
+        cout<<endl;
+        for(int i=0; i<MAX2; i++){
+            cout<<t2[i]<<" ";
+        }
+        
+        
+        
+        
+        return 0;
+    }
+
+
+
+
