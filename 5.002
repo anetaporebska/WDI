@@ -1,0 +1,165 @@
+#include <iostream>
+
+
+using namespace std;
+
+//5.002 Używając funkcji z poprzedniego zadania proszę napisać funkcję rozwiązującą układ 2 równań 
+//o 2 niewiadomych.
+
+
+
+struct ulamek{
+  int l;
+  int m;
+};
+
+
+ulamek wczytaj(){
+    ulamek u;
+    cin>>u.l;
+    cin>>u.m;
+    return u;
+}
+
+
+ulamek wypisz(ulamek u){
+    
+    cout<<u.l<<"/"<<u.m;
+}
+
+
+int nwd(int a, int b){                //najmniejszy wspólny dzielnik, algortym euklidesa 
+    
+    int pom;
+	while(b!=0)
+    {
+		pom = b;
+		b = a%b;
+		a = pom;	
+	}
+	
+    return a;
+    
+}                   
+    
+  int nww(int a, int b){
+      return a*b/nwd(a,b);
+  }
+  
+  
+  ulamek suma(ulamek a, ulamek b){
+      int nowy_mianownik=nww(a.m, b.m);
+      ulamek wynik;
+      wynik.m=nowy_mianownik;
+      a.l=a.l*nowy_mianownik/a.m;
+      b.l=b.l*nowy_mianownik/b.m;
+      wynik.l=a.l+b.l;
+      
+      return wynik;
+      
+      
+  }
+  
+  
+  ulamek roznica(ulamek a, ulamek b){
+      int nowy_mianownik=nww(a.m,b.m);
+      ulamek wynik;
+      wynik.m=nowy_mianownik;
+      a.l=a.l*nowy_mianownik/a.m;
+      b.l=b.l*nowy_mianownik/b.m;
+      wynik.l=a.l-b.l;
+      
+      return wynik;
+  }
+  
+  
+  ulamek iloczyn(ulamek a, ulamek b){
+      ulamek wynik;
+      wynik.l=a.l*b.l;
+      wynik.m=a.m*b.m;
+      return wynik;
+  }
+  
+  ulamek iloraz(ulamek a, ulamek b){
+      ulamek wynik;
+      wynik.l=a.l*b.m;
+      wynik.m=a.m*b.l;
+      return wynik;
+      
+      
+  }
+  
+  ulamek potegowanie(ulamek a, int wykladnik){
+      
+      ulamek wynik=a;
+      for(int i=2; i<=wykladnik; i++){
+          wynik=iloczyn(wynik,a);
+      }
+      
+      return wynik;
+  }
+  
+  ulamek skroc(ulamek a){
+      
+      int d=nwd(a.l, a.m);
+      a.l/=d;
+      a.m/=d;
+      
+      
+      return a;
+  }
+  
+  ulamek wyznacznik_glowny(ulamek x1, ulamek x2, ulamek y1, ulamek y2){
+      
+      return roznica(iloczyn(x1,y2),iloczyn(x2,y1));
+  }
+  
+  
+  ulamek wyznacznik_x(ulamek a1, ulamek a2, ulamek y1, ulamek y2){
+      return roznica(iloczyn(a1,y2),iloczyn(a2,y1));
+  }
+  
+  
+  ulamek wyznacznik_y(ulamek a1, ulamek a2, ulamek x1, ulamek x2){
+      return roznica(iloczyn(x1,a2),iloczyn(x2,a1));
+  }
+    
+    
+int main(){
+   
+    ulamek x1;                  //x1*x+y1*y=a1
+    ulamek y1;                  //x2*x+y2*y=a2
+    ulamek a1;
+    ulamek x2;
+    ulamek y2;
+    ulamek a2;
+    
+    x1.l=12; x1.m=1;
+    y1.l=6; y1.m=1;
+    a1.l=13; a1.m=1;
+    x2.l=3; x2.m=2;
+    y2.l=3; y2.m=1;
+    a2.l=21; a2.m=6;
+    
+    
+    wypisz(x1); cout<<endl;
+    wypisz(y1); cout<<endl;
+    wypisz(a1); cout<<endl;
+    wypisz(x2); cout<<endl;
+    wypisz(y2); cout<<endl;
+    wypisz(a2); cout<<endl;
+
+    ulamek x=iloraz(wyznacznik_x(a1,a2,y1,y2),wyznacznik_glowny(x1,x2,y1,y2));
+    ulamek y=iloraz(wyznacznik_y(a1,a2,x1,x2),wyznacznik_glowny(x1,x2,y1,y2));
+    
+    cout<<"x=";
+    wypisz(skroc(x));
+    cout<<"   y=";
+    wypisz(skroc(y));
+    
+   
+
+    return 0;
+}
+    
+    
