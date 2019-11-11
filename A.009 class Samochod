@@ -1,0 +1,52 @@
+#include <iostream>
+#include <time.h>
+
+using namespace std;
+
+//A.009 class Samochód
+
+
+class Samochod{
+  public:
+  
+  string marka;
+  string model;
+  int rocznik;
+  int przebieg;
+  
+  
+  void wczytaj(){
+      cin>>marka;
+      cin>>model;
+      cin>>rocznik;
+      cin>>przebieg;
+  }
+  
+  
+  void wypisz(){
+      cout<<marka;
+      cout<<model;
+      cout<<rocznik;
+      cout<<przebieg;
+      
+  }
+    
+    
+};
+
+
+int main(){
+    
+    Samochod s1;
+    s1.wczytaj();
+    Samochod s2;
+    s2.wczytaj();
+    
+    s1.wypisz();
+    s2.wypisz();
+    
+    
+    
+    
+    return 0;
+}
