@@ -1,0 +1,56 @@
+#include <iostream>
+#include <time.h>
+
+using namespace std;
+
+//A.010. REKURENCJA (bit algo start)
+
+
+int an(int n){                              //dodaje n razy 2
+    if(n==0) return 0;
+    return an(n-1)+2;
+}
+
+
+
+int ciag_fib(int n){                        //Ciąg FIBONACCIEGO REKURENCYJNIE
+    if(n==0) return 0;
+    if(n==1) return 1;
+    return ciag_fib(n-1)+ciag_fib(n-2);
+    
+}
+
+
+int sum(int arr[], int n, int suma){                   //Funkcja licząca sumę liczb w tablicy
+    if(n==-1) return suma;
+    return sum(arr, n-1, suma+arr[n]);
+}
+
+
+int binary_search(int array[], int x, int p, int k){        //rekurencyjne binary search
+    if(k>=p){
+        int s=(p+k)/2;
+        if(x==array[s]) return s;
+        if(x>array[s]) return binary_search(array,x,s+1,k);
+        if(x<array[s]) return binary_search(array,x,p,s-1);
+    }
+    return -1;
+    
+}
+
+
+
+
+int main(){
+    
+    cout<<an(15)<<endl;
+    cout<<ciag_fib(10)<<endl;
+    int N=10;
+    int arr[N]={3,4,5,3,4,5,4,4,4,4};
+    cout<<sum(arr, N-1, 0)<<endl;
+    int array[10]={3,4,6,8,9,9,13,17,25,80};
+    int szukana;
+    cin>>szukana;
+    cout<<binary_search(array,szukana,0,9)<<endl;
+
+}
