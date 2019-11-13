@@ -1,4 +1,5 @@
 #include <iostream>
+#include <time.h>
 
 using namespace std;
 
@@ -10,56 +11,50 @@ using namespace std;
 //Czynnik pierwszy – dowolna liczba pierwsza, która dzieli bez reszty daną liczbę naturalną złożoną.
 //2,3,5,7,11,13,17,19,23 ....
 
-const int N=10;
+const int N=50;
 
-bool czy_w_obrebie(int indeks){             //funkcja sprawdzająca czy jest możliwy przeskok
-    return(indeks<N);
+bool czy_pierwsza(int a){
+    
+    if(a==2) return true;
+    for(int i=2; i*i<=a; i++){
+        if(a%i==0) return false;
+    }
+    return true;
+    
 }
 
-bool czy_pierwsza(int liczba){              //sprawdza czy dana liczba jest pierwsza
-    if(liczba==2) return true;
-    for(int i=2; i*i<liczba; i++){
-        if(liczba%i==0) return false;
+
+
+void przeskok(int t[N], bool skok[N]){
+    for(int i=1; i<N; i++) skok[i]=false;
+   
+    skok[0]=true;
+    
+    for(int i=0; i<N; i++){
+        if(skok[i]==true){
+            for(int j=2; j<=t[i]; j++){
+                if(t[i]%j==0 && czy_pierwsza(j) && i+j<N) {cout<<" "<<j; skok[i+j]=true;}
+            }
+        }
     }
     
-    return true;
-}
-
-
-
-int o_ile_pol(int n, int wartosc){          //zwraca informację o tym o ile pól można przeskoczyć
-
-for(int i=2; i*i<wartosc; i++){
-    if(wartosc%i==0 && czy_pierwsza(i) && i>n) return i;
-}
-return  
-}
-
-
-bool przeskok(int t[N]){
-
-int wartosc=t[0];
-int n=0;
-
-
-while(k<N){
-    n=o_ile_pol(n,wartosc);
-    k+=n;
-    if(!czy_w_obrebie) n
     
     
-}
 
 
 }
 
 int main(){
-    
-    
+    bool skok[N];
     int t[N];
+    
+    srand(time(NULL));
     for(int i=0; i<N; i++) {t[i]=rand()%50+1; cout<<t[i]<<" ";}
     
-    if(przeskok(t)) cout<<"tak";
+    przeskok(t,skok);
+    if(skok[N-1]==true) cout<<"tak";
     else cout<<"nie";
-    
+   
+   
+   
 }
