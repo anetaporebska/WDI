@@ -1,0 +1,35 @@
+#include <iostream>
+#include <time.h>
+
+using namespace std;
+
+//2.012 Napisz program wczytujący liczbę naturalną z klawiatury i odpowiadający na pytanie, 
+//czy jej cyfry stanowią ciąg rosnący.
+
+
+
+int main(){
+    
+    int n;
+    cin>>n;
+    
+    int ost;            //ostatnia cyfra
+    int post;           //przedostatnia cyfra
+    bool rosnacy=false;
+    
+    while(n>0){
+        ost=n%10;
+        post=(n%100)/10;
+        n/=10;
+        
+        if(ost>post) {rosnacy=true;}
+        else {rosnacy=false; cout<<"nie"; return 0;}
+    }
+    
+    if(rosnacy==true) {cout<<"tak";}
+    
+    
+    return 0;
+
+    
+}
