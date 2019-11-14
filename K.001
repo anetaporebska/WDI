@@ -1,0 +1,61 @@
+#include <iostream>
+using namespace std;
+
+
+//K.001 Dwie liczby naturalne są różnocyfrowe jeśli nie posiadają żadnej wspólnej cyfry. Proszę napisać program, 
+//który wczytuje dwie liczby naturalne i poszukuje najmniejszej podstawy systemu (2-16), w którym liczby są
+//różnocyfrowe. Program powinien wypisać znalezioną podstawę.Jeżeli postawa taka nie istnieje program powinien
+//wypisać komunikat o jej braku.
+//np dla 123 i 522 odpowiedzą jest 11.
+
+
+
+void wyzeruj(int tab1[], int tab2[]){
+    for(int i=0; i<16; i++){
+        tab1[i]=0;
+        tab2[i]=0;
+    }
+}
+
+int main(){
+    
+    int n,k;
+    cin>>n>>k;
+    int pomk=k;
+    int pomn=n;
+    
+    
+    bool roz=false;
+    
+    for(int i=2; i<=16; i++){
+        int tab1[16];
+        int tab2[16];
+        k=pomk;
+        n=pomn;
+        wyzeruj(tab1,tab2);
+        
+        while(n>0){
+            tab1[n%i]=1;                //przypisuję true jesli taka liczba wystąpiła
+            n/=i;
+        }
+        
+        while(k>0){
+            tab2[k%i]=1;
+            k/=i;
+        }
+        
+        roz=true;
+        
+        for(int m=0; m<16; m++){
+            if(tab1[m]==1 && tab2[m]==1) {roz=false; break;}    //jeśli true w obu tablicach to mają taką samą liczbę
+        }
+        
+        if(roz==true) {cout<<"tak"<<i; return 0;}
+        
+    }
+    
+    cout<<"nie";
+    return 0;
+    
+    
+}
