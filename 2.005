@@ -1,0 +1,35 @@
+#include <iostream>
+#include <time.h>
+
+using namespace std;
+
+//2.005 Napisać program, który wyznacza ostanią niezerową cyrę N!. 
+//Program powinien dzaiłać dla N rzędu 1000000.
+
+
+
+int main(){
+    
+    int n;
+    cin>>n;
+    
+    int silnia=1;
+    
+    for(int i=1; i<=n; i++){
+        if((i+1)%5==0 && (i+1)%2!=0) silnia*=i;
+        else{
+            silnia*=i;
+            while(silnia%10==0) silnia/=10;
+            silnia=silnia%10;
+            
+        }
+        
+        
+        
+    }
+    
+    cout<<silnia%10;
+    return 0;
+
+    
+}
