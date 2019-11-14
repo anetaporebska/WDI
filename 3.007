@@ -1,0 +1,16 @@
+//3.007 Napisać program wypełniający tablicę int i[MAX] liczbami naturalnymi 1-1000  i sprawdzający czy
+//każdy element tablicy zawiera co najmniej jedną cyfrę nieparzystą.
+
+//
+
+
+for(int i=0; i<n; i++){
+  while(tab[i]>0){
+      if(tab[i]%2==1) {niep=true; break;}
+      else {niep=false; tab[i]/=10;}
+
+  }
+  if(niep==false) {cout<<"nie"; return 0;}
+}
+
+if(niep==true) cout<<"tak";
