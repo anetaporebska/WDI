@@ -1,0 +1,93 @@
+#include <iostream>
+#include <time.h>
+
+using namespace std;
+
+//3.006 Proszę napisać program, który wczytuje wprowadzony z klawiatury ciąg liczb naturalnych zakończonych zerem
+//stanowiącym wyłącznie  znacznik końca danych. Program powinien wypisać 10 co do wielkości wartość, 
+//jaka wystąpiła w ciągu. Można założyć, że w ciągu znajduje się wystarczająca liczba elementów.
+
+const int N=100;
+
+void swap(int &a, int &b){
+    int c=a;
+    a=b;
+    b=c;
+}
+
+int najm(int i, int tab[], int rozm){
+    
+    int naj=i;
+    for(int k=i+1; k<rozm; k++){
+        if(tab[k]<tab[naj]) naj=k;
+    }
+    return naj;                 //zwraca indeks w którym mamy najmniejszą wartosć
+}
+
+
+void select_sort(int tab[], int rozm){
+    
+    for(int i=0; i<rozm-1; i++){
+        int s=najm(i,tab,rozm);
+        swap(tab[i],tab[s]);
+        
+    }
+    
+    
+    
+    
+    
+}
+
+
+
+
+
+int main(){
+    
+    
+    int t[N];
+    int i=0;
+    
+    while(t[i-1]!=0){
+        cin>>t[i];
+        i++;
+    }
+    
+    int tab[i-1];
+    
+    for(int k=0; k<i-1; k++){
+        tab[k]=t[k];
+    }
+    
+    int rozm=i-1;
+    cout<<endl;
+    
+    select_sort(tab,rozm);
+  
+     
+    for(int k=0; k<rozm; k++){
+        cout<<tab[k]<<" ";
+    }
+    
+    
+    //10 co do wielkości wartość w tab
+    
+    int l=1;
+    int m=0;
+    
+    while(l!=10){
+        if(tab[m]!=tab[m+1]) l++;
+        m++;
+    }
+    
+    cout<<endl<<tab[m];
+    
+    
+    
+    
+    
+        
+    
+    
+}
