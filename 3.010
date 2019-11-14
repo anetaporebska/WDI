@@ -1,0 +1,45 @@
+#include <iostream>
+#include <time.h>
+
+using namespace std;
+
+//3.010 Napisać funkcję, która dla tablicy int t[MAX] wypełnionej liczbami naturalnymi wyznacza długość
+//najdłuższego, spójnego podciągu rosnącego.
+
+
+int main(){
+    
+    srand(time(NULL));
+    int n;              //ilość elementów tablicy
+    cin>>n;
+    int tab[n]={};
+    int w=1;            //licznik długości ciągu
+    int naj=1;          //najdłuższy podciągu
+    
+    
+    for(int i=0; i<n; i++){
+        tab[i]=rand()%100+1;
+        
+    }
+    
+    for(int i=0; i<n; i++){
+        cout<<tab[i]<<" ";
+        
+    }
+    
+    for(int i=0; i<n-1; i++){
+        
+        if(tab[i]<tab[i+1]) {w++;}
+        else{
+            if(w>naj) {naj=w;}
+            w=1;
+        }
+        
+    }
+    
+    cout<<endl<<naj;
+    
+    return 0;
+
+    
+}
