@@ -1,0 +1,13 @@
+//3.008 Napisać program wypełniający tablicę int t[MAX] liczbami naturalnymi 1-1000 i sprawdzający czy istnieje
+//element tablicy zawierający wyłącznie cyfry nieparzyste.
+
+
+for(int i=0; i<n; i++){
+  while(tab[i]>0){
+    if(tab[i]%2==0) {istnieje=false; break;}
+    else {istnieje=true; tab[i]/=10;}
+}
+  if(istnieje==true) {cout<<"tak"; return 0;}
+
+}
+cout<<"nie";
