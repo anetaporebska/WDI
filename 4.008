@@ -1,0 +1,85 @@
+#include <iostream>
+#include <time.h>
+
+using namespace std;
+
+//4.008 Dana jest tablica wypełniona liczbami naturalnymi: int i[MAX][MAX]
+//Proszę napisać funkcję, która poszukuje w tablicy najdłuższego ciągu geometrycznego
+//leżącego ukośnie w kierunku prawo-dół, liczącego co najmniej 3 elementy.
+//Funckja powinna zwrócić informacje czy udało się znaleźć taki ciąg oraz długość tego ciągu.
+
+
+//MAX=N;
+
+//sprawdzanie zaczniemy od  komórki [0][N-2], dojdziemy do [0][0] a skończymy na [N-2][0]
+
+
+const int N=15;
+
+void podciag(int t[N][N]){
+    float iloczyn=0;
+    int d=2; //dlugosc podciagu
+    int naj=2; //najdłuższy podciag
+    //najpierw sprawdzimy od [0][N-2] do [0][0]
+    
+    for(int i=N-3; i>=0; i--){                      //i -numer kolumny od której zaczynamy
+        iloczyn=t[0][i]/t[1][i+1];
+        d=2;
+        for(int j=i+1, w=1; j<N-1 && w<N-1; j++, w++){
+            if(iloczyn==t[w][j]/t[w+1][j+1]){
+              d++;
+              if(d>naj) naj=d;
+            }  
+            else {iloczyn=t[w][j]/t[w+1][j+1]; d=2;}
+        }
+    }
+    
+    //sprawdzamy od [1][0] do [N-2][0]
+    for(int i=1; i<=N-2; i++){
+        iloczyn=t[i][0]/t[i+1][1];
+        d=2;
+        for(int j=i+1, k=1; j<N-1 && k<N-1; j++, k++){
+            if(iloczyn==t[j][k]/t[j+1][k+1]){
+                d++;
+                if(d>naj) naj=d;
+            }
+            else {iloczyn=t[j][k]/t[j+1][k+1]; d=2;}
+        }
+    }
+    
+    
+    cout<<naj;
+}
+
+
+
+
+
+
+
+
+int main(){
+    
+    srand(time(NULL));
+    int t[N][N];
+    
+    
+    
+ for(int i=0; i<N; i++){
+        for(int j=0; j<N; j++){
+          t[i][j]=rand()%100+1;
+    }
+  }
+    
+     for(int i=0; i<N; i++){
+        for(int j=0; j<N; j++){
+            cout<<t[i][j]<<" ";
+        }
+        cout<<endl;
+    }
+    
+    podciag(t);
+    
+    
+    
+}
