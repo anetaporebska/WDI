@@ -1,0 +1,55 @@
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+
+//K.009 Dane są dwa ciągi określone następująco:
+// a(1)=1, a(n)=a(n-1)+b(n)/3
+// b(1)=2, b(n)=b(n-1)+a(n-1)
+//Proszę napisać program, który wczytuje liczbę naturalną k i odnajduje wyraz należący do jednego z ciągów o wartości
+//najbliższej k. Program powinien wypisać numer znalezionego wyrazu i ciąg, z którego on pochodzi. Jeżeli więcej niż
+// jeden wyraz jest jednakowo odległy od k, należy wybrać ten o mniejszym numerze.
+
+
+
+int main(){
+    
+    int k;
+    cin>>k;
+    float an=1;
+    float bn=2;
+    string ciag="a";
+    float odleglosc;                        //największa odleglosc to k-1; jesli jest większa to break, 
+                                            //ale warunek damy przy tym ciągu który wolniej rośnie, żeby nie stracic rozwiązania jakiegoś
+    int w=1;
+    
+    odleglosc=fabs(k-an);
+    float naj=odleglosc;
+    odleglosc=fabs(k-bn);
+    if(odleglosc<naj) {naj=odleglosc; w=1; ciag='b';}
+    
+    int i=2;
+    while (true){
+        bn=bn+an;
+        an=an+bn/3;
+        cout<<bn<<" "<<an<<endl;
+        
+        
+        odleglosc=fabs(k-bn);
+        if(odleglosc<naj){naj=odleglosc; w=i; ciag='b';}
+        
+        odleglosc=fabs(k-an);
+        if(odleglosc<naj){naj=odleglosc; w=i; ciag='a';}
+        if(odleglosc>k-1) break;
+        i++;
+    }
+    
+    
+    cout<<naj<<" "<<w<<" "<<ciag;
+    
+    
+    
+    
+    
+    return 0;
+}
