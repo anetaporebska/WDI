@@ -1,0 +1,54 @@
+#include <iostream>
+using namespace std;
+
+
+//K.006 Dana jest tablica int t[9], w której należy umieścić liczby od 1 do 9 tak, aby były spełnione warunki:
+// 1) wartości na sąsiednich polach tablicy muszą różnić się o co najmniej 2
+// 2) liczby pierwsze nie mogą zajmować sąsiednich pól tablicy
+//Wartość 1 została już umieszczona w pierwszym (pod indeksem 0) elemencie tablicy. Proszę napisać program, 
+//który wypisuje wszystkie poprawne umieszczenia liczb w tablicy.
+
+
+//to mi wygląda jak robota dla rekurencji 
+
+
+bool czy_pierwsza(int a){
+    if(a==2) return true;
+    for(int i=2; i*i<=a; i++){
+        if(a%i==0) return false;
+    }
+    return true;
+}
+
+
+void umieszczenia(int t[9]){
+    
+    for(int i=1; i<9; i++){
+        
+        
+        
+        
+    }
+    
+    
+    
+    
+    
+}
+
+
+
+
+
+
+int main(){
+    int t[9];
+    int t[0]=1;
+    
+   
+    return 0;
+}
+
+
+
+
