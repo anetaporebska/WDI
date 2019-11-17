@@ -1,0 +1,72 @@
+#include <iostream>
+using namespace std;
+
+
+//K.007 Dana jest tablica wypełniona liczbami naturalnymi int t[N][N] reprezentująca szachownicę.
+//Proszę napisać funkcję, która sprawdza, czy jest możliwe ustawienie dwóch wzajemnie szachujących się skoczków,
+//tak, aby suma wartości pól, na których stoją skoczki, była liczbą pierszą. Do funkcji należy przekazać tablicę t,
+//funkcja powinna zwrócić wartość typu bool.
+
+//skoczek to kuń
+
+
+
+//było już takie zadanie, lecimy po wszyskich elementach tablicy i sprawdzamy z niego wszyskie ustawienia "w dół", 
+//żeby nie sprwadzać po dwa razy tego samego
+
+
+const int N=10;
+
+bool czy_pierwsza(int a){
+    if(a==1 || a==0) return false;
+    if(a==2) return true;
+    
+    for(int i=2; i*i<=a; i++){
+        if(a%i==0) return false;
+    }
+    
+    return true;
+    
+}
+
+bool czy_mozliwe(int a, int b){              //musimy sprawdzić czy nie wychodzimy poza tablicę
+
+    if(a>=0 && b>=0 && a<N && b<N) return true;
+    return false;
+    
+    
+} 
+
+bool skoczek(int t[N][N]){
+
+    for(int i=0; i<N; i++){
+        for(int j=0; j<N; j++){
+        
+            if(czy_mozliwe(i+1,j-2) && czy_pierwsza(t[i][j]+t[i+1][j-2])) return true;
+            if(czy_mozliwe(i+1,j+2) && czy_pierwsza(t[i][j]+t[i+1][j+2])) return true;
+            if(czy_mozliwe(i+2,j-1) && czy_pierwsza(t[i][j]+t[i+2][j-1])) return true;
+            if(czy_mozliwe(i+2,j+1) && czy_pierwsza(t[i][j]+t[i+2][j+1])) return true;
+        }
+    }
+
+    
+}    
+    
+
+
+
+
+
+
+int main(){
+    int t[N][N];
+    skoczek(t);
+    
+    return 0;
+}
+
+
+
+
+
+
