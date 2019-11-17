@@ -1,0 +1,61 @@
+#include <iostream>
+#include <cmath>
+#include <time.h>
+using namespace std;
+
+
+//K.010 Proszę napisać program, który wypełnia tablicę int t[MAX] liczbami pseudolosowymi z zakresu [1,1000], 
+//a następnie wyznacza i wypisuje sumę 10 największych elementów tablicy.
+//tablica t zajmuje poand połowę dostępnej pamięci na dane i nie może ulec zmianie
+
+
+//nie mogę posortować
+
+const int MAX=20;
+
+
+int main(){
+    
+    int tab[MAX];
+    srand(time(NULL));
+    
+    for(int i=0; i<MAX; i++){
+        tab[i]=rand()%1000+1;
+        //cout<<tab[i]<<" ";
+    }
+    
+    //zastosuję wyszukiwanie liniowe, i będę musiała pamiętać poprzednią największa wartość
+    //a także muszę uwględnić krotności tych wartości
+    
+    int najwieksza=0;
+    int poprzednia=1001;
+    int suma=0;
+    int l=0;
+    int k=1;
+    
+    while(k<=10){
+        l=0;
+        najwieksza=0;
+        for(int i=0; i<MAX; i++){
+            if(tab[i]>najwieksza && tab[i]<poprzednia) najwieksza=tab[i];
+        }
+        
+        for(int i=0; i<MAX; i++){
+            if(tab[i]==najwieksza) l++;
+        }
+        
+        poprzednia=najwieksza;
+        while(k<=10 && l>0){
+            suma+=najwieksza;
+            l--;
+            k++;
+        }
+    }
+    
+    cout<<endl<<suma;
+    
+  
+    
+    
+    return 0;
+}
