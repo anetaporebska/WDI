@@ -1,0 +1,41 @@
+#include <iostream>
+
+using namespace std;
+
+//6.001 Dany jest zestaw odważników int t[N]. Napisać funkcję, która sprawdza czy jest możliwe odważenie
+//określonej masy. Odważniki można umieszczać tylko na jednej szalce.
+
+const int N=10;
+
+int t[N]={3,5,7,8,3,2,1,4,5,9};
+
+
+//p - indeks w tablicy, wartość pod tym indeksem odejmujemy lub nie;
+
+bool waga(int n, int p){
+    
+    if(n==0) return true;
+    if(p==N) return false;                  //gdy dojdziemy do ostatniego indeksu to wiemy, że nie znaleźliśmy takiego podzbioru
+    if(n<0) return false;
+    
+    
+    return waga(n-t[p],p+1) or waga(n,p+1);         //LUB -> wystarczy, żeby gdziekolwiek było true i zwróci true;
+    
+    
+}
+
+
+
+int main(){
+    
+    int k;
+    cin>>k;
+    
+    if(waga(k,0)) cout<<"tak";
+    else cout<<"nie";
+    
+    return 0;
+}
+
+
+
