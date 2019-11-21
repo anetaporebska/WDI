@@ -1,0 +1,44 @@
+#include <iostream>
+using namespace std;
+
+
+//A.012 Funkcja zliczająca ilość różnych czynników pierwszych danej liczby
+
+
+int ile(int n){
+    
+    int licznik=0;
+    int dzielnik=2;
+    int pierwszy=0;         //będzie przechowywać ostatni czynniik pierwszy (bo mają być różne)
+    
+    while(n>1 && dzielnik<=n){
+        
+        if(n%dzielnik==0){
+            
+            if(dzielnik!=pierwszy) licznik++;
+            pierwszy=dzielnik;
+            n/=dzielnik;
+            
+        }
+        else dzielnik++;
+        
+    }
+    return licznik;
+    
+}
+
+
+int main(){
+    
+    cout<<ile(1)<<endl;
+    cout<<ile(2)<<endl;
+    cout<<ile(6)<<endl;
+    cout<<ile(30)<<endl;
+    cout<<ile(64)<<endl;
+    cout<<ile(20)<<endl;
+    
+    
+    
+    
+    return 0;
+}
