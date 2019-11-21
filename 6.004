@@ -1,0 +1,66 @@
+#include <iostream>
+using namespace std;
+
+
+
+//6.004 "Waga" liczby jest określona jako ilość różnych czynników pierwszych liczby. 
+//np. waga(1)=0, waga(2)=1, waga(6)=2, waga(30)=3, waga(64)=1.
+//Dana jest tablica int t[N]. Tablica zawiera liczby naturalne. Proszę napisać funkcję, która sprawdza
+//czy można elementy tablicy podzielić na 3 podzbiory o równych wagach. Do funkcji należy przekazać wyłącznie tablicę,
+//funkcja powinna zwrócić wartość typu bool.
+
+
+const int N=5;
+
+int waga(int n){
+    int licznik=0;
+    int p=2;
+    int pierwsza=0;
+    
+    while(n>1 && p<=n){
+        if(n%p==0){
+            if(p!=pierwsza) licznik++;
+            pierwsza=p;
+            n=n/p;
+            
+        }
+        else p++;
+        
+        
+    }
+    
+    return licznik;
+    
+}
+
+
+
+bool suma(int t[N], int p, int w1, int w2, int w3){         //suma(t,0,0,0,0)
+    if(N==p){
+        if(w1==w2 && w2==w3) {cout<<w1; return true;}
+        else return false;
+    }
+    int k=waga(t[p]);
+    return suma(t,p+1,w1+k,w2,w3) or suma(t,p+1,w1,w2+k,w3) or suma(t,p+1,w1,w2,w3+k);
+    
+    
+}
+
+bool czy_mozna(int t[N]){
+    return suma(t,0,0,0,0);
+}
+
+
+int main(){
+    
+    int t[N]={2,20,10,30,64};
+    
+    if(czy_mozna(t)) cout<<" tak";
+    else cout<<"nie";
+    
+    return 0;
+}
+
+
+
+
