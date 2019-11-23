@@ -1,0 +1,48 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+//6.011 Dana jest tablica int t[N]. Proszę napisać program zliczający liczbę "enek" o określonym iloczynie.
+//Program powinien wypisywać znalezione enki.
+
+const int N=10;
+
+string str(int a){
+    
+    string b=to_string(a);
+    
+    return b;
+}
+
+void enki(int n, int p, int t[N], int iloczyn, int &licznik, string result){
+    
+    if(n==1){
+        for(int i=p; i<N; i++){
+            if(t[i]==iloczyn) {licznik++; cout<<result+str(t[i])<<endl;}
+        }
+    }
+    
+    else {
+        for(int i=p; i<=N-n; i++){
+            if(iloczyn%t[i]==0) enki(n-1,i+1,t,iloczyn/t[i],licznik, result+str(t[i]));
+        }
+    }
+}
+
+int main(){
+    
+    int licznik=0;
+    string result="";
+    int t[N]={2,11,5,7,12,4,6,2,3,8};
+    
+    enki(3,0,t,24,licznik,result);
+    
+    cout<<endl<<licznik<<endl;
+   
+    return 0;
+}
+
+
+
+
+
