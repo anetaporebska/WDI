@@ -1,0 +1,41 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+//6.012 Napisać program wypisujący wsztskie możliwe podziały liczby naturalnej na sumę składników.
+//Na przykład dla liczby 4 są to: 1+3, 1+1+2, 1+1+1+1, 2+2.
+
+string str(int n){
+    string b=to_string(n);
+    
+    return b;
+}
+
+void ilepodzialow(int n, int ost, string suma){
+    if(n==0) {cout<<suma<<endl; return;}
+    
+    int licznik=0;
+    for(int i=1; i<=ost; i++){
+        if(n>=i){
+            ilepodzialow(n-i,i,suma+' '+str(i));
+        }
+    }
+    return;
+}
+
+
+
+
+int main(){
+    
+    
+    string suma="";
+    int a=5;                        //liczba której podziały chcemy wypisać
+    ilepodzialow(a,a-1,suma);                     
+    
+  
+    
+    
+    return 0;
+}
+
