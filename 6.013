@@ -1,0 +1,39 @@
+#include <iostream>
+
+using namespace std;
+
+
+//6.013 Problem wież Hanoi
+
+
+//algortym:
+//przenieść n-1 krążków ze słupka A na słupek B, posługując się słupkiem C
+//przeenieść ten jeden krażęk ze słupka A na słupek C (jest to za każdym razem największy krązek)
+//przenieść n-1 krążków ze słupka B na słupek C posługując się A
+
+
+
+
+
+
+void hanoi(int n, char source, char aux, char dest){     //n-ilość krążków
+
+if(n==1){ cout<<"from "<<source<<" to "<<dest<<endl; return;}
+
+hanoi(n-1,source,dest,aux);
+cout<<"from "<<source<<" to "<<dest<<endl;
+hanoi(n-1,aux,source,dest);
+
+}
+
+int main(){
+    
+    char source='a';
+    char aux='b';
+    char dest='c';
+    
+    
+    hanoi(3,source,aux,dest);
+    
+    return 0;
+}
