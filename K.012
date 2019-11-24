@@ -1,0 +1,66 @@
+#include <iostream>
+using namespace std;
+
+
+//K.012 Dana jest liczba naturalna N niezawierająca cyfry 0, którą rozbijamy na dwie liczby naturralne
+//A i B, przenosząc kolejne cyfry z liczby N do liczby A albo B. Na przykład liczbę 21523 możemy rozbić
+//na wiele sposobów, np. (215,23), (2,1523), (223,15), (152,23)...
+//Uwaga: względna kolejność cyfr w liczbie N oraz w liczbach A i B musi być zachowana.
+//Proszę napisać funkcję generującą i wypisującą wszyskie rozbicia, w których powstałe liczby
+//A i B są względnie pierwsze. Do funkcji należy przekazać wartość N, funkcja powinna zwrócic liczbę znalezionych par.
+
+
+//Liczby względnie pierwsze – liczby całkowite, których największym wspólnym dzielnikiem jest jeden
+
+bool czy_wzglednie_pierwsze(int a, int b){
+    for(int i=2; i<=a && i<=b; i++){
+        if(a%i==0 && b%i==0) return false;
+    }
+    return true;
+}
+
+int rewers(int n){
+    
+    int rew=0;
+    while(n>0){
+        rew=rew*10+n%10;
+        n/=10;
+    }
+    return rew;
+}
+
+
+
+//musimy odwrócić liczbe
+int ile(int n, int a, int b){             //ile(rewers(liczba),0,0)
+    
+    int licznik=0;
+    
+    if(n==0){
+        if(a==0 || b==0) return licznik;
+        if(czy_wzglednie_pierwsze(a,b)) {cout<<a<<" "<<b<<endl; licznik++;} 
+    }
+    
+    else{
+        licznik+=ile(n/10, a*10+n%10, b);
+        licznik+=ile(n/10, a, b*10+n%10);
+    }
+    
+    
+    return licznik;
+}
+
+
+
+
+
+
+
+int main(){
+    
+    cout<<ile(rewers(215),0,0);
+    
+    
+    
+    return 0;
+}
