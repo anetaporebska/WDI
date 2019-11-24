@@ -1,0 +1,108 @@
+#include <iostream>
+using namespace std;
+
+
+//K.014 Dana jest tablica int t[N][N] (reprezentująca szachownicę) wypełniona liczbami naturalnymi
+//W każdej kolumnie znajduje się dokładnie jedna wieża, której numer wiersza  zawiera tablica int w[N]
+//Proszę napisać funkcję, która wybiera do usunięcia z szachownicy dwie wieże, tak aby suma liczba 
+//na polach szachowanych przez pozostałe wieże była najmniejsza. Do funkcji należy przekazać tablice
+//t i w, funkcja powinna zwrócić numery kolumn z któych usunięto wieże.
+
+const int N=4;
+
+int suma(int t[N][N], int polozenie[N][N]){
+    int sum=0;
+    
+    for(int i=0; i<N; i++){
+        for(int j=0; j<N; j++){
+            if(polozenie[i][j]==1) sum+=t[i][j];
+        }
+    }
+   return sum;
+}
+
+
+void zaznacz(int polozenie[N][N], int tablica[N]){
+    
+    for(int i=0; i<N; i++){
+        int a=tablica[i];
+        if(a!=-1){
+            for(int j=0; j<N; j++){
+                polozenie[a][j]=1;
+                polozenie[j][i]=1;
+            }
+        }    
+    }
+    
+   for(int i=0; i<N; i++){
+        if(tablica[i]!=-1){
+            polozenie[tablica[i]][i]=0;
+        }
+    }
+   
+    
+}
+
+void tymczasowa(int tablica[N], int w[N], int i, int j){
+    
+    for(int k=0; k<N; k++){
+        tablica[k]=w[k];
+    }
+    tablica[i]=-1;
+    tablica[j]=-1;
+}
+
+struct kolumny{
+  int kolumna1;  
+   int kolumna2;        
+};
+
+struct kolumny wieze(int t[N][N], int w[N], kolumny &kolumn){
+    int naj=10000000;           //max int
+    int sum=0;
+    int k1, k2;
+    int polozenie[N][N];
+    
+    for(int i=0; i<N; i++){         //wybieram dwie kolumny z których usunę wieze
+        for(int j=i+1; j<N; j++){
+            int tablica[N];
+            tymczasowa(tablica,w,i,j);
+            zaznacz(polozenie,tablica);
+            sum=suma(t,polozenie);
+            cout<<"suma"<<sum<<endl;
+            if(sum<naj) {naj=sum; k1=i; k2=j;}
+        }
+        
+    }
+    cout<<k1<<" "<<k2;
+    
+
+    kolumn.kolumna1=k1;
+    kolumn.kolumna2=k2;
+    
+    return kolumn;
+}
+
+
+
+int main(){
+    int t[N][N]={12,33,5,46,1082,57,8,93,4,72,5,62,4,7,3,47};
+    int w[N]={1,2,0,1};
+    
+    for(int i=0; i<N; i++){
+        for(int j=0; j<N; j++){
+            cout<<t[i][j]<<" ";
+        }
+        cout<<endl;
+    }
+    
+    kolumny kolumn;
+    wieze(t,w,kolumn);
+    cout<<endl;
+    cout<<kolumn.kolumna1<<" "<<kolumn.kolumna2;
+    
+    return 0;
+}
+
+
+
