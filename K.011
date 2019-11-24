@@ -1,0 +1,112 @@
+#include <iostream>
+using namespace std;
+
+
+//K.011 Dana jest tablica t[N][N] (reprezentująca szachownicę) wypełniona liczbami naturalnymi. Proszę napisać funkcję, 
+//która ustawia na szachownicy dwie wieże tak, aby suma liczb na "szachowanych" przez wieże polach była jak największa.
+//Do fukcji należy przekazać tablicę, funkcja powinna zwrócić położenie wież.
+
+const int N=3;
+
+struct wspolrzedne{
+  int wiersz1;
+  int kolumna1;
+  int wiersz2;
+  int kolumna2;
+};
+
+int suma_szachowanych(int t[N][N], int polozenie[N][N]){
+    int suma=0;
+    for(int i=0; i<N; i++){
+        for(int j=0; j<N; j++){
+            if(polozenie[i][j]==1) suma+=t[i][j];
+        }
+    }
+    return suma;
+}
+
+void zaznacz_pozycje(int polozenie[N][N], int w, int k, int znacznik){
+    
+    for(int i=0; i<N; i++){
+        polozenie[i][k]=znacznik;
+        polozenie[w][i]=znacznik;
+    }
+}
+
+void wyzeruj(int polozenie[N][N]){
+    for(int i=0; i<N; i++){
+        for(int j=0; j<N; j++){
+            polozenie[i][j]=0;
+        }
+    }
+}
+
+struct wspolrzedne wieze(int t[N][N], wspolrzedne &wieza){
+    
+//zaczniemy od pozycji 00 dla pierwszej wieży i sprawdzimy dla niej wszyskie mozliwe rozwiązania dla 63 ustaiwień
+//drugiej wieży; nie będziemy po dwa razy sprawdzać każdego elemnetu
+    int polozenie[N][N]={};
+    int suma=0;
+    int naj=0;
+    int w1, k1, w2, k2;
+    
+    for(int i=0; i<N; i++){
+        for(int j=0; j<N; j++){
+            
+            
+            for(int k=i; k<N; k++){
+                for(int l=j; l<N; l++){
+                    zaznacz_pozycje(polozenie,i,j,1);
+                    zaznacz_pozycje(polozenie,k,l,1);
+                    polozenie[i][j]=0;
+                    polozenie[k][l]=0;
+                    suma=suma_szachowanych(t,polozenie);
+                    if(suma>naj) {naj=suma; w1=i; k1=j; w2=k; k2=l;}
+                    wyzeruj(polozenie);
+                }
+            }
+        }
+    }
+    cout<<w1<<" "<<k1<<endl<<w2<<" "<<k2;
+    
+
+    wieza.wiersz1=w1;
+    wieza.wiersz2=w2;
+    wieza.kolumna1=k1;
+    wieza.kolumna2=k2;
+    
+    return wieza;
+}
+
+int main(){
+    int t[N][N]={3,4,5,6,7,3,0,9,3};
+    
+    wspolrzedne wieza;
+    
+    for(int i=0; i<N; i++){
+        for(int j=0; j<N; j++){
+            cout<<t[i][j]<<" ";
+        }
+        cout<<endl;
+    }
+    
+    
+    cout<<endl;
+    wieze(t,wieza);
+    cout<<endl;
+    cout<<wieza.wiersz1<<" ";
+    cout<<wieza.kolumna1<<endl;
+    cout<<wieza.wiersz2<<" ";
+    cout<<wieza.kolumna2;
+    
+    
+}
+
+
+
+
+
+
+
+
+
