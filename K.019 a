@@ -1,0 +1,9 @@
+#include <iostream>
+using namespace std;
+
+
+//K.019 Dane są dwie tablice int t1[N] oraz int t2[N] wypełnione liczbami naturalnymi. Elementy z tablic t1 i t2 
+//łączymy w pary (po jednym elemencie z każdej tablicy) tak, aby suma wybranych elementów tablicy t1 była równa sumie
+//wybranych elementów z tablicy t2. Proszę napisać funkcję, która zwróci maksymalną liczbę par, jaką można uzyskać.
+//Do fukcji należy przekazać wyłącznie tablice t1 i t2, funkcja powinna zwrócić maksymalną liczbę par.
+
