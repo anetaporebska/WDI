@@ -1,0 +1,53 @@
+#include <iostream>
+using namespace std;
+
+
+//K.021 Proszę napisać program, który wczytuje liczbę naturalną A i odpowiada na pytanie:
+//czy w którymkolwiek z systemów o podstawie 2-16, wszystkie cyfry liczby A zapisanej w tym systemie 
+//są liczbami pierwszymi?"
+
+
+
+bool czy_pierwsza(int n){
+    
+    if(n==0 || n==1) return false;
+    if(n==2) return true;
+    
+    for(int i=2; i*i<=n; i++){
+        if(n%i==0) return false;
+    }
+    
+    return true;
+    
+}
+
+int main(){
+    
+    int n;
+    cin>>n;
+    
+    
+    int pom=n;
+    for(int i=2; i<=16; i++){
+        
+        
+        bool czy=true;
+        while(n>0){
+            if(!czy_pierwsza(n%i)){ czy=false; break;}
+            n/=i;
+        }
+        if(czy){cout<<"system: "<<i<<endl;}
+        n=pom;
+    }
+    
+    
+    
+    
+    
+    return 0;
+}
+
+
+
+
+
