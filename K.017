@@ -1,0 +1,53 @@
+#include <iostream>
+using namespace std;
+
+
+//K.017 Proszę napisać program, który wczytuje wprowadzany z klawiatury ciąg liczb naturalnych zakończonych zerem
+//stanowiącym wyłącznie znacznik końca danych. Program powinien wypisać te elementy ciągu, które są równe średniej 
+//arytmetycznej z 4 najbliższych sąsiadów.
+//Mozna założyć, że w ciągu znajduje się co najmniej 5 elementów.
+    
+ 
+ const int N=100;
+ 
+ int main(){
+     
+     
+     int t[N];
+     int i=0;
+     do{
+         cin>>t[i];
+         i++;
+     }while(t[i-1]!=0);
+     int suma=0;
+     int n=i-1;     //mam n elementów w tablicy
+     
+    
+     for(int j=2; j<n-2; j++){
+         suma=t[j-2]+t[j-1]+t[j+1]+t[j+2];
+         if(t[j]==(suma/4)) cout<<t[j]<<endl;
+     }
+    
+    //dla t[0] 
+     suma=(t[1]+t[2]+t[3]+t[4]);
+     if(t[0]==(suma/4)) cout<<t[0]<<endl;
+     
+     //dla t[1]
+     suma=t[0]+t[2]+t[3]+t[4];
+     if(t[1]==(suma/4)) cout<<t[1]<<endl;
+     
+     //dla t[n-2]
+     suma=t[n-5]+t[n-4]+t[n-3]+t[n-1];
+     if(t[n-2]==(suma/4)) cout<<t[n-2]<<endl;
+     
+     //dla t[n-1]
+     suma=t[n-2]+t[n-3]+t[n-4]+t[n-5];
+     if(t[n-1]==(suma/4)) cout<<t[n-1]<<endl;
+     
+     
+     
+     
+ 
+    return 0;
+}
+
