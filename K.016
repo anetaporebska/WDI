@@ -1,0 +1,76 @@
+#include <iostream>
+using namespace std;
+
+
+//K.016 Dane są dwie tablice mogące pomieścić taką samą liczbę elementów: int t1[N][N]; int t2[M]; //M=N*N
+//W każdym wierszu tablicy t1 znajdują się uporządkowane niemalejąco (w obrębie wiersza) liczby naturalne.
+//Proszę napisać fragment programu przepisujący wszyskie liczby z tablicy t1 do t2, tak aby liczby w tablicy t2 
+//były uporządkowane niemalejąco.
+
+
+
+const int N=4;
+const int M=N*N;
+
+int licznik(int t1[N][N], int k){
+    int licz=0;
+    
+    for(int i=0; i<N; i++){
+        for(int j=0; j<N; j++){
+            if(t1[i][j]==k) licz++;
+        }
+    }
+    
+    return licz;
+}
+
+int najmniejsza(int t1[N][N], int poprzednia){
+    
+    int naj=10000;
+
+    for(int i=0; i<N; i++){
+        for(int j=0; j<N; j++){
+            if(t1[i][j]>poprzednia && t1[i][j]<naj) {naj=t1[i][j]; break;}
+        }
+    }
+    return naj;
+}
+
+void przepisz(int t1[N][N], int t2[M]){
+    
+    int poprzednia=0;
+    
+    for(int i=0; i<M; i++){
+        int k=najmniejsza(t1,poprzednia);
+        int licz=licznik(t1,k);
+        int j=i;
+        while(licz>0){
+            t2[j]=k;
+            j++;
+            licz--;
+        }
+        i=j-1;
+        poprzednia=t2[i];
+    }
+}
+
+
+
+
+
+
+int main(){
+    int t1[N][N]={1,2,2,4,1,4,5,6,1,3,5,7,8,9,11,12};
+    int t2[M]={};
+    
+    przepisz(t1,t2);
+    
+    for(int i=0; i<M; i++){
+        cout<<t2[i]<<" ";
+    }
+    
+    
+ 
+    return 0;
+}
+
