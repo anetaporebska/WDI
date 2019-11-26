@@ -1,0 +1,68 @@
+#include <iostream>
+#include <time.h>
+#include <cmath>
+using namespace std;
+
+
+//K.023 Dane są trzy operacje na liczbach naturalnych oznaczone literami A,B,C.
+// A jeżeli liczba posiada co najmniej 2 cyfry zamienia miejscami dwie ostanie cyfry w liczbie
+// B mnoży liczbę przez 3
+// C jeżeli liczba posiada co najmniej 2 cyfry usuwa pierwszą cyfrę z liczby
+//Należy napisać funkcję, która szuka sekwencji operacji przekształacającej liczbę naturalną x na y (x!=y) o długości nie 
+//większej niż 7. Do funkcji należy przekazać liczby x, y. Funkcja powinna zwrócić napis złożony z liter ABC realizujący przekształcenie
+//albo łańcuch pusty jeżeli przekształcenie nie istnieje. Na przykład dla liczb 6, 3 funkcja powinna zwrócić napis "BACB".
+
+
+
+int funA(int n){
+    int j=n%10;
+    int d=(n%100)/10;
+    
+    int pom=(n/100)*100+j*10+d;
+    return pom;
+}
+
+int funB(int n){
+    return n*3;
+}
+
+int funC(int n){
+    int pom=n;
+    int ile=0;
+    while(n>0){
+        ile++;
+        n/=10;
+    }
+    int d=pow(10,ile-1);
+    
+    return pom%d;
+}
+
+
+void przeksztalc(int n, int k, string napis, int licznik){           //n - przeksztalacan cyfra
+    if(licznik>7){return;}
+    if(n==k) {cout<<"jest :"<<napis<<endl; return;}
+    
+    if(n>9){ 
+        przeksztalc(funA(n),k,napis+'A', licznik+1);
+        przeksztalc(funC(n),k, napis+'C', licznik+1);
+    }
+    przeksztalc(funB(n),k,napis+'B', licznik+1);
+    
+    
+    
+}
+
+
+
+
+
+int main(){
+
+string napis;
+int n=3;
+int k=6;
+przeksztalc(n,k,"",0);
+
+return 0;
+}
