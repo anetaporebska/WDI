@@ -1,0 +1,64 @@
+#include <iostream>
+#include <time.h>
+using namespace std;
+
+
+//K.022 Proszę napisać program, który wypełnia tablicę t[N] pseudolosowymi liczbami nieparzystymi z zakresu [1..99],
+//a następnie wyznacza i wypisuje różnicę pomiędzy długością najdłuższego znajdującego się w niej ciągu arytmetycznego 
+//o dodatniej różnicy, a długością najdłuższego ciągu arytmetycznego o ujemnej różnicy, przy założeniu, że kolejnymi
+//wyrazami ciągu są elementy tablicy o kolejnych indeksach.
+const int N=100;
+
+int dlugosc(int t[N]){
+    int najd=0;
+    int dld=0;
+    int naju=0;
+    int dlu=0;
+    int roznica;
+    for(int i=0; i<N-1; i++){
+        roznica=t[i]-t[i+1];
+        if(roznica<0){
+            dld=2;
+            for(int j=i+1; j<N-1; j++){
+                if(roznica==t[j]-t[j+1]){dld++;}
+                else break;
+            }
+            if(dld>najd){najd=dld;}
+        }
+        if(roznica>0){
+            dlu=2;
+            for(int j=i+1; j<N-1; j++){
+                if(roznica==t[j]-t[j+1]){dlu++;}
+                else break;
+            }
+            if(dlu>naju){naju=dlu;}
+        }
+    }
+    cout<<"dodatni:"<<najd<<" ujemny:"<<naju<<endl;
+    return najd-naju;
+}
+
+
+
+
+
+
+int main(){
+    srand(time(NULL));
+    int t[N];
+    for(int i=0; i<N; i++){
+        t[i]=rand()%99+1;
+        if(t[i]%2==0) t[i]+=1;
+    }
+    
+    for(int i=0; i<N; i++){
+        cout<<t[i]<<" ";
+    }
+cout<<endl;
+    cout<<dlugosc(t);
+    
+    
+    
+    return 0;
+}
+
