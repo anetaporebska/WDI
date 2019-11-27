@@ -1,0 +1,58 @@
+#include <iostream>
+using namespace std;
+
+//6.008 Szachownica jest reprezentowana przez tablicę int t[8][8] wypełnioną liczbami naturalnymi zawierającymi
+//koszt przebywania na danym polu szachownicy. Król szachowy znajduje się w wierszu 0 i kolumnie k. Król musi w dokładnie
+//7 ruchach dotrzec do wiersza 7. Proszę napisać funkcję, która wyznaczy minimalny koszt przejscia króla. 
+//Do funkcji należy przekazać tablicę t oraz startową kolumnę k. Koszt przebywania na polu startowym i ostatnim także
+//wliczamy do kosztu przejscia.
+
+
+//sprawdzimy wszyskie możliwe przejścia; 
+//dokładnie 7 ruchów, czyli za każdym razem idziemy w dół (może to być na ukos o jeden w prawo lub lewo lub w doł po prostej)
+
+
+bool mozliwe(int k){
+    return (k>=0 && k<8);
+}
+
+void przejscie(int t[8][8], int w, int k, int &naj, int suma){         //w- wiersz w którym aktualnie znajduje się król; przejscie(t,w,k,1000,t[w][k])
+
+    if(w==7){
+        if(suma<naj) {naj=suma;}
+    }
+    else{
+        przejscie(t,w+1,k,naj,suma+t[w+1][k]);
+        if(mozliwe(k-1)){    
+            przejscie(t,w+1,k-1,naj,suma+t[w+1][k-1]);
+        }
+        if(mozliwe(k+1)){
+            przejscie(t,w+1,k+1,naj,suma+t[w+1][k+1]);
+        }    
+    }
+}
+
+int main(){
+    
+    int t[8][8];
+    for(int i=0; i<8; i++){
+        for(int j=0; j<8; j++){
+            t[i][j]=rand()%100+1;
+        }
+    }
+    
+    for(int i=0; i<8; i++){
+        for(int j=0; j<8; j++){
+            cout<<t[i][j]<<" ";
+        }
+        cout<<endl;
+    }
+    int naj=1000;
+    
+    przejscie(t,0,3,naj,t[0][3]);
+    
+    cout<<naj;
+    
+    return 0;
+}
+
