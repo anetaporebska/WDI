@@ -1,0 +1,64 @@
+#include <iostream>
+#include <time.h>
+#include <cmath>
+using namespace std;
+
+
+//3.016 Dana jest tablica int t[MAX]. Proszę napisać funkcję, która zwraca informację czy w tablicy zachodzi następujący
+//warunek: "wszyskie elementy, których indeks jest elementem ciągu Fibonacciego są liczbami złożonymi, a wśród pozostałych
+//przynajmniej jedna jest pierwszą".
+
+const int N=20;
+
+bool czy_pierwsza(int n){
+    if(n==1 || n==0) return false;
+    if(n==2) return true;
+    
+    for(int i=2; i*i<=n; i++){
+        if(n%i==0) return false;
+    }
+    
+    return true;
+}
+
+
+bool warunek(int t[N]){
+    
+    //najpierw sprawdzimy warunek z Fibonacciego
+    
+    if(czy_pierwsza(t[0])) return false;
+    if(czy_pierwsza(t[1])) return false;
+    
+    int fib=2;
+    int pop=1;
+    bool poza=false;
+    for(int i=2; i<N; i++){
+        if(i==fib){
+            if(czy_pierwsza(t[i])) return false;
+            fib+=pop;
+            pop=i;
+        }
+        else{
+            if(czy_pierwsza(t[i])){poza=true;} 
+        }
+        
+    }
+    
+    
+    
+    if(poza==true) return true;
+    
+    
+}
+
+
+
+
+int main(){
+    
+    int t[N]={2,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4};
+    
+    if(warunek(t)) cout<<"tag";
+    else cout<<"nie";
+    return 0;
+}
