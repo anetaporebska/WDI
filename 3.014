@@ -1,0 +1,44 @@
+#include <iostream>
+#include <time.h>
+#include <cmath>
+using namespace std;
+
+
+//3.014 Proszę napisać program, który wypełnia tablicę int tab[MAX] trzycyfrowymi liczbami pseudolosowymi, a następnie
+//wyznacza i wypisuje długość najdłuższego  podciągu spójnego znajdującego się w tablicy dla któ©ego w tablicy występuje również rewers
+//tego ciągu. 
+
+const int MAX=15;
+int dlugosc(int t[MAX]){
+    
+    int dl=0;
+    int naj=1;
+    
+    for(int i=0; i<MAX; i++){
+        
+        for(int j=MAX-1; j>i; j--){
+            if(t[i]==t[j]) {
+                dl=1;
+                for(int k=1; i+k<j-k; k++){
+                    if(t[i+k]==t[j-k]) dl++;
+                    else break;
+                }
+                if(dl>naj) naj=dl;
+            }
+            
+        }
+    }
+    
+    return naj;
+}
+
+
+
+
+int main(){
+    
+    int t[MAX]={2,9,3,1,7,11,11,7,1,3,1,7,9,12,15};
+    cout<<dlugosc(t);
+    
+    return 0;
+}
