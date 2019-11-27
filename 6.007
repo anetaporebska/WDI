@@ -1,0 +1,46 @@
+#include <iostream>
+using namespace std;
+
+//6.007 Dana jest tablica int t[N]. Proszę napisać funkcję, która znajdzie niepusty, najmniejszy (w sensie liczebnosci)
+//podzbiór elementów tablicy, dla którego suma elementów jest równa sumie indeksów tych elementów. Do funkcji należy
+//przekazać tablicę, funkcja powinna zwrócić sumę elementów znalezionego podzbioru.
+//Na przykład dla tablicy: [1,7,3,5,11,2] rozwiązaniem jest liczba 10.
+
+
+//zaczniemy od sprawdzenia czy nie ma może takiego elementu w tablicy, który znajduje się w komórce o indeksie równym jego wartości
+//skończymi rekurencję, gdy będziemy szukać n==N elementów
+
+const int N=6;
+void podzbior(int t[N], int n, int &wart, int suma_i, int suma_w, int &naj){              //n-liczebność, którą sprawdzamy
+    
+    if(suma_i==suma_w && suma_i!=0) {
+        if(n<naj){
+            wart=suma_w;
+            naj=n;
+        }
+    }
+    else if(n==N){
+        return;
+    }
+    
+    else{
+        for(int i=n; i<N; i++){
+            podzbior(t, n+1, wart, suma_i+i, suma_w+t[i], naj);
+        }
+    }
+    
+    
+}
+
+
+int main(){
+    int t[N]={1,7,3,5,11,2};
+    int naj=N;
+    int wart=0;
+    podzbior(t,0,wart,0,0,naj);
+    cout<<wart<<endl<<naj;
+   
+   
+    return 0;
+}
+
