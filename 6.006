@@ -1,0 +1,56 @@
+#include <iostream>
+#include <string>
+#include <cmath>
+using namespace std;
+
+//6.006 Dany jest ciąg zer i jedynek zapisany w tablicy int t[N]. Proszę napisać funkcję, która odpowiada na pytanie,
+//czy jest możliwe pocięcie ciągu na kawałki z których każdy reprezentuje liczbę pierwszą. Długość każdego z kawałków
+//nie może przekroczyć 30. Na przykład dla ciągu 111011 jest to możliwe, a dla ciągu 110100 nie jest możliwe.
+
+
+
+const int N=6;
+
+bool pierwsza(int n){
+    
+    if(n==1 || n==0) return false;
+    if(n==2) return true;
+    
+    for(int i=2; i*i<=n; i++){
+        if(n%i==0) return false;
+    }
+    return true;
+}
+
+
+
+bool podzial(int t[N], int p){
+    if(p==-1) return true;
+    int n=0;
+
+    for(int i=p; p-i<30 && i>=0; i--){
+        n=n*2+t[i];
+        if(pierwsza(n) && podzial(t,i-1)) return true; 
+    }
+    
+    return false;
+}    
+
+
+
+
+
+
+int main(){
+    
+    int t[N]={1,1,0,1,0,0};
+    
+    if(podzial(t,0)) cout<<"tak";
+    else cout<<"nie";
+    
+    return 0;
+}
+
+
+
+
