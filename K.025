@@ -1,0 +1,48 @@
+#include <iostream>
+using namespace std;
+
+
+//K.025 Dany jest N elementowy zbiór liczb naturalnych w postaci tablicy int t[N]. Proszę napisać funkcję, 
+//która zwraca informację czy jest możliwy podział zbioru na trzy zbiory tak, aby w każdym z tych trzech zbiorów
+//łączna liczba jedynek w liczbach zapisanych w systemie binarnym była jednakowa.
+
+const int N=7;
+
+int ile(int n){
+    int ilosc=0;
+    
+    while(n>0){
+        if(n%2==1) ilosc++;
+        n/=2;
+    }
+    return ilosc;
+}
+
+
+bool podzial(int t[N], int w1, int w2, int w3, int i){
+    
+    if(i==N){
+        if(w1==w2 && w2==w3) return true;
+        else return false;
+    }
+    
+    return podzial(t,w1+ile(t[i]),w2,w3,i+1) or podzial(t,w1,w2+ile(t[i]),w3,i+1) or podzial(t,w1,w2,w3+ile(t[i]),i+1);
+}
+
+
+int main(){
+    int t[N]={2,3,5,4,11,13,16};
+    
+    if(podzial(t,0,0,0,0)) cout<<"true";
+    else cout<<"false";
+    
+    
+    return 0;
+    
+    
+}
+
+
+
+
+
