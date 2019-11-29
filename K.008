@@ -6,38 +6,28 @@ using namespace std;
 // czy z elementów tablicy (niekoniecznie wszyskich) można utworzyć dwa równoliczne, niepuste podzbiory o jednakowej
 // sumie elementów. Do funkcji należy przekazać wyłącznie tablice t, funkcja powinna zwrócić wartość typu bool.
 
+const int N=5;
 
-//tu też raczej rekurencja
-
-
-bool szukaj(int i, int t[N]){
+bool podzbior(int w1, int w2, int l1, int l2, int t[N], int i){
     
-    if(i==1){
-        for(int j=0; j<N; j++){
-            
-        }
+    if(i==N) return false;
+    
+    if(l1!=0){
+        if(l1==l2 && w1==w2) return true;
     }
     
-    
+    return podzbior(w1+t[i],w2,l1+1,l2,t,i+1) or podzbior(w1,w2+t[i],l1,l2+1,t,i+1) or podzbior(w1,w2,l1,l2,t,i+1);
 }
 
 
-bool podzbiory(int t[N]){
-    
-    for(int i=1; i<=N/2; i++){                  //i to jest liczność podzbioru
-        
-        
-        
-        
-        
-    }
-    
-    
-    
-}
 
 
 int main(){
+    
+    int t[N]={1,4,7,4,44};
+    
+    if(podzbior(0,0,0,0,t,0)) cout<<"tak";
+    else cout<<"nie";
     
     
     
