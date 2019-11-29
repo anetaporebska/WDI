@@ -1,0 +1,99 @@
+#include <iostream>
+using namespace std;
+
+
+//6.014 Problem 8 Hetmanów (jakie są wszyskie możliwe ustawienia hetmanów na 8x8 polach, tak aby żadne 
+//dwa sie nie szachowały)
+
+//wiemy że żadne dwa nie mogą występować w jednym wierszu/ kolumnie
+//będziemy sprawdzać po kolei ustawienie w każdym wierszu
+
+//Dwa hetmany będą się atakować po skosie jeśli różnica między wartością absolutną przesunięcia wzdłuż osi X jak i Y są sobie równe.
+
+
+const int N=8;
+
+void zaznacz_zajete(int t[N][N], int zajete[N][N]){
+    
+    for(int i=0; i<N; i++){
+        for(int j=0; j<N; j++){
+            if(t[i][j]==2){
+                for(int k=0; k<N; k++){
+                    zajete[i][k]=1;
+                    zajete[k][j]=1;
+                    if(i+k<N && j+k<N) zajete[i+k][j+k]=1;
+                    if(i-k>=0 && j-k>=0) zajete[i-k][j-k]=1;
+                    if(i-k>=0 && j+k<N) zajete[i-k][j+k]=1;
+                    if(i+k<N && j-k>=0) zajete[i+k][j-k]=1;
+                }
+            }
+        }
+    }
+    
+}
+
+
+void wypisz(int t[N][N]){
+    
+    for(int i=0; i<N; i++){
+        for(int j=0; j<N; j++){
+            cout<<t[i][j]<<" ";
+        }
+        cout<<endl;
+    }
+    cout<<endl;
+    cout<<"****************************"<<endl;
+    
+}
+
+void ustaw(int t[N][N], int w, int licznik){
+    
+    
+    
+    if(licznik==8){
+        wypisz(t);
+    }
+    else{
+         int zajete[N][N]={};
+        zaznacz_zajete(t,zajete);
+    
+        for(int i=w; i<N; i++){
+            for(int j=0; j<N; j++){
+               if(zajete[i][j]==0){
+                  t[i][j]=2;
+                   ustaw(t,i+1,licznik+1);
+                   t[i][j]=0;
+               } 
+           }
+         }
+    }
+    
+}
+
+
+void hetmany(int t[N][N]){
+    
+    for(int i=0; i<N; i++){
+        t[0][i]=2;                  //2 oznacza, że tam mamy hetmana
+        ustaw(t,1,1);
+        t[0][i]=0;
+    }
+    
+}
+
+
+
+
+
+
+int main(){
+    
+    int t[N][N]={};
+    
+    
+    hetmany(t);
+    
+    
+    
+    return 0;
+}
