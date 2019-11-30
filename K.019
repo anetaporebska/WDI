@@ -1,0 +1,42 @@
+#include <iostream>
+using namespace std;
+
+
+//K.019 Dane są dwie tablice int t1[N] oraz int t2[N] wypełnione liczbami naturalnymi. Elementy z tablic t1 i t2 
+//łączymy w pary (po jednym elemencie z każdej tablicy) tak, aby suma wybranych elementów tablicy t1 była równa sumie
+//wybranych elementów z tablicy t2. Proszę napisać funkcję, która zwróci maksymalną liczbę par, jaką można uzyskać.
+//Do fukcji należy przekazać wyłącznie tablice t1 i t2, funkcja powinna zwrócić maksymalną liczbę par.
+
+//l to jest długość, ile liczb już wzięliśmy
+
+const int N=6;
+
+int pary(int t1[N], int t2[N], int l1, int l2, int i1, int i2, int s1, int s2){
+    
+    int result=0;
+    
+    if(i1==N || i2==N) return result;
+    if(l1==l2 && s1==s2) result=l1;
+    
+    
+    result=max(result,pary(t1,t2,l1+1,l2, i1+1, i2, s1+t1[i1],s2));
+    result=max(result,pary(t1, t2, l1, l2, i1+1, i2, s1, s2));
+    result=max(result, pary(t1,t2, l1, l2+1, i1, i2+1, s1, s2+t2[i2]));
+    result=max(result, pary(t1,t2,l1,l2,i1,i2+1,s1,s2));
+    
+    
+    return result;
+}
+
+
+
+
+int main(){
+    
+    int t1[N]={2,2,2,8,2,3};
+    int t2[N]={2,2,3,2,1,5};
+    cout<<pary(t1,t2,0,0,0,0,0,0);
+    
+    
+    return 0;
+}
