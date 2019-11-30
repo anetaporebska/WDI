@@ -1,0 +1,58 @@
+#include <iostream>
+using namespace std;
+
+
+//K.027 Tablica t[N] jest wypełniona liczbami naturalnymi. Skok z pola i-tego można wykonać na pola o indeksach i+k,
+//gdzie k jest czynnikiem pierwszym t[i] (mniejszym od niej samej). Napisz funkcję, która sprawdza, czy da się przejsc
+//z pola 0 do N-1, jeśli się da, zwraca ilość skoków, jeśli się nie da zwraca -1.
+
+
+const int N=6;
+
+bool pierwsza(int n){
+    
+    if(n==1 || n==0) return false;
+    if(n==2) return true;
+    
+    for(int i=2; i*i<=n; i++){
+        if(n%i==0) return false;
+    }
+    return true;
+}
+
+
+
+int skok(int t[N], int ile, int i){
+    
+    if(i==N-1) return ile;
+    
+    for(int j=2; j<t[i]; j++){
+        if(t[i]%j==0 && pierwsza(j)) return skok(t,ile+1,i+j);
+    }
+    
+    return -1;
+    
+}
+
+
+
+
+
+
+
+int main(){
+    
+
+    int t[N]={9,5,8,7,4,1};
+    
+    cout<<skok(t,0,0);
+    
+    return 0;
+    
+    
+}
+
+
+
+
+
