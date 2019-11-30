@@ -1,0 +1,90 @@
+#include <iostream>
+using namespace std;
+
+
+//K.026 Dana jest tablica int t[N][N] zawierająca liczby naturalne. Dokładnie w jednym z wierszy tablicy znajduje
+//się fragment ciągu Fibonacciego o długości większej niż 2 a mniejszej niż N. Proszę napisać funkcję, która
+//odszukuje ten fragment ciągu i zwróci numer wiersza, w którym się on znajduje.
+
+
+const int N=5;
+
+bool czy_fib(int n, int k){
+    int fib1=1;
+    int fib2=1;
+    int pom;
+    
+    while(n>=fib2){
+        if(n==fib2){
+            if(k==n+fib1) return true;
+        }
+        
+        pom=fib1+fib2;
+        fib1=fib2;
+        fib2=pom;
+        
+    }
+    
+    return false;
+}
+
+
+
+int wiersz(int t[N][N]){
+    int w=-1;
+    
+    for(int i=0; i<N; i++){
+        for(int j=0; j<N-2; j++){
+            int pom=t[i][j]+t[i][j+1];
+            if(pom==t[i][j+2]){
+                if(czy_fib(t[i][j],t[i][j+1])) {w=i; return w;}
+            }
+            
+        }
+    }
+    
+    
+}
+
+
+
+
+
+
+
+int main(){
+    
+    int t[N][N];
+    int licznik=6;
+    
+    for(int i=0; i<N; i++){
+        for(int j=0; j<N; j++){
+            t[i][j]=licznik;
+            licznik++;
+        }
+    }
+    
+    
+    t[2][1]=13;
+    t[2][2]=21;
+    t[2][3]=34;
+    
+    for(int i=0; i<N; i++){
+        for(int j=0; j<N; j++){
+            cout<<t[i][j]<<" ";
+        }
+        cout<<endl;
+    }
+    
+    
+    cout<<wiersz(t);
+    
+    return 0;
+    
+    
+}
+
+
+
+
+
