@@ -1,0 +1,74 @@
+#include <iostream>
+using namespace std;
+
+
+//K.028 Dana jest tablica booli int t[N][N] reprezentująca szachownicę. Pole szachownicy ma wartość true, jeżeli stoi na 
+//nim figura, a false, jeśli jest ono puste. Proszę napisać funkcję, która sprawdza czy istnieje droga  skoczka przemieszczającego się 
+// z wiersza 0 do wiersza N-1. Skoczek może poruszać się tylko po polach pustych. Skoczek w każdym ruchu powienien przybliżać się
+//do N-1 wiersza. Funkcja ma zwrócić najmniejszą możliwą liczbę ruchów. Skoczek może poruszać się z dowolnego pustego pola z wiersza 0.
+//N z zakresu 4..20
+const int N=5;
+
+bool mozliwe(int a, int b, int t[N][N]){
+    return t[a][b]==0 && a>=0 && a<N && b>=0 && b<N;
+}
+
+
+
+
+int skoczek(int t[N][N], int w, int k, int ruch){
+    int a=N,b=N,c=N,d=N;
+    
+    if(w==N-1) {return ruch;}
+    
+    else{
+    
+        if(mozliwe(w+1,k-2,t))  a=skoczek(t,w+1,k-2, ruch+1);
+        if(mozliwe(w+2,k-1,t))  b=skoczek(t,w+2,k-1, ruch+1);
+        if(mozliwe(w+2,k+1,t))  c=skoczek(t,w+2,k+1, ruch+1);
+        if(mozliwe(w+1,k+2,t))  d=skoczek(t,w+1,k+2, ruch+1);
+    }
+    return min(min(a,b),min(c,d));
+}    
+    
+int ile_ruchow(int t[N][N]){    
+    int ile=0;
+    int naj=N;
+    
+    for(int i=0; i<N; i++){
+        if(t[0][i]==0) {
+            ile=skoczek(t,0,i,0);
+            if(ile<naj) naj=ile;
+        }    
+    }
+    
+    
+    
+    return naj;
+    
+}
+
+int main(){
+    
+    int t[N][N]={1,1,0,1,1,
+                1,1,1,1,0,
+                1,1,0,1,1,
+                0,1,1,1,1,
+                1,1,0,1,1};
+    
+    
+    for(int i=0; i<N; i++){
+        for(int j=0; j<N; j++){
+            cout<<t[i][j]<<" ";
+        }
+        cout<<endl;
+    }
+    
+    cout<<ile_ruchow(t);
+    
+    
+    return 0;
+}
+
+
+
