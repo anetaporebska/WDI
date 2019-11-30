@@ -1,5 +1,0 @@
-# depslib dependency file v1.0
-1572070456 source:/home/aneta/Pulpit/cpp/3.10/main.cpp
-	<iostream>
-	<time.h>
-
