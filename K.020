@@ -1,0 +1,90 @@
+#include <iostream>
+using namespace std;
+
+
+//K.020 Dana jest tablica int t[N][N] zawierająca liczby naturalne. Dokładnie w jednym wierszu, 
+//bądź kolumnie znajduje się fragment ciągu arytmetycznego o długości większej niż 2, którego elementy są 
+//liczbami pierwszymi. Proszę napisać funkcję, która zwróci długość tego ciągu.
+
+
+
+const int N=5;
+
+bool pierwsza(int n){
+    
+    if(n==0 || n==1) return false;
+    if(n==2) return true;
+    
+    for(int i=2; i*i<=n; i++){
+        if(n%i==0) return false;
+    }
+    return true;
+}
+
+
+int dlugosc(int t[N][N]){
+    
+    int dl=0;
+    int roznica=0;
+    
+    //sprawdzamy wiersze
+    for(int i=0; i<N; i++){
+        for(int j=0; j<N-1; j++){
+            if(pierwsza(t[i][j]) && pierwsza(t[i][j+1])){
+                roznica=t[i][j]-t[i][j+1];
+                dl=2;
+                for(int k=j+1; k<N-1; k++){
+                    if(t[i][k]-t[i][k+1]==roznica) dl++;
+                    else break;
+                }
+                if(dl>2) return dl;
+            } //sprawdzamy kolumny
+            if(pierwsza(t[j][i]) && pierwsza(t[j+1][i])){
+                roznica=t[j][i]-t[j+1][i];
+                dl=2;
+                for(int k=j+1; k<N-1; k++){
+                    if(t[k][i]-t[k+1][i]==roznica) dl++;
+                    else break;
+                }
+            }
+            if(dl>2) return dl;
+        }
+    }
+    
+    
+   // return 0;
+    
+    
+}
+
+
+
+
+int main(){
+    
+    int t[N][N]={0};
+    t[1][2]=3;
+    t[2][2]=5;
+    t[3][2]=7;
+    
+    for(int i=0; i<N; i++){
+        for(int j=0; j<N; j++){
+            cout<<t[i][j]<<" ";
+        }
+        cout<<endl;
+    }
+    
+    int x=dlugosc(t);
+    cout<<x;
+    
+    
+    return 0;
+}
+    
+
+
+
+
+
+
+
