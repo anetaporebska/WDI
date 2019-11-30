@@ -1,3 +1,4 @@
+
 #include <iostream>
 using namespace std;
 
@@ -8,41 +9,43 @@ using namespace std;
 //jeżeli takie pocięcie nie jest możliwe. 
  
  const int N=9;
- bool podziel(int t[N], int n){
+ 
+ //ile - na ile kawałków chcę podzielić
+ //p   - pozycja na której się aktualnie znajduję w tablicy sumy
+ //p_max - ile miejsc w tablicy sumy mam zarezerwowane
+ //pozycja - gdzie się znajduję w tablicy t
+ //
+ 
+ 
+ 
+bool podziel(int t[N], int ile, int pozycja, int sumy[], int p, int p_max){
+    
+    if(pozycja==N-1){
+        for(int i=0; i<p_max-1; i++){
+            if(!(sumy[i]==sumy[i+1])) return false;
+        }
+        return true;
+    }
+    
+    
+    for(int i=1; i<=N-pozycja-ile+1; i++){            //
+        for(int j=pozycja; j<i+j; j++){
+            sumy[p]+=t[j];
+            return podziel(t,ile-1,j+1,sumy,p+1,p_max);
+        }
+    }
+    
+}
+ 
+ 
+ int kawalki(int t[N]){
      
-     //mamy N-1 przegródek (w tym przykładzie 8)
      
-     //jesli mamy podzielić na 8 sum to możemy użyć 7 przegrodek; n-1 przegródek które można użyć
-     
-     //nie uzyjemy N-n przegródek
-     
-     int sumy[n];
-     for(int i=0; i<n; i++){
-         
+     for(int i=N; i>=2; i--){                   //bedę dzielić tablicę t najpierw na i=N kawałków
+         int sumy[i]={};
+         int p_max=i;
+         if(podziel(t,i,0,sumy,0,p_max)) return i;
      }
-     
-     
-     
-     
-     
- }
- 
- 
- 
- int ile_kawalkow(int t[N]){
-    
-    bool czy_n=false; 
-    for(int i=0; i<N-1; i++){
-        if(t[i]==t[i+1]) czy_n=true;
-        else {czy_n=false; break;}
-    }
-    
-    if(czy_n) return N; 
-     
-    for(int i=N-1; i<=1; i--){
-         if(podziel(t,i)) return i;
-    }
-     
      
      return 0;
      
@@ -50,9 +53,10 @@ using namespace std;
  
  
  
- 
  int main(){
-     int t[N];
+     int t[N]={1,2,3,1,5,2,2,2,6};
+     
+     cout<<kawalki(t);
  
     return 0;
 }
