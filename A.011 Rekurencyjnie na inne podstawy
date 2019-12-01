@@ -1,0 +1,40 @@
+#include <iostream>
+
+void zamiana(int podstawa, int liczba)
+{
+    if(liczba>0)
+    {
+         zamiana(podstawa,liczba/podstawa);
+         if(liczba%podstawa>9)
+         {switch(liczba%podstawa)
+             {
+                 case 10:
+                     std::  cout<<"A";
+                 break;
+                 case 11:
+                     std::   cout<<"B";
+                 break;
+                 case 12:
+                     std::  cout<<"C";
+                 break;
+                 case 13:
+                     std::   cout<<"D";
+                 break;
+                 case 14:
+                     std::   cout<<"E";
+                 break;
+                 case 15:
+                     std::   cout<<"F";
+                 break;
+             }
+         }
+         else
+         std::cout<<liczba%podstawa;
+    }
+}
+int main(){
+    int podstawa=16;
+    int liczba=46514;
+    zamiana(podstawa, liczba);
+
+    return 0;}
