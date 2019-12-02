@@ -1,0 +1,73 @@
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+//6.017 W szachownicy o wymiarach 8x8 każdemu z pól przypisano licbę naturalną. Na ruchy króla nałożono dwa ograniczenia:
+//król może przesunąć się na jedno z 8 sąsiednich pól, jeżeli ostatnia cyfra liczby na polu na którym stoi jest mniejsza od
+//pierwszej cyfry pola docelowego, oraz  w drodze do obranego celu(np.narożnika) król nie może wykonać ruchu, który powoduje
+//oddalenie go od celu. Dana jest globalna tablica int t[8][8] wypełniona liczbami naturalnymi.
+//Lewy górny narożnik ma współrzędne w=0, k=0. Proszę napisać funkcję sprawdzającą czy król może się dostać z pola w,k do prawego
+//dolenego narożnika.
+const int N=3;
+int t[N][N]={11,22,55,
+            4,11,16,    
+            7,4,9};
+
+int ile_cyfr(int n){
+    int ile=0;
+    while(n>0){
+        ile++;
+        n/=10;
+    }
+    
+    return ile;
+}
+
+
+
+bool mozliwe(int a, int nw, int nk){
+    if(nw<N && nk<N){
+        int ost=a%10;
+        int b=t[nw][nk];
+        int pierw=b/pow(10,ile_cyfr(b)-1);
+        if(ost<pierw) return true;
+    }
+    return false;
+}
+
+
+bool krol(int w, int k){
+    
+    if(w==N-1 && k==N-1) return true;
+    bool a, b, c;
+    
+    if(mozliwe(t[w][k],w,k+1)){
+        a=krol(w,k+1);
+    }
+    if(mozliwe(t[w][k],w+1,k)){
+        b=krol(w+1,k);
+    }
+    if(mozliwe(t[w][k],w+1,k+1)){
+        c=krol(w+1,k+1);
+    }
+    
+    return a or b or c;
+    
+}
+
+
+
+
+
+
+int main(){
+    
+    if(krol(0,0)) cout<<"Tak";
+    else cout<<"nien";
+    
+    return 0;
+}
+
+
+
+
