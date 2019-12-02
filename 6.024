@@ -1,0 +1,72 @@
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+//6.024 Napisz procedurę, która jako argument przyjmuje liczbę całkowitą i wypisuje wszystkie co najmniej dwucyfrowe 
+//liczby pierwsze, powstałe przez wykreślenie z liczby pierwotnej co najmniej jednej cyfry.
+
+
+bool pierwsza(int n){
+    if(n==0 || n==1) return false;
+    if(n==2) return true;
+    
+    for(int i=2; i*i<=n; i++){
+        if(n%i==0) return false;
+    }
+    return true;
+}
+
+
+int ile_cyfr(int n){
+    int ile=0;
+    while(n>0){
+        ile++;
+        n/=10;
+    }
+    
+    return ile;
+}
+
+
+
+void wypisz(int n){
+    int a=ile_cyfr(n);
+    
+    if(a>1 && pierwsza(n)) cout<<n<<endl;
+    if(a==1) return;
+    
+    int t[a];
+    int i=a-1;
+    while(n>0){
+        t[i]=n%10;
+        n/=10;
+        i--;
+    }
+    
+    for(int j=0; j<a; j++){
+        int nowa=0;
+        i=0;
+        while(i<a){
+            if(i==j) {i++; continue;}
+            nowa=nowa*10+t[i];
+            i++;
+        }
+        wypisz(nowa);
+        
+    }
+}
+
+
+
+
+
+int main(){
+    
+    wypisz(1873);
+    
+    return 0;
+}
+
+
+
+
