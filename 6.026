@@ -1,0 +1,70 @@
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+//6.026 Do budowy liczby naturalnej reprezentowanej w systemie dwójkowym możemy użyć A cyfr 1 oraz B cyfr 0,
+//gdzie A,B>0. Proszę napisać funkcję, która dla zadanych parametrów A i B zwraca ilość wszyskich możliwych do zbudowania
+//liczb, takich że pierwsza cyfra w systemie dwójkowym (najstarszy bit) jest równa 1, a zbudowana liczba jest złożona.
+//Na przykład dla A=2, B=3 ilość liczb wynosi 3, są to 10010, 10100, 11000
+
+
+
+bool pierwsza(int n){
+    if(n==0 || n==1) return false;
+    if(n==2) return true;
+    
+    for(int i=2; i*i<=n; i++){
+        if(n%i==0) return false;
+    }
+    return true;
+}
+
+int licz(int a, int b, int t[], int N, int i){
+    int licznik=0;
+    if(a==0 && b==0){
+        int n=0;
+        for(int j=0; j<N; j++){
+            n=n*2+t[j];
+        }
+        if(!pierwsza(n)) licznik++;
+    }
+    
+    
+    if(a>0){
+        t[i]=1;
+        licznik+=licz(a-1,b,t,N,i+1);
+        t[i]=0;
+    }
+    if(b>0){
+        licznik+=licz(a,b-1,t,N,i+1);
+    }
+    return licznik;
+    
+}
+
+int ile(int a, int b){
+    int N=a+b;
+    int t[N]={};
+    t[0]=1;
+    
+    return licz(a-1,b,t,N,1);
+}
+
+
+
+
+
+
+
+
+int main(){
+    int a=2;
+    int b=3;
+   
+    cout<<ile(a,b);    
+    return 0;
+}
+
+
+
+
