@@ -1,0 +1,190 @@
+#include <iostream>
+#include <limits.h>
+using namespace std;
+
+//A.013 Przydatne funkcje na kolosa
+
+
+int rewers(int n){
+    
+    int nowa=0;
+    while(n>0){
+        nowa=nowa*10+n%10;
+        n/=10;
+    }
+    return nowa;
+    
+}
+
+
+int rewers_2(int n){
+    int nowa=0;
+    while(n>0){
+        nowa=nowa*2+n%2;
+        n/=2;
+    }
+    return nowa;
+}
+
+
+int rewers_k(int n, int k){         //k-system 
+    int nowa=0;
+    while(n>0){
+        nowa=nowa*k+n%k;
+        n/=k;
+        
+    }
+    return nowa;
+    
+}
+
+
+int potega(int n, int k){
+    int wynik=1;
+    
+    for(int i=1; i<=k; i++){
+        wynik*=n;
+    }
+    return wynik;
+    
+}
+
+
+int ile_cyfr(int n){
+    
+    int ile=0;
+    
+    while(n>0){
+        ile++;
+        n/=10;
+    }
+    return ile;
+    
+}
+
+
+void swap(int &a, int &b){
+    int pom=a;
+    a=b;
+    b=pom;
+}
+
+int zamiana_na_dec(int t[5], int k){               //n- liczba którą mamy, k- sytem w którym ta liczba jest zapisana
+    int wynik=0;
+    
+    for(int i=0; i<5; i++){
+        wynik=wynik*k+t[i];
+    }
+    
+    return wynik;
+}
+
+
+void dec_to_k(int n, int tab[], int k, int &p){      //n- liczba która chcemy zamienic na system k
+    
+    while(n>0){
+        tab[p]=n%k;
+        n/=k;
+        p++;
+    }
+}
+
+int nwd(int a, int b){
+    
+    while(a>0 && b>0){
+        if(a>=b) a-=b;
+        else b-=a;
+    }
+    
+    return a+b;
+}
+
+
+int nww(int a, int b){
+    return a*b/nwd(a,b);
+}
+
+
+void sito_e(int sito[]){
+    
+    for(int i=2; i<100; i++){
+        if(sito[i]==0){
+            for(int k=2*i; k<100; k+=i){
+                sito[k]=1;
+            }
+        }
+    }
+    
+    
+}
+
+
+struct polozenie{
+    int w1;
+    int k1;
+};
+
+struct polozenie gdzie_wieze(polozenie &wieze){
+    wieze.w1=3;
+    wieze.k1=4;
+    
+    
+    return wieze;
+}
+
+int main(){
+    
+    cout<<rewers(678354647)<<endl;
+    cout<<rewers_2(19)<<endl;
+    cout<<rewers_k(19,3)<<endl;
+    cout<<"*******"<<endl;
+    
+    cout<<potega(2,10)<<endl;
+    cout<<ile_cyfr(3456)<<endl;
+    cout<<"*******"<<endl;
+    
+    int a=5;
+    int b=82394;
+    swap(a,b);
+    cout<<a<<" "<<b<<endl;
+    cout<<"*******"<<endl;
+    
+    int t[5]={1,1,0,0,1};       //tyle cyfr danej liczby mamy w tablicy
+    cout<<zamiana_na_dec(t,3)<<endl;
+    
+    
+    int tab[100]={};
+    int p=0;
+    dec_to_k(19,tab,4,p);
+    for(int i=p-1; i>=0; i--){
+        cout<<tab[i];
+    }
+    cout<<endl<<"********"<<endl;
+    cout<<INT_MIN<<endl;          //-2,147,483,648
+    cout<<INT_MAX<<endl;            //2,147,483,647
+    cout<<"*******"<<endl;
+    
+    cout<<nwd(18,24)<<endl;
+    cout<<nww(6,4)<<endl;
+    cout<<"*******"<<endl;
+    
+    
+    int sito[100]={}; //wszyskie liczby pierwsze od 2 do 100;
+    sito_e(sito);
+    for(int i=2; i<100; i++){
+        if(sito[i]==0) cout<<i<<" ";
+    }
+    
+    cout<<endl<<"*******"<<endl;
+    polozenie wieze;
+    wieze.w1=9;
+    wieze.k1=8;
+    cout<<wieze.w1<<" "<<wieze.k1<<endl;
+    gdzie_wieze(wieze);
+    cout<<wieze.w1<<" "<<wieze.k1<<endl;
+    
+    return 0;
+}
+
+
+
