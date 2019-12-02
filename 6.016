@@ -1,0 +1,71 @@
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+//6.016 Dane są dwie liczby naturalne, z których budujemy trzecią liczbę. W budowanej liczbie muszą wystąpić
+//wszystkie cyfry występujące w liczbach wejściowych. Wzajemna kolejność cyfr każdej z liczb wejściowych nadal musi być zachowana
+//Na przykład mając liczby 123 i 75 możemy zbudować liczby 12375, 17523, 75123, 17253 ...
+//Proszę napisać funkcję, która wyznaczy ile liczb pierwszych można zbudować z dwóch zadanych liczb.
+
+
+bool pierwsza(int n){
+    if(n==0 || n==1) return false;
+    if(n==2) return true;
+    for(int i=2; i*i<=n; i++){
+        if(n%i==0) return false;
+    }
+    return true;
+}
+
+int ile_cyfr(int n){
+    int ile=0;
+    
+    while(n>0){
+        ile++;
+        n/=10;
+    }
+    
+    return ile;
+}
+
+
+
+int ile(int a, int b, int c){
+    int licznik=0;
+    if(a==0 && b==0){
+        cout<<c<<endl;
+        if(pierwsza(c)) licznik++; 
+    }
+    
+    int ile_a=ile_cyfr(a);
+    int ile_b=ile_cyfr(b);
+    int da=pow(10,ile_a-1);
+    int db=pow(10,ile_b-1);
+    
+    if(a>0) licznik+=ile(a%da,b,c*10+a/pow(10,ile_a-1));
+    if(b>0) licznik+=ile(a,b%db, c*10+b/pow(10, ile_b-1));
+    
+    
+    
+    
+    return licznik;
+}
+
+
+
+
+
+
+int main(){
+    
+    int a=13;
+    int b=12;
+    
+    cout<<ile(a,b,0);
+    
+    return 0;
+}
+
+
+
+
