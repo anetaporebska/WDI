@@ -1,0 +1,71 @@
+
+#include <iostream>
+using namespace std;
+
+
+//A.015  Linearyzacja tablicy.
+//przydatna jak chcę szukać dwóch elementów tablicy o zadanym iloczynie na przykkład
+//nie mam wtedy czterech zagnieżdżonych pętli tylko dwie
+
+const int N=5;
+
+void line(int t[N][N]){
+    for(int i=0; i<N*N; i++){
+        cout<<t[i/N][i%N]<<" ";
+    }
+}
+
+int iloczyn(int szukany, int t[N][N]){
+    int licznik=0;
+    
+    for(int i=0; i<N*N; i++){
+        int p=t[i/N][i%N];
+        for(int j=i+1; j<N*N; j++){
+            int q=t[j/N][j%N];
+            if(p*q==szukany) licznik++;
+        }
+    }
+    return licznik;
+    
+}
+
+
+
+
+
+
+int main(){
+    
+    int t[N][N];
+    int licznik=1;
+    for(int i=0; i<N; i++){
+        for(int j=0; j<N; j++){
+            t[i][j]=licznik++;
+        }
+    }
+    
+    for(int i=0; i<N; i++){
+        for(int j=0; j<N; j++){
+            cout<<t[i][j]<<" ";
+        }
+        cout<<endl;
+    }
+    cout<<"**********"<<endl;
+    line(t);
+    
+    cout<<endl;
+    
+    cout<<iloczyn(12,t);
+    
+    
+    
+    return 0;
+}
+
+
+
+
+
+
+
+
