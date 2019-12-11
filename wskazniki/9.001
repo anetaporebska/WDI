@@ -1,0 +1,126 @@
+
+
+#include <iostream>
+
+using namespace std;
+
+
+//9.001 Zaimplementuj zbiór mnogościowy liczb naturalnych korzystając ze struktury listy.
+//-czy element należy do zbioru
+//-dodanie elementu do zbioru
+//-usunięcie elementu ze zbioru
+
+
+struct node{
+    int w;
+    node *next;
+};
+
+
+//czy element należy do zbioru
+bool find(node *head, int n){
+    
+    if(head==NULL){ return false;}
+    if(head->next==NULL){ return false;}
+    
+    node *p=head;
+    
+    while(p->next!=NULL){
+        p=p->next;
+        if(p->w==n) return true;
+    }
+    
+    return false;
+    
+    
+    
+}
+
+
+//dodanie elementu do zbioru
+void insert(node *&head, int n){            //dodaję na początku listy
+    
+    if(head==NULL){         //lista pusta
+        node *p=new node;
+        head->next=p;
+        p->w=n;
+        p->next=NULL;
+        return;
+    }
+    
+    if(head->next==NULL){
+        node *p=new node;
+        p->next=head->next;
+        head->next=p;
+        p->w=n;
+        return;
+        
+    }
+    
+    node *dodaj=new node;
+    dodaj->w=n;
+    dodaj->next=head->next;
+    head->next=dodaj;
+    
+}
+
+//usunięcie elementu ze zbioru
+void del(node *&head, int n){
+    if(head==NULL) return;
+    if(head->next==NULL) return;
+    
+    
+    
+    node *p=head;
+    node *prev=NULL;
+    
+    while(p->next!=NULL){
+        prev=p;
+        p=p->next;
+        if(p->w==n){
+            prev->next=p->next;
+            delete p;
+            return;
+        }
+    }
+    
+    
+    
+    
+    
+}
+
+
+
+
+
+int main()
+{
+    node *head=new node;
+   // head->next=NULL;
+    
+    insert(head,2);
+    insert(head,4);
+    insert(head,27);
+        
+        
+    del(head,4);
+    node *p=new node;
+    p=head;
+    
+    
+    while(p->next!=NULL){
+        
+        p=p->next;
+        cout<<p->w<<endl;
+    }
+    
+    
+    if(find(head,2)) cout<<"jezd";
+    else cout<<"nie";
+    
+
+    
+
+    return 0;
+}
