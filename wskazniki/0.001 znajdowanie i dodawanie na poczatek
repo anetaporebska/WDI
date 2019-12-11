@@ -1,0 +1,65 @@
+
+#include <iostream>
+
+using namespace std;
+
+struct node{
+    int w;
+    node *next;
+};
+
+//Znajdz element w liscie jednokierunkowej
+bool find (node *head, int val){
+    
+    while(head!=NULL){
+        if(head->w==val) return true;
+        head=head->next;
+    }
+    
+    return false;
+}
+
+
+//Wstaw element do listy jednokierunkowej na początek
+
+void insert (node *&head, int val){
+    node *a=new node;
+    a->w=val;
+    a->next=head;
+    head=a;
+    
+}
+
+
+int main()
+{
+    
+    
+    node *head=new node;
+    node *element=new node;
+    head->next=element;
+    element->next=NULL;
+    element->w=0;
+    
+    insert(head,2);
+    insert(head,4);
+    insert(head,6);
+    
+    
+    
+    node *tmp=head;
+    
+    while(tmp->next!=NULL){
+        cout<<tmp->w<<endl;
+        tmp=tmp->next;
+    }
+    
+    
+    if(find(head,6)) cout<<"jest";
+    else cout<<"nie ma";
+
+    
+    
+    
+    return 0;
+}
