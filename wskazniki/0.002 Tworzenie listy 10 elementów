@@ -1,0 +1,75 @@
+
+
+#include <iostream>
+
+using namespace std;
+
+
+//Funkcja tworząca listę 10 elementów.
+
+//Dodawanie elementu na koniec listy
+//1. Tworzymy nowy element. W polu next umieszczamy adres zero (ostatni element listy nie posiada następinika)
+//2. Jeśli lista jest pusta, to head zawiera adres NULL; adres nowego elementu umieszczzamy w zmiennej head
+//3. Jeśli lista zawiera elementy, to przechodzimy do ostatniego z nich
+//4. w polu next ostatniego elementu umieszczamy adres nowego elementu. W ten sposób nowy element staje ostatniego
+//częścią listy i jest umieszony na jej końcu
+
+
+
+struct node{
+    int w;
+    node *next;
+};
+
+
+void insert_last (node *head, int x){
+    
+    node *r=new node;       //to jest nasz nowy element
+    r->w=x;
+    r->next=NULL;
+    
+    node *p=head;
+    
+    if(p){
+        while(p->next) p=p->next;
+        p->next=r;
+    }
+    else head =r;
+    
+    
+}
+
+
+void create(node *&head){
+    
+    for(int i=1; i<=10; i++){
+        insert_last(head,i);
+    }
+    
+}
+
+
+
+
+int main()
+{
+    node *head=new node;
+    head->next=NULL;
+    
+    create(head);
+    
+    
+    
+    node *tmp=head->next;
+    //Wypisywanie wszyskich elementów listy
+    cout<<tmp->w<<endl;
+    while(tmp->next!=NULL){
+        tmp=tmp->next;
+        cout<<tmp->w<<endl;
+    }
+    
+    
+    
+    
+    return 0;
+}
