@@ -1,0 +1,162 @@
+
+
+#include <iostream>
+
+using namespace std;
+
+//9.002 Zastosowania listy do implementacji tablicy rzadkiej. Proszę napisać trzy funckje:
+//- void init(node *&tab) - inicjalizująca tablicę
+//- int value(node *tab, int n) - zwracającą wartość elementu o indeksie node
+//- void set(node *&tab, int n, int value) - podstawiająca wartość value pod indeks n
+
+
+
+const int N=100;
+
+struct node{
+    int ind;
+    int val;
+    node *next;
+};
+
+//void init(node *&tab){
+    
+    
+void create_new_node(node *&tab, int wartosc, int indeks){
+    
+    node *temp=tab;
+    
+    if(temp==NULL){                 //lista pusta
+        temp->val=wartosc;
+        temp->ind=indeks;
+        temp->next=NULL;
+        tab=temp;
+    }
+    else if(temp->next==NULL){          //lista jednoelementowa
+        node *dodaj=new node;
+        dodaj->val=wartosc;
+        dodaj->ind=indeks;
+        dodaj->next=NULL;
+        temp->next=dodaj;
+    }
+    else{
+        while(temp->next!=NULL){
+            temp=temp->next;
+        }
+        node *dodaj=new node;
+        dodaj->val=wartosc;
+        dodaj->ind=indeks;
+        dodaj->next=NULL;
+        temp->next=dodaj;
+    }
+}    
+
+
+void create(int tablica[N], node *&tab){
+    
+    for(int i=0; i<N; i++){
+        if(tablica[i]!=0){
+            create_new_node(tab, tablica[i],i);
+        }
+    }
+}
+
+
+
+
+int value (node *tab, int ind){
+    
+    while(tab!=NULL && tab->ind<ind){
+        tab=tab->next;
+    }   
+    if(tab==NULL) return 0;
+    
+    if(tab->ind==ind) return tab->val;
+    else return 0;
+
+}
+
+
+void set(node *&tab, int n, int value){
+    
+    node *t=tab;
+    
+    while(t->next!=NULL){           //gdy w liscie była już jakaś wartość różna od 0 pod indeksem n
+        if(t->ind==n){
+            t->val=value;
+            return;
+        }
+        t=t->next;
+    }
+    
+    t=tab;
+    node *prev=NULL;
+    
+    while(t->ind<n){
+          prev=t;
+          t=t->next;
+    }
+    
+    node *dodaj=new node;
+    
+    dodaj->val=value;
+    dodaj->ind=n;
+    dodaj->next=t;
+    prev->next=dodaj;
+    
+}
+
+
+
+int main()
+{
+    int tablica[N];
+    //te trzy fory to torzenie tablicy z której później wyciągnę niezerowe elementy
+    
+    for(int i=0; i<N; i++){
+        tablica[i]=0;
+    }
+    
+    for(int i=6; i<N; i+=8){
+        tablica[i]=i/4+5;
+    }
+    
+    for(int i=0; i<N; i++){
+        cout<<tablica[i]<<" ";
+    }
+    
+    //
+    cout<<endl;
+    node *tab=new node;
+    
+    create(tablica, tab);
+    
+    node *p=tab;
+    
+    while(p->next!=NULL){
+       p=p->next;
+        cout<<p->val<<" : ";
+    }
+    
+    
+    cout<<endl;
+    
+    cout<<value(tab,13);
+    cout<<endl;
+    set(tab,10,99);
+    
+    
+    node *s=tab;
+    
+    while(s->next!=NULL){
+       s=s->next;
+        cout<<s->val<<" : ";
+    }
+    
+    
+    
+    
+    
+
+    return 0;
+}
