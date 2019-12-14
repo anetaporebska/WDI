@@ -1,0 +1,99 @@
+#include <iostream>
+
+using namespace std;
+
+
+
+//D.003 Dana jest niepusta lista, proszę napisać funkcję usuwającą co drugi element listy. Do funkcji należy przekazać
+//wskazanie na pierwszy element listy.
+
+struct node{
+    int w;
+    node *next;
+};
+
+void insert_first(node *&head, int wart){
+    
+    if(head==NULL){
+        node *dodaj=new node;
+        dodaj->w=wart;
+        dodaj->next=NULL;
+        head=dodaj;
+        return;
+    }
+    
+    node *dodaj=new node;
+    dodaj->w=wart;
+    dodaj->next=head;
+    head=dodaj;
+}
+
+void create(node *&head){
+    
+    for(int i=1; i<=11; i++){
+        insert_first(head, 12-i);
+    }
+    
+}
+
+
+void delete_2(node *&head){
+    
+    node *tmp=head;
+    node *lacz=head;        //łącz
+    node *prev=NULL;
+    
+    while(lacz->next!=NULL && lacz->next->next!=NULL){
+        
+        prev=lacz;
+        tmp=lacz->next;
+        lacz=tmp->next;
+        
+        prev->next=lacz;
+        delete tmp;
+        
+    }
+    
+    if(lacz->next!=NULL){
+        tmp=lacz->next;
+        delete tmp;
+    }
+    
+    lacz->next=NULL;
+}
+
+
+int main(){
+    
+    node *head=NULL;
+    
+    create(head);
+   delete_2(head);
+    
+    
+    
+    
+    
+    node *tmp=head;
+    cout<<tmp->w<<endl;
+    while(tmp->next!=NULL){
+        tmp=tmp->next;
+        cout<<tmp->w<<endl;
+    }
+    
+    
+    
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
