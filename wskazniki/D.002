@@ -1,0 +1,95 @@
+#include <iostream>
+
+using namespace std;
+
+
+
+//D.002 Proszę napisać funkcję usuwającą ostatni element listy. Do funkcji należy przekazać wskazanie na pierwszy element listy.
+
+struct node{
+    int w;
+    node *next;
+};
+
+void insert_first(node *&head, int wart){
+    
+    if(head==NULL){
+        node *dodaj=new node;
+        dodaj->w=wart;
+        dodaj->next=NULL;
+        head=dodaj;
+        return;
+    }
+    
+    node *dodaj=new node;
+    dodaj->w=wart;
+    dodaj->next=head;
+    head=dodaj;
+}
+
+void create(node *&head){
+    
+    for(int i=1; i<=10; i++){
+        insert_first(head, i+i*6);
+    }
+    
+}
+
+
+void delete_last(node *&head){
+    if(head==NULL) return;
+    
+    if(head->next==NULL){
+        head==NULL;
+        return;
+    }
+    
+    node *prev=NULL;
+    node *p=head;
+    
+    
+    while(p->next!=NULL){
+        prev=p;
+        p=p->next;
+    }
+    
+    prev->next=NULL;
+    delete p;
+    
+} 
+    
+
+
+
+int main(){
+    
+    node *head=NULL;
+    
+    create(head);
+    delete_last(head);
+    
+    
+    node *tmp=head;
+    
+    
+    while(tmp->next!=NULL){
+        tmp=tmp->next;
+        cout<<tmp->w<<endl;
+    }
+    
+    
+    
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
