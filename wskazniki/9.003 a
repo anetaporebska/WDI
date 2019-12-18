@@ -1,0 +1,153 @@
+#include <iostream>
+
+using namespace std;
+
+
+
+//9.003 Proszę napisać funkcję scajalącą dwie posortowane listy w jedną posortowaną listę. Do  funkcji należy przekazać wskaźnika na 
+//pierwsze elementy obu list, funkcja powinna zwrócić wskazanie do scalonej listy.
+//-funkcja iteracyjna
+//-funkcja rekurencyjna
+
+struct node{
+    int w;
+    node *next;
+};
+
+void insert_first(node *&head, int wart){
+    
+    if(head==NULL){
+        node *dodaj=new node;
+        dodaj->w=wart;
+        dodaj->next=NULL;
+        head=dodaj;
+        return;
+    }
+    
+    node *dodaj=new node;
+    dodaj->w=wart;
+    dodaj->next=head;
+    head=dodaj;
+}
+
+void create(node *&head, int wart){
+    
+    for(int i=11; i>0; i--){
+        insert_first(head, 2*i+wart);
+    }
+    
+}
+
+
+
+void nowapol(node *fir, node *sec){
+    //edgecase: jedna jest pusta, a druga nie; obie są puste
+    
+    node *nowa=new node;            //to musi być nasze wskazanie na pierwszy element listy
+    
+    //muszę tu przeprowadzić całą operację dla pierwszego elementu:
+    
+    if(fir!=NULL && sec!=NULL){
+        if(fir->w<sec->w){
+            nowa->w=fir->w;
+            fir=fir->next;
+        }
+        else{
+            nowa->w=sec->w;
+            sec=sec->next;
+        }
+    }
+    
+    node *tmp=new node;
+    tmp->next=NULL;
+    nowa->next=tmp;
+    
+    
+    while(fir!=NULL || sec!=NULL){
+        
+        if(fir!=NULL && sec!=NULL){
+            if(fir->w<sec->w){
+                tmp->w=fir->w;
+                fir=fir->next;
+                node *pom=new node;
+                pom->next=NULL;
+                tmp->next=pom;
+                tmp=pom;
+            }
+            else{
+                tmp->w=sec->w;
+                sec=sec->next;
+                node *pom=new node;
+                pom->next=NULL;
+                tmp->next=pom;
+                tmp=pom;
+            }
+        }
+        
+        
+        
+    }
+    
+    node *k=nowa;
+    
+    while(k->next!=NULL){
+        cout<<k->w<<" ";
+        k=k->next;
+    }
+    
+    
+    
+    
+    
+    //return nowa;
+    
+}
+
+
+
+
+
+int main(){
+    
+ 
+    node *fir=new node;
+    node *sec=new node;
+    
+    
+    create(fir,6);
+    create(sec,7);
+    
+    node *p=fir;
+    
+    while(p->next!=NULL){
+        cout<<p->w<<" ";
+        p=p->next;
+    }
+    
+    cout<<endl;
+    
+    node *t=sec;
+    
+    while(t->next!=NULL){
+        cout<<t->w<<" ";
+        t=t->next;
+    }
+    
+    cout<<endl;
+    //node *polacz=
+    nowapol(fir,sec);
+    
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
