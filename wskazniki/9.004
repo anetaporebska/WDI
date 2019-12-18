@@ -1,0 +1,108 @@
+#include <iostream>
+
+using namespace std;
+
+
+
+//9.004 Proszę napisać funkcję, która dla podanej listy odwraca kolejność jej elementów.
+
+struct node{
+    int w;
+    node *next;
+};
+
+void insert_first(node *&head, int wart){
+    
+    if(head==NULL){
+        node *dodaj=new node;
+        dodaj->w=wart;
+        dodaj->next=NULL;
+        head=dodaj;
+        return;
+    }
+    
+    node *dodaj=new node;
+    dodaj->w=wart;
+    dodaj->next=head;
+    head=dodaj;
+}
+
+void create(node *&head){
+    
+    for(int i=1; i<=11; i++){
+        insert_first(head, 12-i);
+    }
+    
+}
+
+void reverse(node *curr, node *prev, node *&head){
+    if(curr->next==NULL){
+        cur->next=prev;
+        head=curr;
+    }
+    else{
+        reverse(curr->next, curr, head);
+        cur->next=prev;
+    }
+    
+}
+
+node *rev1(node *head){
+    if(head==NULL) return NULL;
+    reverse(head,NULL,head);
+    return head;
+}
+
+node *rev2(node *head){
+    node *res=NULL;
+    
+    while(head!=NULL){
+        node *tmp=head->next;
+        head->next=res;
+        res=head;
+        head=tmp;
+    }
+    
+    return res;
+}
+
+
+node *rev3(node *head, node *result=NULL){
+    if(head==NULL) return result;
+    
+    node *tmp=head->next;
+    head->next=result;
+    result=head;
+    head=tmp;
+    
+    return reverse(head,result);
+
+}
+
+
+
+
+
+
+
+
+int main(){
+    
+ 
+    
+    
+    
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
