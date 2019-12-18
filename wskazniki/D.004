@@ -1,0 +1,133 @@
+#include <iostream>
+using namespace std;
+
+
+//D.004 Dana jest niepusta lista reprezentująca liczbę naturalną. Kolejne elementy listy przechowują kolejne cyfry.
+//Proszę napisać funkcję zwiększającą taką liczbę o jeden.
+
+
+struct node{
+    int w;
+    node *next;
+};
+
+void insert_first(node *&head, int wart){
+    
+    if(head==NULL){
+        node *dodaj=new node;
+        dodaj->w=wart;
+        dodaj->next=NULL;
+        head=dodaj;
+        return;
+    }
+    
+    node *dodaj=new node;
+    dodaj->w=wart;
+    dodaj->next=head;
+    head=dodaj;
+}
+
+void create(node *&head){
+    
+    for(int i=9; i>0; i--){
+        if(i==2) {insert_first(head,8); continue;}
+        insert_first(head,9);
+    }
+    
+}
+
+
+
+node *poprzedni(node *&head, node *last){
+    
+    node *d=head;
+    
+    while(d->next!=last){
+        d=d->next;
+    }
+    
+    return d;
+}
+
+
+
+void add(node *&head){
+    
+    node *t=head;
+    node *prev=NULL;
+    
+    while(t->next!=NULL){
+        prev=t;
+        t=t->next;
+    }
+    
+    int wyn=t->w+1;
+    t->w=wyn%10;
+    int reszta=wyn/10;
+    
+    while(reszta>0){
+        wyn=prev->w+reszta;
+        prev->w=wyn%10;
+        reszta=wyn/10;
+        
+        prev=poprzedni(head,prev);
+        if(prev==head && reszta>0){
+            wyn=prev->w+reszta;
+            prev->w=wyn%10;
+            reszta=wyn/10;
+            node *nowy=new node;
+            nowy->next=head;
+            nowy->w=reszta;
+            reszta=0;
+            head=nowy;
+        }
+    }
+    
+}
+
+
+
+
+int main(){
+    
+    node *head=NULL;
+    
+    create(head);
+    
+    node *pom=head;
+    
+    
+    while(pom!=NULL){
+        cout<<pom->w<<" ";
+        pom=pom->next;
+    }
+    
+    cout<<endl;
+    add(head);
+    
+    node *p=head;
+    
+    while(p!=NULL){
+        cout<<p->w<<" ";
+        p=p->next;
+    }
+    
+    
+    
+    
+    
+    return 0;
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
