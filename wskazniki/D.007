@@ -1,0 +1,35 @@
+#include <iostream>
+
+using namespace std;
+
+
+//D.007  Zbiór mnogościowy zawierający napisy jest reprezentowany w postaci jednokierunkowej listy. Napisy w łańcuchu są uporządkowane
+//w porządku leksykograficznym. Proszę napisać stosowne definicje typów oraz funkcje dodającą napis do zbioru. Do funkcji należy 
+//przekazać wskaźnik do listy oraz wstawiany napis, funkcja powinna zwrócić wartość logiczną wskazującą, czy w wyniku opreracji moc zbioru 
+//uległa  zmianie.
+
+struct wyraz{
+    string nap;
+    wyraz *next;
+};
+
+
+
+int main(){
+    
+    
+  
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
