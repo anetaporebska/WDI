@@ -1,0 +1,101 @@
+#include <iostream>
+#include <time.h>
+using namespace std;
+
+
+//D.009 Proszę napisać funkcję, otrzymującą jako parametr wskaźnik na pierwszy element listy o wartościach typu int,
+//usuwającą wszystkie elementy, których wartość jest mniejsza od wartości bezpośrednio poprzedzających je elementów.
+
+struct node{
+    int w;
+    node *next;
+};
+
+
+void insert_first(node *&head, int wart){
+    
+    if(head==NULL){
+        node *dodaj=new node;
+        dodaj->w=wart;
+        dodaj->next=NULL;
+        head=dodaj;
+        return;
+    }
+    
+    node *dodaj=new node;
+    dodaj->w=wart;
+    dodaj->next=head;
+    head=dodaj;
+}
+
+void create(node *&head, int dlugosc){
+    
+    srand(time(NULL));
+    
+    
+    for(int i=10+dlugosc; i>10; i--){
+        int w=rand()%20+1;
+        insert_first(head,w);
+    }
+    
+}
+
+
+void usun(node *&head){
+    
+    node *h=head;
+    node *prev=NULL;
+    
+    int wart;
+    
+    while(h->next!=NULL){
+        prev=h;
+        h=h->next;
+        wart=prev->w;
+        while(wart>h->w && h->next!=NULL){
+            prev->next=h->next;
+            node *tmp=h;
+            h=h->next;
+            wart=tmp->w;
+            delete tmp;
+        }
+    }
+    
+}
+
+
+
+
+
+int main(){
+    
+    
+    node *head=NULL;
+   
+    create(head,10);
+    
+    node *h=head;
+    
+    while(h!=NULL){
+        cout<<h->w<<" ";
+        h=h->next;
+    }
+    cout<<endl;
+    
+    
+    usun(head);
+    
+    node *t=head;
+    while(t!=NULL){
+        cout<<t->w<<" ";
+        t=t->next;
+    }
+    
+    
+    
+    return 0;
+}
+
+
+
+
