@@ -1,0 +1,120 @@
+#include <iostream>
+using namespace std;
+
+
+//D.006 Lista zawiera niepowtarzające się elementy. Proszę napisać funkcję, do której przekazujemy wskaźnik na początek oraz
+//wartość klucza. Jeżeli element o takim kluczu występuje w liście należy do usunąć z listy. Jeżeli elementu o zadanym kluczu
+//brak w liście należy element o takim kluczu wstawić do listy.
+
+struct node{
+    int w;
+    node *next;
+};
+
+
+void insert_first(node *&head, int wart){
+    
+    if(head==NULL){
+        node *dodaj=new node;
+        dodaj->w=wart;
+        dodaj->next=NULL;
+        head=dodaj;
+        return;
+    }
+    
+    node *dodaj=new node;
+    dodaj->w=wart;
+    dodaj->next=head;
+    head=dodaj;
+}
+
+void create(node *&head, int wart, int dlugosc){
+    
+    for(int i=10+dlugosc; i>10; i--){
+        insert_first(head,i+wart);
+    }
+    
+}
+
+bool czy_jest(node *head, int szukana){
+    
+    if(head==NULL){
+        return false;
+    }
+    
+    while(head!=NULL){
+        if(head->w==szukana) return true;
+        head=head->next;
+    }
+    
+    return false;
+    
+}
+
+
+
+void klucz(node *&head, int k){
+    
+    if(czy_jest(head,k)){
+        node *curr=head;
+        node *prev=NULL;
+        if(head->w==k){
+            head=head->next;
+            delete curr;
+            return;
+        }
+        
+        while(curr!=NULL){
+            prev=curr;
+            curr=curr->next;
+            if(curr->w==k) break;
+        }
+        
+        prev->next=curr->next;
+        delete curr;
+    }
+    else{
+        node *wstaw=new node;
+        wstaw->w=k;
+        wstaw->next=head;
+        head=wstaw;
+    }
+    
+    
+}
+
+
+
+
+int main(){
+    
+    
+    node *head=NULL;
+   
+    create(head,50,10);
+    
+    node *h=head;
+    
+    while(h!=NULL){
+        cout<<h->w<<" ";
+        h=h->next;
+    }
+    cout<<endl;
+    
+    
+    klucz(head,61);
+    
+    node *t=head;
+    while(t!=NULL){
+        cout<<t->w<<" ";
+        t=t->next;
+    }
+    
+    
+    
+    return 0;
+}
+
+
+
+
