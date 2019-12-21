@@ -1,0 +1,160 @@
+#include <iostream>
+using namespace std;
+
+
+//D.005 Liczby naturalne są reprezentowane jak w poprzednim zadaniu. Proszę napisać funkcję dodającą dwie takie liczby.
+//W wyniku dodawania powinna powstać nowa lista.
+
+struct node{
+    int w;
+    node *next;
+};
+
+
+void insert_first(node *&head, int wart){
+    
+    if(head==NULL){
+        node *dodaj=new node;
+        dodaj->w=wart;
+        dodaj->next=NULL;
+        head=dodaj;
+        return;
+    }
+    
+    node *dodaj=new node;
+    dodaj->w=wart;
+    dodaj->next=head;
+    head=dodaj;
+}
+
+void create(node *&head, int wart, int dlugosc){
+    
+    for(int i=10+dlugosc; i>10; i--){
+        insert_first(head,(i+wart)%10);
+    }
+    
+}
+
+node *poprzedni(node *head, node *prev){
+    node *d=head;
+    
+    while(d->next!=prev){
+        d=d->next;
+    }
+    
+    return d;
+}
+
+
+
+
+void sum(node *head1, node *head2, node *&suma){
+    
+    node *prev1=NULL;
+    node *prev2=NULL;
+    
+    
+    int reszta=0;
+    
+    //dla ostaniego elementu
+    node *nowy=new node;
+    prev1=poprzedni(head1,prev1);
+    prev2=poprzedni(head2,prev2);
+    int w=prev1->w+prev2->w+reszta;
+    nowy->w=w%10;
+    reszta=w/10;
+    node *p=nowy;
+    
+    
+    while(prev1!=head1 && prev2!=head2){
+        node *dod=new node;
+        prev1=poprzedni(head1,prev1);
+        prev2=poprzedni(head2,prev2);
+        int w=prev1->w+prev2->w+reszta;
+        dod->w=w%10;
+        reszta=w/10;
+        dod->next=p;
+        p=dod;
+    }
+    
+    while(prev1!=head1){
+        node *dod=new node;
+        prev1=poprzedni(head1,prev1);
+        int w=prev1->w+reszta;
+        dod->w=w%10;
+        reszta=w/10;
+        dod->next=p;
+        p=dod;
+    }
+    
+    while(prev2!=head2){
+        node *dod=new node;
+        prev2=poprzedni(head2,prev2);
+        int w=prev2->w+reszta;
+        dod->w=w%10;
+        reszta=w/10;
+        dod->next=p;
+        p=dod;
+    }
+    
+    
+    while(reszta>0){
+        node *dod=new node;
+        dod->w=reszta%10;
+        reszta=reszta/10;
+        dod->next=p;
+        p=dod;
+    }
+    
+    
+    suma=p;
+   
+}
+
+
+
+
+int main(){
+    
+    
+    node *head1=NULL;
+    node *head2=NULL;
+    
+    create(head1,4,6);
+    create(head2,5,10);
+    
+    
+    node *h1=head1;
+    
+    while(h1!=NULL){
+        cout<<h1->w<<" ";
+        h1=h1->next;
+    }
+    
+    cout<<endl;
+    node *h2=head2;
+    while(h2!=NULL){
+        cout<<h2->w<<" ";
+        h2=h2->next;
+    }
+    
+    node *suma=new node;
+    //suma=NULL;
+    
+    sum(head1,head2,suma);
+    
+    
+    cout<<endl;
+    node *s=suma;
+    while(s!=NULL){
+        cout<<s->w<<" ";
+        s=s->next;
+    }
+    
+    
+    return 0;
+}
+
+
+
+
