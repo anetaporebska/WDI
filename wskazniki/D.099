@@ -1,0 +1,110 @@
+#include <time.h>
+#include <iostream>
+using namespace std;
+
+
+//D.099 Dana jest lista, ktora zakończona jest cyklem. Napisać funkcję, która zwraca wskaźnik do ostatniego elementu przed cyklem.
+
+struct node{
+    int w;
+    node *next;
+};
+
+void dodaj(node *&head, int wart){
+
+    node *h=new node;
+    h->w=wart;
+    h->next=head;
+    head=h;
+    
+}
+
+
+
+node * ile(node *head){
+    int licz=0;
+    
+    
+    node *f=head;
+    node *s=head;
+    
+    while(1){
+        f=f->next->next;
+        s=s->next;
+        
+        if(f==s){
+            node *pocz=f;
+            node *l=f->next;
+            licz++;
+            while(l!=pocz){
+                licz++;
+                l=l->next;
+            }
+            cout<<licz<<endl;
+            
+            int licznik=0;
+            node *el=head;
+            node *res=head;
+            node *prev=NULL;
+            while(1){
+                el=res;
+                for(int i=1; i<=licz; i++){
+                    el=el->next;
+                }
+                
+                
+                if(el==res) return prev;
+                prev=res;
+                res=res->next;
+                
+                 licznik++;           
+                
+            }
+            
+            
+        }
+        
+        
+    }
+    
+}
+
+
+
+
+
+
+int main(){
+    
+    node *head=NULL;
+    
+    
+    for(int i=1; i<=56; i++){
+        dodaj(head,i);
+    }
+    
+    node *h=head;
+    node *p=NULL;
+    
+    while(h!=NULL){
+        cout<<h->w<<" ";
+        p=h;
+        h=h->next;
+    }
+    cout<<endl;
+    
+    p->next=head->next->next->next->next;
+    
+    
+    
+    cout<<ile(head)->w;
+    
+    
+    
+    return 0;
+}
+
+
+
+
+
