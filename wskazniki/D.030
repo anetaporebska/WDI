@@ -1,0 +1,163 @@
+#include <time.h>
+#include <iostream>
+using namespace std;
+
+
+//D.030 Proszę napisać funkcję, która usuwa z listy cyklicznej elementy, których klucz występuje dokładnie k razy.
+//Do funkcji neleży przekazać wskazanie na jeden z elementów listy, oraz liczbę k. Funkcja powinna zwrócić informację, 
+//czy usunięto jakieś elementy z listy.
+
+struct node{
+    int w;
+    node *next;
+};
+
+void dodaj(node *&head, int wart){
+
+    node *h=new node;
+    h->w=wart;
+    h->next=head;
+    head=h;
+    
+}
+
+
+void usun_o_wartosci(node *&head, int wart){
+    
+    node *h=head;
+    
+    node *ost=head;
+    
+    while(ost->next!=head){
+        ost=ost->next;
+    }
+    
+    while(head->w==wart){
+        head=head->next;
+        delete h;
+        ost->next=head;
+        h=head;
+    }
+    
+   // head=ost->next;
+    
+    h=head;
+    node *prev=NULL;
+    bool pierwszy=true;
+    
+    while(h!=head || pierwszy){
+        prev=h;
+        h=h->next;
+        if(h->w==wart){
+            prev->next=h->next;
+            node *tmp=h;
+            delete tmp;
+            h=h->next;
+        }
+        pierwszy=false;
+    }
+    
+    
+    
+}
+
+int dlugosc_cyklu(node *head){
+    
+    int ile=1;
+    node *h=head->next;
+    
+    while(h!=head){
+        ile++;
+        h=h->next;
+    }
+    
+    return ile;
+    
+}
+
+
+
+
+void deletek(node *&head, int k){
+    
+    node *h=head;
+    node *p=head;
+    node *prev=NULL;
+    int i=0;
+    
+    int dl=dlugosc_cyklu(head);
+    cout<<"jaki dlugi: "<<dl<<endl<<endl;
+    
+    for(int j=1; j<=dl; j++){
+        int sz=p->w;
+        prev=p;
+        p=p->next;
+        i=1;
+        h=p;
+        while(h!=prev){
+            if(h->w==sz) i++;
+            h=h->next;
+        }
+        cout<<sz<<": "<<i<<endl;
+        
+        if(i==k){
+            usun_o_wartosci(head,sz);
+            j+=k-1;
+        }
+        
+        
+    }
+    
+    
+    
+    
+}
+
+
+
+
+
+
+int main(){
+    
+    node *head=NULL;
+    srand(time(NULL));
+    
+    for(int i=1; i<=15; i++){
+        int j=rand()%10+1;
+        dodaj(head,j);
+    }
+    
+    node *h=head;
+    node *p=NULL;
+    
+    while(h!=NULL){
+        cout<<h->w<<" ";
+        p=h;
+        h=h->next;
+    }
+    cout<<endl;
+    p->next=head;
+    
+    deletek(head,2);
+    
+    //cout<<dlugosc_cyklu(head)<<endl;
+   // usun_o_wartosci(head,4);
+    
+    
+    node *t=head;
+    
+    do{
+        cout<<t->w<<" ";
+        t=t->next;
+    }while(t!=head);
+    
+    
+    
+    return 0;
+}
+
+
+
+
+
