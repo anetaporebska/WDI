@@ -1,0 +1,122 @@
+#include <time.h>
+#include <iostream>
+using namespace std;
+
+
+//D.012 Proszę napisać funckję, która otrzyjmując jako parametr wskaźnik na początek listy jednokierunkowej, 
+//przenosi na początek listy te z nich, które mają parzystą liczbę piątek w zapisie ósemkowym.
+
+
+
+struct node{
+    int w;
+    node *next;
+};
+
+void dodaj(node *&head, int wart){
+
+    node *h=new node;
+    h->w=wart;
+    h->next=head;
+    head=h;
+    
+}
+
+
+bool parz5(int w){
+    
+    int t[8];
+    
+    for(int i=0; i<8; i++){
+        t[i]=0;
+    }
+    
+    while(w>0){
+        t[w%8]++;
+        w/=8;
+    }
+    if(t[5]%2==0) return true;
+    
+    return false;
+    
+}
+
+
+
+
+
+void przenies(node *&head){
+    
+    //nie sprawdzam pierwszego elementu, bo nie ma znaczenia
+    
+    node *h=head->next;
+    node *prev=head;
+    
+    while(h->next!=NULL){
+        
+        if(parz5(h->w)){
+            prev->next=h->next;
+            h->next=head;
+            head=h;
+            h=prev->next;
+            
+        }
+        else {
+            prev=h;
+            h=h->next;
+        }
+    }    
+    
+    if(h->next==NULL){
+        if(parz5(h->w)){
+            h->next=head;
+            prev->next=NULL;
+            head=h;
+        }
+    }
+    
+    
+}
+
+    
+
+
+
+
+int main(){
+    
+    node *head=NULL;
+    
+    for(int i=4; i<=16; i++){
+        dodaj(head,i);
+    }
+    
+    node *h=head;
+    
+    while(h!=NULL){
+        cout<<h->w<<" ";
+        h=h->next;
+    }
+    
+    przenies(head);
+    
+    h=head;
+    cout<<endl;
+    while(h!=NULL){
+        cout<<h->w<<" ";
+        h=h->next;
+    }
+    
+
+
+
+
+
+
+    return 0;
+}
+
+
+
+
+
