@@ -1,0 +1,111 @@
+#include <time.h>
+#include <iostream>
+using namespace std;
+
+
+//D.022 Proszę napisać funkcję, która sprawdza czy jedna lista zawiera się w drugiej.
+//Do funkcji należy przekazać wskazania na pierwsze elementy obu list, funkcja powinna zwrócić wartość logiczną.
+
+
+//czyli: bierzemy pierwszy element ze sprawdzanej listy i sprawdzamy czy znajduje się w drugiej (równe wskaźniki), bierzemy drugi element i sprawdzamy,
+//czy jest równy ...
+
+
+struct node{
+    int w;
+    node *next;
+};
+
+void dodaj(node *&head, int wart){
+
+    node *h=new node;
+    h->w=wart;
+    h->next=head;
+    head=h;
+    
+}
+
+bool czy_zawiera(node *head, node *spr){
+    
+    node *h=head;
+    node *s=spr;
+    
+    if(s==NULL) return true;        //pusta lista zawiera się w każdej
+    
+    
+    if(s->next==NULL){          //gdy sprawdzana zawiera tylko jeden element
+        while(h!=NULL){
+            if(s->w=h->w) return true;
+        }
+        return false;
+    }
+    
+    h=head;
+    bool czy=false;
+    
+    while(s->next!=NULL){
+        
+        while(h->next!=NULL){
+            if(s->w==h->w) {czy=true; break;}
+            h=h->next;
+        }
+        
+        if(czy){
+            s=s->next;
+            czy=false;
+        }
+        else return false;
+    }
+    
+    
+    return true;
+    
+    
+}
+
+    
+
+
+
+
+int main(){
+    
+    node *head=NULL;
+    
+    for(int i=1; i<=10; i++){
+        dodaj(head,i);
+    }
+    
+    node *h=head;
+    
+    while(h!=NULL){
+        cout<<h->w<<" ";
+        h=h->next;
+    }
+    
+    node *spr=NULL;
+    
+    for(int i=2; i<=20; i+=2){
+        dodaj(spr,i);
+    }
+    
+    node *s=spr;
+    cout<<endl;
+    while(s!=NULL){
+        cout<<s->w<<" ";
+        s=s->next;
+    }
+    
+    cout<<endl;
+    if(czy_zawiera(head,spr)) cout<<"zawiera";
+    else cout<<"nie zawiera";
+    
+    
+    
+    return 0;
+}
+
+
+
+
+
