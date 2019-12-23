@@ -1,0 +1,117 @@
+#include <time.h>
+#include <iostream>
+using namespace std;
+
+
+//D.011 Proszę napisać funkcję, która otrzymując jako parametr wskazujący na początek listy kierunkowej, usuwa z niej wszystkie
+//elementy, w których wartość klucza w zapisie trójkowym ma większą ilość jedynek niż dwójek.
+
+
+
+struct node{
+    int w;
+    node *next;
+};
+
+void dodaj(node *&head, int wart){
+
+    node *h=new node;
+    h->w=wart;
+    h->next=head;
+    head=h;
+    
+}
+
+
+bool klucz(int w){
+    
+    int t[3];
+    
+    for(int i=0; i<3; i++){
+        t[i]=0;
+    }
+    
+    while(w>0){
+        t[w%3]++;
+        w/=3;
+    }
+    if(t[1]>t[2]) return true;
+    
+    return false;
+    
+}
+
+void usun(node *&head){
+    
+    
+    
+    if(head==NULL) return;
+    
+    if(head->next==NULL){
+        if(klucz(head->w)) {head=NULL; return;}
+        else return;
+    }
+    
+    while(klucz(head->w)){
+        node *tmp=head;
+        head=head->next;
+        delete tmp;
+    }
+    
+    
+    node *h=head;
+    node *pr=head;
+    
+    while(h->next!=NULL){
+        if(klucz(h->w)){
+            pr->next=h->next;
+            node *tmp=h;
+            h=h->next;
+            delete tmp;
+        }
+        else{
+            pr=h;
+            h=h->next;
+        }
+    }
+    
+    if(h->next==NULL && klucz(h->w)) {pr->next=NULL; delete h;}
+    
+}
+    
+
+
+
+
+int main(){
+    
+    node *head=NULL;
+    
+    for(int i=4; i<=16; i+=2){
+        dodaj(head,i);
+    }
+    
+    node *h=head;
+    
+    while(h!=NULL){
+        cout<<h->w<<" ";
+        h=h->next;
+    }
+    
+    usun(head);
+    
+    h=head;
+    cout<<endl;
+    while(h!=NULL){
+        cout<<h->w<<" ";
+        h=h->next;
+    }
+    
+    if(klucz(8)) cout<<"tak";
+    return 0;
+}
+
+
+
+
+
