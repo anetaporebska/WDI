@@ -1,0 +1,134 @@
+#include <time.h>
+#include <iostream>
+using namespace std;
+
+
+//D.013 Proszę napisać funkcję, która otrzymując jako parametr wskazujący na początek listy dwukierunkowej, usuwa 
+//z niej wszystkie elementy, w których wartość klucza w zapisie binarnym ma nieparzystą ilość jedynek.
+
+
+
+struct node{
+    int w;
+    node *next;
+    node *prev;
+};
+
+
+bool nieparz1(int w){
+    
+    int t[2];
+    
+    for(int i=0; i<2; i++){
+        t[i]=0;
+    }
+    
+    while(w>0){
+        t[w%2]++;
+        w/=2;
+    }
+    if(t[1]%2==1) return true;
+    
+    return false;
+    
+}
+
+
+
+
+void dodaj_do_dwukierunkowej(node *&head, int wart){
+    
+    if(head==NULL){
+        node *dodaj=new node;
+        dodaj->next=NULL;
+        dodaj->prev=NULL;
+        dodaj->w=wart;
+        head=dodaj;
+        return;
+    }
+    
+    
+    node *dodaj=new node;
+    head->prev=dodaj;
+    dodaj->next=head;
+    dodaj->w=wart;
+    dodaj->prev=NULL;
+    head=dodaj;
+    
+}
+
+    
+void usun(node *&head){
+ 
+    while(nieparz1(head->w)){
+        node *tmp=head;
+        head=head->next;
+        head->prev=NULL;
+        delete tmp;
+    }
+    
+    
+    node *p=head;
+    node *h=head->next;
+    
+    
+    while(h->next!=NULL){
+        
+        if(nieparz1(h->w)){
+            node *tmp=h;
+            h=h->next;
+            p->next=h;
+            h->prev=p;
+            delete tmp;
+        }
+        else{
+            p=h;
+            h=h->next;
+        }
+        
+    }
+    
+    if(h->next==NULL && nieparz1(h->w)){
+        p->next=NULL;
+        delete h;
+    }
+ 
+ 
+    
+}
+
+
+
+
+
+
+int main(){
+    
+    node *head=NULL;
+    
+    for(int i=4; i<=10; i++){
+        dodaj_do_dwukierunkowej(head,i);
+    }
+    
+    
+    node *h=head;
+    
+    while(h->next!=NULL){
+        cout<<h->w<<" ";
+        h=h->next;
+    }
+    cout<<h->w;
+    
+    usun(head);
+    
+
+
+
+
+    return 0;
+}
+
+
+
+
+
