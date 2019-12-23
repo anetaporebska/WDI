@@ -1,0 +1,139 @@
+#include <time.h>
+#include <iostream>
+using namespace std;
+
+
+//D.027 Proszę napisać funkcję, która rozdziela listę na dwie listy. Pierwsza powinna zwierać klucze parzyste dodatnie, 
+//druga klucze nieparzyste ujemne, pozostałe elementy należy usunąć z pamięci. Do funkcji należy przekazać wskaźniki na 
+//listę z danymi oraz wskaźniki na listy wynikowe. Funkcja powinna zwrócić liczbę usunietych elementów.
+
+
+
+struct node{
+    int w;
+    node *next;
+};
+
+
+
+void dodaj(node *&p, int wart){
+    
+    node *dodaj=new node;
+    dodaj->w=wart;
+    dodaj->next=p;
+    p=dodaj;
+    
+    
+}
+
+
+
+int rozdziel(node *&head, node *&pd, node *&nu){
+    int licz=0;
+    
+    while((head->w<0 && head->w%2==0) || (head->w>0 && head->w%2==1)){
+        node *tmp=head;
+        head=head->next;
+        licz++;
+        delete tmp;
+    }
+    
+    node *p=NULL;
+    node *h=head;
+    
+    while(h->next!=NULL){
+        if(h->w<0 && h->w%2==-1){
+            dodaj(nu,h->w);
+        }
+        else if(h->w>0 && h->w%2==0){
+           dodaj(pd,h->w);
+        } 
+        else {
+            node *tmp=h;
+            p->next=h->next;
+            h=h->next;
+            licz++;
+            delete tmp;
+            continue;
+        }
+        p=h;
+        h=h->next;
+    }
+    
+    
+    if(h->w<0 && h->w%2==-1){
+            dodaj(nu,h->w);
+        }
+        else if(h->w>0 && h->w%2==0){
+           dodaj(pd,h->w);
+        } 
+        else {
+            p->next=NULL;
+            licz++;
+            delete h;
+            
+        }
+    
+    
+    
+    return licz;
+}
+
+
+
+
+
+
+int main(){
+    
+    node *head=NULL;
+    
+    for(int i=1; i<=50; i++){
+        int t=rand()%40-20;
+        dodaj(head,t);
+    }
+    
+    
+    node *h=head;
+    
+    while(h!=NULL){
+        cout<<h->w<<" ";
+        h=h->next;
+    }
+    
+    cout<<endl;
+    
+    node *pd=NULL;
+    node *nu=NULL;
+    
+    cout<<rozdziel(head,pd,nu);
+    cout<<endl;
+    
+    h=head;
+    
+    while(h!=NULL){
+        cout<<h->w<<" ";
+        h=h->next;
+    }
+    
+    cout<<endl;
+    
+    h=pd;
+    while(h!=NULL){
+        cout<<h->w<<" ";
+        h=h->next;
+    }
+    cout<<endl;
+    h=nu;
+    while(h!=NULL){
+        cout<<h->w<<" ";
+        h=h->next;
+    }
+
+    return 0;
+}
+
+
+
+
+
