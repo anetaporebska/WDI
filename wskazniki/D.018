@@ -1,0 +1,132 @@
+#include <time.h>
+#include <iostream>
+using namespace std;
+
+
+//D.018 Kolejne elementy listy o zwiększającej się wartości pola val nazywamy podlistą rosnącą. Proszę napisać funkcję, 
+//która usuwa z listy wejściowej najdłuższą podlistę rosnącą. Warunkiem usunięcia jest istnienie w liście dokładnie jednej 
+//najdłuższej  podlisty rosnącej.
+
+struct node{
+    int w;
+    node *next;
+};
+
+
+
+void dodaj(node *&p, int wart){
+    
+    node *dodaj=new node;
+    dodaj->w=wart;
+    dodaj->next=p;
+    p=dodaj;
+}
+
+
+
+
+void podlista(node *&head){
+    
+    int dl=1;
+    int ndl=1;
+    
+    node *h=head;
+    node *p=NULL;
+    node *naj=NULL;
+    int l=0;
+    
+    while(h->next!=NULL){
+        
+        
+        dl=1;
+        int sz=h->w;
+        p=h->next;
+        while(p!=NULL && p->w>sz){
+            dl++;
+            sz=p->w;
+            p=p->next;
+        }
+        if(dl>ndl){
+            naj=h;
+            ndl=dl;
+            l=0;
+        }
+        if(dl==ndl){
+            l++;
+        }
+        h=h->next;
+        
+    }
+    cout<<"najdluzsza podlista: "<<ndl;
+    cout<<endl<<"liczebonosc: "<<l<<endl;
+    
+    if(l>2) return;
+    
+    //if(naj==head)
+    
+    
+    
+    p=head;             //wskaźnik na ostatni  element przed naj
+    while(p->next!=naj){
+        p=p->next;
+    }
+    
+    h=p->next;
+    
+    
+    for(int i=1; i<=ndl; i++){
+        node *tmp=h;
+        h=h->next;
+        p->next=h;
+        delete tmp;
+    }
+    
+    
+    //if jesli usuwamy z końca elementy
+    
+    
+    
+}
+
+
+
+
+
+
+
+
+int main(){
+    
+    node *head=NULL;
+    srand(time(NULL));
+    for(int i=1; i<=25; i++){
+        int t=rand()%15+1;
+        dodaj(head,t);
+    }
+    
+    node *h=head;
+    while(h!=NULL){
+        cout<<h->w<<" ";
+        h=h->next;
+    }
+    
+    
+    
+    cout<<endl;
+    podlista(head);
+    
+    cout<<endl;
+    h=head;
+    while(h!=NULL){
+        cout<<h->w<<" ";
+        h=h->next;
+    }
+    
+
+    return 0;
+}
+
+
+
+
+
