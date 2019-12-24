@@ -1,0 +1,216 @@
+#include <time.h>
+#include <iostream>
+using namespace std;
+
+
+//D.025 Dwie listy zawierają niepowtarzające się (w obrębie listy) liczby naturalne. W obu listach liczby są 
+//posortowane rosnąco. Proszę napisać funkcję usuwającą z każdej listy liczby nie występujące w drugiej. Do funkcji
+//należy przekazać wskazania na obie listy, funkcja powinna zwrócić łączną liczbę usuniętych elementów.
+
+//czyli mają zostać w obu listach tylko te liczby, które są takie same
+
+struct node{
+    int w;
+    node *next;
+};
+
+
+
+void dodaj(node *&p, int wart){
+    
+    node *dodaj=new node;
+    dodaj->w=wart;
+    dodaj->next=p;
+    p=dodaj;
+    
+    
+}
+
+//funkcja sortująca listę
+void sort(node *&head){
+    
+    node *nowa=NULL;
+    node *gl=head;
+    node *pob=NULL;
+    node *naj=NULL;     //wskaźnik na największy element
+    
+    while(gl!=NULL){
+        
+        pob=head;
+        naj=pob;
+        while(pob!=NULL){
+            if(pob->w>naj->w) naj=pob;
+            pob=pob->next;
+        }
+        
+        dodaj(nowa,naj->w);
+        naj->w=0;
+        gl=gl->next;
+    } 
+    
+    gl=head;
+    while(gl!=NULL){
+        pob=gl;
+        gl=gl->next;
+        delete pob;
+    }
+    
+    
+    head=nowa;
+    
+}
+
+void usuwanie(node *&head1, node *&head2){
+    
+    node *h1=head1;
+    node *h2=head2;
+    
+    while(h1!=NULL){
+        
+        h2=head2;
+        while(h2!=NULL && h2->w<h1->w){
+            if(h2->w==h1->w) break;
+            h2=h2->next;
+        }
+        
+        
+        if(h2==NULL || h2->w!=h1->w){
+            h1->w=0;
+        }
+        
+        h1=h1->next;
+    }
+    
+    
+}
+
+
+int usun(node *&head1, node *&head2){
+    
+    usuwanie(head1,head2);          //pozostawi tylko te które są takie same, reszta to będą zera;
+    usuwanie(head2,head1);
+    
+    int licz=0;
+    
+    while(head1->w==0){
+        node *tmp=head1;
+        head1=head1->next;
+        licz++;
+        delete tmp;
+    }
+    while(head2->w==0){
+        node *tmp=head2;
+        head2=head2->next;
+        licz++;
+        delete tmp;
+    }
+    
+    
+    node *h=head1;
+    node *p=NULL;
+    
+    
+    while(h->next!=NULL){
+        if(h->w==0){
+            node *tmp=h;
+            p->next=h->next;
+            h=h->next;
+            licz++;
+            delete tmp;
+        }
+        else{
+            p=h;
+            h=h->next;
+        }
+    }
+    if(h->w==0){
+        p->next=NULL;
+        licz++;
+        delete h;
+    }
+    
+    
+    h=head2;
+    p=NULL;
+    
+    while(h->next!=NULL){
+        if(h->w==0){
+            node *tmp=h;
+            p->next=h->next;
+            h=h->next;
+            licz++;
+            delete tmp;
+        }
+        else{
+            p=h;
+            h=h->next;
+        }
+    }
+    if(h->w==0){
+        p->next=NULL;
+        licz++;
+        delete h;
+    }
+    
+    return licz;
+    
+}
+
+
+
+int main(){
+    
+    node *head1=NULL;
+    
+    for(int i=1; i<=15; i++){
+        int t=rand()%100+1;
+        dodaj(head1,t);
+    }    
+    sort(head1);
+    node *h=head1;
+    while(h!=NULL){
+        cout<<h->w<<" ";
+        h=h->next;
+    }
+    cout<<endl;
+    
+    node *head2=NULL;
+    for(int i=1; i<=15; i++){
+        int t=rand()%100+1;
+        dodaj(head2,t);
+    }    
+    sort(head2);
+    h=head2;
+     while(h!=NULL){
+        cout<<h->w<<" ";
+        h=h->next;
+    }
+    cout<<endl;
+    
+    
+    
+    cout<<usun(head1,head2)<<endl;
+  
+    h=head1;
+    while(h!=NULL){
+        cout<<h->w<<" ";
+        h=h->next;
+    }
+    cout<<endl;
+    h=head2;
+    while(h!=NULL){
+        cout<<h->w<<" ";
+        h=h->next;
+    }
+    cout<<endl;
+    
+    
+    
+
+    return 0;
+}
+
+
+
+
+
