@@ -10,7 +10,7 @@ void dodaj(node *&p, int wart){
     
 }
 
-
+//z jakiegoś powodu ta funkcja działa tylko dla nieujemnych liczb
 
 //funkcja sortująca listę
 void sort(node *&head){
