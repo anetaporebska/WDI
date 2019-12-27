@@ -1,0 +1,209 @@
+#include <iostream>
+#include <time.h>
+using namespace std;
+
+//K.001 (10.01.17)
+//Dane są dwie listy cykliczne powstałe przez zapętlenie listy jednokierunkowej posortowanej rosnąco, dla każdej listy
+//dany jest wskaźnik wskazujący przypadkowy element w takiej liście. Proszę napisać funkcję, która dla dwóch list cyklicznych, 
+//usuwa z obu list elementy występujące w obu listach. Do funkcji należy przekazać wskaźniki na obie listy, funkcja powinna zwrócić 
+//łączną liczbę usuniętych elementów.
+
+struct node{
+    int w;
+    node *next;
+};
+
+
+
+void dodaj(node *&p, int wart){
+    
+    node *dodaj=new node;
+    dodaj->w=wart;
+    dodaj->next=p;
+    p=dodaj;
+    
+    
+}
+
+void create(node *&head, int dlugosc){
+    
+    for(int i=10+dlugosc; i>10; i--){
+        int w=rand()%20+1;
+        dodaj(head,w);
+    }
+    
+}
+
+
+//funkcja sortująca listę
+void sort(node *&head){
+    
+    node *nowa=NULL;
+    node *gl=head;
+    node *pob=NULL;
+    node *naj=NULL;     //wskaźnik na największy element
+    
+    while(gl!=NULL){
+        
+        pob=head;
+        naj=pob;
+        while(pob!=NULL){
+            if(pob->w>naj->w) naj=pob;
+            pob=pob->next;
+        }
+        
+        dodaj(nowa,naj->w);
+        naj->w=0;
+        gl=gl->next;
+    } 
+    
+    gl=head;
+    while(gl!=NULL){
+        pob=gl;
+        gl=gl->next;
+        delete pob;
+    }
+    
+    
+    head=nowa;
+    
+}
+
+
+int usunzera(node *&w1){
+    int licz=0;
+    node *d=w1;
+    node *p=w1->next;
+    do{
+        if(p->w==0){
+            node *tmp=p;
+            d->next=p->next;
+            p=p->next;
+            licz++;
+            delete tmp;
+        }
+        else{d=p;
+        p=p->next;
+        }
+    }while(p!=w1);
+    
+    if(p->w==0){
+        node *tmp=p;
+        d->next=p->next;
+        p=p->next;
+        w1=p;
+        licz++;
+        delete tmp;
+    }
+    return licz;
+}
+
+
+
+int usun(node *&w1, node *&w2){
+    
+    int sz;
+    node *p=w1;
+    node *d=w2;
+    bool zn=false;
+    
+    do{
+        sz=p->w;
+        zn=false;
+        d=w2;
+        do{
+            if(d->w==sz){
+                d->w=0;
+                zn=true;
+            }
+            d=d->next;
+         }while(d!=w2);
+    
+        if(zn) {
+            
+            
+            p->w=0;
+            while(p->next->w==sz){
+                p=p->next;
+                p->w=0;
+            }
+        }
+        
+        
+        p=p->next;
+    
+    }while(p!=w1);
+    
+    
+    int licz=usunzera(w1)+usunzera(w2);
+    
+  
+
+    
+    return licz;
+    
+}
+
+
+
+
+
+
+
+
+int main(){
+    
+    srand(time(NULL));
+    
+    node *w1=NULL;
+    create(w1,10);
+    sort(w1);
+    node *h=w1;
+    while(h->next!=NULL){
+        cout<<h->w<<" ";
+        h=h->next;
+    }
+    cout<<h->w;
+    h->next=w1;
+    cout<<endl;
+    
+    node *w2=NULL;
+    create(w2,15);
+    sort(w2);
+    h=w2;
+    while(h->next!=NULL){
+        cout<<h->w<<" ";
+        h=h->next;
+    }
+    cout<<h->w;
+    h->next=w2;
+    cout<<endl;
+    
+    
+    
+   cout<<"ile usunieto: "<<usun(w1,w2)<<endl; 
+   
+   h=w1;
+   cout<<"nowa lista pierwsza: ";
+   do{
+       cout<<h->w<<" ";
+       h=h->next;
+   }while(h!=w1);
+   cout<<endl;
+   
+   h=w2;
+   cout<<"nowa lista druga: ";
+   do{
+       cout<<h->w<<" ";
+       h=h->next;
+   }while(h!=w2);
+   cout<<endl;
+    
+    
+    
+    return 0;
+}
+
+
+
+
