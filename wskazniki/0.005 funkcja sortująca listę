@@ -1,0 +1,33 @@
+//funkcja sortująca listę
+void sort(node *&head){
+    
+    node *nowa=NULL;
+    node *gl=head;
+    node *pob=NULL;
+    node *naj=NULL;     //wskaźnik na największy element
+    
+    while(gl!=NULL){
+        
+        pob=head;
+        naj=pob;
+        while(pob!=NULL){
+            if(pob->w>naj->w) naj=pob;
+            pob=pob->next;
+        }
+        
+        dodaj(nowa,naj->w);
+        naj->w=0;
+        gl=gl->next;
+    } 
+    
+    gl=head;
+    while(gl!=NULL){
+        pob=gl;
+        gl=gl->next;
+        delete pob;
+    }
+    
+    
+    head=nowa;
+    
+}
