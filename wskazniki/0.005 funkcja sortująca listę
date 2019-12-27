@@ -1,3 +1,17 @@
+
+
+void dodaj(node *&p, int wart){
+    
+    node *dodaj=new node;
+    dodaj->w=wart;
+    dodaj->next=p;
+    p=dodaj;
+    
+    
+}
+
+
+
 //funkcja sortująca listę
 void sort(node *&head){
     
