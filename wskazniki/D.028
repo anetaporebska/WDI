@@ -1,0 +1,114 @@
+#include <iostream>
+#include <time.h>
+using namespace std;
+
+//D.028 Lista reprezentuje wielomian o współczynnikach całkowitych. Elementy w liście ułożone są według rosnących potęg.
+//Proszę napisać funkcję obliczjącą różnicę dwóch dowolnych wielomianów. Wielomiany reprezentowane są przez wyżej opisane
+//listy. Procedura powinna zwracać wskaźnik do nowo utworzonej listy reprezentującej wielomian wynikowy. Listy wejściowe
+//powinny zostać niezmienione.
+
+struct node{
+    int w;
+    node *next;
+};
+
+
+void insert_first(node *&head, int wart){
+    
+    
+    node *dodaj=new node;
+    dodaj->w=wart;
+    dodaj->next=head;
+    head=dodaj;
+}
+
+void create(node *&head, int dlugosc){
+    
+    
+    
+    
+    for(int i=10+dlugosc; i>10; i--){
+        int w=rand()%20-10;
+        insert_first(head,w);
+    }
+    
+}
+
+
+node *wynik(node *w1, node *w2){
+    
+    node *wynik=NULL;
+    
+    
+    while(w1!=NULL && w2!=NULL){
+        node *dodaj=new node;
+        dodaj->w=w1->w-w2->w;
+        dodaj->next=wynik;
+        wynik=dodaj;
+        w1=w1->next;
+        w2=w2->next;
+    }
+    
+    while(w1!=NULL){
+        node *dodaj=new node;
+        dodaj->w=w1->w;
+        dodaj->next=wynik;
+        wynik=dodaj;
+        w1=w1->next;
+    }
+    
+    while(w2!=NULL){
+        node *dodaj=new node;
+        dodaj->w=-(w2->w);
+        dodaj->next=wynik;
+        wynik=dodaj;
+        w2=w2->next;
+    }
+    
+    
+    return wynik;
+    
+    
+}
+
+
+
+
+int main(){
+    
+    srand(time(NULL));
+    node *w1=NULL;
+    create(w1,10);
+    node *h=w1;
+    while(h!=NULL){
+        cout<<h->w<<" ";
+        h=h->next;
+    }
+    cout<<endl;
+    
+    node *w2=NULL;
+    create(w2,15);
+    h=w2;
+    while(h!=NULL){
+        cout<<h->w<<" ";
+        h=h->next;
+    }
+    cout<<endl;
+    
+    node *wyn=wynik(w1,w2);
+    
+    
+    h=wyn;
+    while(h!=NULL){
+        cout<<h->w<<" ";
+        h=h->next;
+    }
+    cout<<endl;
+    
+    
+    return 0;
+}
+
+
+
+
