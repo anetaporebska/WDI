@@ -1,0 +1,196 @@
+#include <iostream>
+#include <time.h>
+using namespace std;
+
+//K.002 (11.01.17)
+//Zbiór liczb naturalncych jest reprezentowany jako jednokierunkowa lista. Y-lista to struktura reprezentująca
+//dwa zbiory liczb naturalnych (rysunek).
+//Porszę napisać funkcję, która dwa zbiry A,B reprezentowane jako Y-lista przekształca w dwa zbiory reprezentowane jako 
+//niezależne listy. Do funkcji należy przekazać wskaźniki do dwóch list, funkcja powinna zwróicić liczbę elementów części
+//wspólnej zbiorów A i B.
+//(Jeżeli część wspólna dwóch zbiorów jest pusta, Y-lista staje się dwoma niezależnymi listami)
+
+
+struct node{
+    int w;
+    node *next;
+};
+
+
+
+void dodaj(node *&p, int wart){
+    
+    node *dodaj=new node;
+    dodaj->w=wart;
+    dodaj->next=p;
+    p=dodaj;
+    
+    
+}
+
+void create(node *&head, int s){
+    
+    for(int i=20-s; i>=s; i-=2){
+        dodaj(head,i);
+    }
+    
+}
+
+
+void func(node *za, node *zb){
+    
+    node *a=za;
+    node *b=zb;
+    node *p=NULL;
+    
+    //zbiór A będzie nową listą, B zostanie jak jest
+    bool zn=false;
+    
+    while(b!=NULL){
+        
+        a=za;
+        while(a!=NULL){
+            if(a==b){
+                zn=true;
+                break;
+            }
+            p=a;                //poprzedni
+            a=a->next;
+        }
+        if(zn) break;
+        b=b->next;
+        
+    }
+   
+   
+    while(b!=NULL){
+        node *nowy=new node;
+        nowy->w=b->w;
+        nowy->next=NULL;
+        p->next=nowy;
+        p=nowy;
+        b=b->next;
+        
+    }
+    
+    
+    
+    
+    
+}
+
+
+
+
+
+
+
+int main(){
+    
+    node *za=NULL;
+    node *zb=NULL;
+    
+    create(za,3);
+    create(zb,6);
+    
+    
+    node *czw=NULL;
+    for(int i=20; i<30; i+=3){
+        dodaj(czw,i);
+    }
+    cout<<"część wspólna zbiorów:     ";
+    node *h=czw;
+    while(h!=NULL){
+        cout<<h->w<<" ";
+        h=h->next;
+    }
+    cout<<endl;
+    
+    
+    h=za;
+    node *p=NULL;           //poprzedni element
+    cout<<"część unikaowa zbioru A:    ";
+    while(h!=NULL){
+        cout<<h->w<<" ";
+        p=h;
+        h=h->next;
+    }
+    cout<<endl;
+    p->next=czw;
+    
+    cout<<"część unikowatowa zbioru B:    ";
+    h=zb;
+    while(h!=NULL){
+        cout<<h->w<<" ";
+        p=h;
+        h=h->next;
+    }
+    cout<<endl;
+    p->next=czw;
+   
+    
+    cout<<"zbiór A: ";
+    h=za;
+    while(h!=NULL){
+        cout<<h->w<<" ";
+        p=h;
+        h=h->next;
+    }
+    cout<<endl;
+    
+    
+    cout<<"zbiór B: ";
+    h=zb;
+    while(h!=NULL){
+        cout<<h->w<<" ";
+        p=h;
+        h=h->next;
+    }
+    cout<<endl;
+    
+    
+    func(za,zb);
+    
+    cout<<"zbiór A: ";
+    h=za;
+    while(h!=NULL){
+        cout<<h->w<<" ";
+        p=h;
+        h=h->next;
+    }
+    cout<<endl;
+    
+    
+    cout<<"zbiór B: ";
+    h=zb;
+    while(h!=NULL){
+        cout<<h->w<<" ";
+        p=h;
+        h=h->next;
+    }
+    cout<<endl;
+    
+    cout<<"zbiór A: ";
+    h=za;
+    while(h!=NULL){
+        cout<<h<<" ";
+        h=h->next;
+    }
+    cout<<endl;
+    
+    
+    cout<<"zbiór B: ";
+    h=zb;
+    while(h!=NULL){
+        cout<<h<<" ";
+        h=h->next;
+    }
+    cout<<endl;
+    
+    
+    return 0;
+}
+
+
+
+
