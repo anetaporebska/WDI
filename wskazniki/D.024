@@ -1,0 +1,178 @@
+#include <iostream>
+#include <time.h>
+using namespace std;
+
+//D.024 Dwie listy zawierają niepowtarzające się (w obrębie listy) liczby naturalne. W pierwszej liście liczby są posortowane rosnąco,
+//a w drugiej nie. Proszę napisać funkcję, usuwającą z obu list liczby występujące w obu listach. Do funkcji należy przekazać wskazania 
+//na obie listy, funkcja powinna zwrócić łączną liczbę usuniętych elementów.
+
+
+
+struct node{
+    int w;
+    node *next;
+};
+
+
+
+void dodaj(node *&p, int wart){
+    
+    node *dodaj=new node;
+    dodaj->w=wart;
+    dodaj->next=p;
+    p=dodaj;
+    
+    
+}
+
+void create(node *&head, int s){
+    
+    for(int i=30-s; i>=s; i-=3){
+        dodaj(head,i);
+    }
+    
+}
+
+
+void creater(node *&head){
+    for(int i=8; i<=14; i++){
+        dodaj(head,i);
+    }
+}
+
+
+int usun(node *&l1, node *&l2){
+    
+    bool zn=false;
+    node *h=l1;
+    while(h->next!=NULL){
+        
+        int wart=h->w;
+        node *p=l2;
+        zn=false;
+        while(p!=NULL){
+            
+            if(p->w==wart){
+                p->w=0;
+                zn=true;
+                break;
+            }
+            p=p->next;
+        }
+        if(zn){
+            h->w=0;
+        }
+        
+        h=h->next;
+    }
+    
+    
+    int licz=0;
+    
+    while(l1->w==0){
+        node *usun=l1;
+        l1=l1->next;
+        licz++;
+        delete usun;
+    }
+    
+    while(l2->w==0){
+        node *usun=l1;
+        l2=l2->next;
+        licz++;
+        delete usun;
+    }
+    
+    
+    node *prev=l1;
+    h=l1->next;
+    while(h->next!=NULL){
+        
+        if(h->w==0){
+            node *usun=h;
+            h=h->next;
+            prev->next=h;
+            licz++;
+            delete usun;
+        }
+        else{
+            prev=h;
+            h=h->next;
+        }
+    }
+    
+    if(h->w==0){
+        prev->next=NULL;
+        delete h;
+    }
+    
+    
+    prev=l2;
+    h=l2->next;
+    while(h->next!=NULL){
+        
+        if(h->w==0){
+            node *usun=h;
+            h=h->next;
+            prev->next=h;
+            licz++;
+            delete usun;
+        }
+        else{
+            prev=h;
+            h=h->next;
+        }
+    }
+    if(h->w==0){
+        prev->next=NULL;
+        delete h;
+    }
+    
+    
+    
+    return licz;
+}
+
+
+
+int main(){
+    
+    node *l1=NULL;
+    node *h=NULL;
+    create(l1,5);
+    h=l1;
+    while(h!=NULL){
+        cout<<h->w<<" ";
+        h=h->next;
+    }
+    cout<<endl;
+    
+    node *l2=NULL;
+    creater(l2);
+    h=l2;
+    while(h!=NULL){
+        cout<<h->w<<" ";
+        h=h->next;
+    }
+    cout<<endl;
+    
+    cout<<usun(l1,l2)<<endl;
+    h=l1;
+    while(h!=NULL){
+        cout<<h->w<<" ";
+        h=h->next;
+    }
+    cout<<endl;
+     h=l2;
+    while(h!=NULL){
+        cout<<h->w<<" ";
+        h=h->next;
+    }
+    cout<<endl;
+    
+    return 0;
+}
+
+
+
+
