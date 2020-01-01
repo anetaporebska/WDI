@@ -1,0 +1,180 @@
+#include <iostream>
+#include <time.h>
+using namespace std;
+
+//D.026 Dane są dwie niepuste listy, z których każda zawiera niepowtarzające się elementy. Elementy w pierwszej liście są
+//uporządkowane rosnąco, w drugiej elementy występują w przypadkowej kolejności. Proszę napisać funkcję, która z dwóch takich
+//list tworzy jedną, w której uporządkowane elementy będą stanowić sumę mnogościową elementów z list wejściowych.
+//Do funkcji należy przekazać  wskazania na obie listy, funkcja powinna zwrócić wskazanie na listę wynikową.
+
+
+//nowa lista to będzie ta z posortowanymi elementami i będę do niej wstawiać elementy z drugiej listy w odpowiednie miejsca
+
+
+
+struct node{
+    int w;
+    node *next;
+};
+
+
+
+void dodaj(node *&p, int wart){
+    
+    node *dodaj=new node;
+    dodaj->w=wart;
+    dodaj->next=p;
+    p=dodaj;
+    
+    
+}
+
+void create(node *&head, int s){
+    
+    for(int i=30-s; i>=s; i-=3){
+        dodaj(head,i);
+    }
+    
+}
+
+void creater(node *&head){
+    
+    for(int i=0; i<=10; i++){
+        int t=rand()%20+1;
+        dodaj(head,t);
+    }
+    
+}
+
+
+
+node *przepisz(node *l1){
+    
+    node *n=NULL;
+    
+    while(l1!=NULL){
+        dodaj(n,l1->w);
+        l1=l1->next;
+    }
+    
+    return n;
+}
+
+
+void reverse(node *h, node *prev, node *&head){
+    
+    if(h->next==NULL){
+        h->next=prev;
+        head=h;
+    }
+    
+    else{
+        reverse(h->next,h,head);
+        h->next=prev;
+    }
+}
+
+
+
+node* func(node *l1, node *l2){
+    node *nowa=przepisz(l1);
+    reverse(nowa,NULL,nowa);
+    
+    
+    node *p=l2;
+    node *l=l1;
+    
+    while(p!=NULL){
+        
+        int wart=p->w;
+        
+        l=nowa;
+        
+        if(wart<l->w){
+            node *dodaj=new node;
+            dodaj->w=wart;
+            dodaj->next=nowa;
+            nowa=dodaj;
+            p=p->next;
+            continue;
+        }
+        
+        while(l->next!=NULL){
+            
+            if(wart>l->w && wart<l->next->w){
+                node *dodaj=new node;
+                dodaj->w=wart;
+                dodaj->next=l->next;
+                l->next=dodaj;
+                l=l->next;
+                break;
+                
+            }
+            l=l->next;
+        }
+        
+        if(wart>l->w){
+            node *dodaj=new node;
+            dodaj->w=wart;
+            dodaj->next=NULL;
+            l->next=dodaj;
+            
+        }
+        
+        p=p->next;
+        
+        
+    }
+    
+    
+    return nowa;
+    
+    
+}
+
+
+
+
+
+
+int main(){
+    
+    
+    node *l1=NULL;
+    create(l1,1);
+    
+    node *h=l1;
+    
+    while(h!=NULL){
+        cout<<h->w<<" ";
+        h=h->next;
+    }
+    cout<<endl;
+    
+    node *l2=NULL;
+    creater(l2);
+    
+    h=l2;
+    while(h!=NULL){
+        cout<<h->w<<" ";
+        h=h->next;
+    }
+    cout<<endl;
+    
+    
+    node *k=func(l1,l2);
+    h=k;
+    while(h!=NULL){
+        cout<<h->w<<" ";
+        h=h->next;
+    }
+    cout<<endl;
+    
+    
+    
+    return 0;
+}
+
+
+
+
