@@ -1,0 +1,126 @@
+#include <iostream>
+#include <time.h>
+
+using namespace std;
+
+
+//D.010. Proszę napisać funkcję, otrzymującą jako parametr wskaźnik na pierwszy element listy o wartosciach typu int, 
+//usuwającą wszystkie elementy, których wartość dzieli bez reszty wartość bezpośrednio następujących po nich elementów.
+
+struct node{
+    int w;
+    node *next;
+};
+
+void insert_first(node *&head, int wart){
+    
+    if(head==NULL){
+        node *dodaj=new node;
+        dodaj->w=wart;
+        dodaj->next=NULL;
+        head=dodaj;
+        return;
+    }
+    
+    node *dodaj=new node;
+    dodaj->w=wart;
+    dodaj->next=head;
+    head=dodaj;
+}
+
+void create(node *&head, int dlugosc){
+    
+    srand(time(NULL));
+    
+    
+    for(int i=10+dlugosc; i>10; i--){
+        int w=rand()%20+1;
+        insert_first(head,w);
+    }
+    
+}
+
+
+void usun_dziel(node *&head){
+    
+    node *h=head;
+    
+    while(h->next!=NULL){
+        
+        int d=h->w;
+        if(h->next->w%d==0){
+            h->w=0;
+        }
+        h=h->next;
+        
+    }
+    
+    
+    while(head->w==0){
+        node *usun=head;
+        head=head->next;
+        delete usun;
+    }
+    
+    h=head->next;
+    node *p=head;
+    
+    while(h->next!=NULL){
+        
+        if(h->w==0){
+            node *usun=h;
+            h=h->next;
+            p->next=h;
+            delete usun;
+        }
+        else{
+            p=h;
+            h=h->next;
+        }
+        
+        
+    }
+    
+    
+    
+    
+    
+}
+
+
+int main(){
+    
+   node *head=NULL;
+   
+   create(head,25);
+   
+   node *h=head;
+   
+   while(h!=NULL){
+       cout<<h->w<<" ";
+       h=h->next;
+   }
+   
+  usun_dziel(head);
+  
+  node *n=head;
+  cout<<endl;
+  
+  while(n!=NULL){
+      cout<<n->w<<" ";
+      n=n->next;
+  }
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
