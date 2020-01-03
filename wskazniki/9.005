@@ -1,0 +1,150 @@
+#include <iostream>
+using namespace std;
+
+
+
+//9.005  Proszę napisać funkcję, która rozdziela elementy listy wejściowej do 10 list, według ostatniej cyfry pola val.
+//W drugim kroku powstałe listy należy połączyć w jedną listę, która jest posortowana niemalejąco według ostatniej cyfry pola val.
+
+
+struct node{
+    int w;
+    node *next;
+};
+
+
+void insert_first(node *&head, int wart){
+    
+    if(head==NULL){
+        node *dodaj=new node;
+        dodaj->w=wart;
+        dodaj->next=NULL;
+        head=dodaj;
+        return;
+    }
+    
+    node *dodaj=new node;
+    dodaj->w=wart;
+    dodaj->next=head;
+    head=dodaj;
+}
+
+void create(node *&head){
+    
+    for(int i=101; i>0; i--){
+        insert_first(head,i);
+    }
+    
+}
+
+void rozdziel(node *head, node *h[10]){
+    
+    while(head!=NULL){
+        
+        insert_first(h[head->w%10],head->w);
+        head=head->next;
+        
+    }
+    
+}
+
+
+void insert_last(node *&head, int wart){
+    
+    node *dodaj=new node;
+    dodaj->w=wart;
+    dodaj->next=NULL;
+    
+    if(head==NULL){
+        head=dodaj;
+        return;
+    }
+    
+    node *p=head;
+    
+    while(p->next!=NULL){
+        p=p->next;
+    }
+    
+    p->next=dodaj;
+    
+}
+
+
+
+node * polacz(node *h[10]){
+    
+    node *nowa=NULL;
+    
+    for(int i=0; i<10; i++){
+        
+        node *p=h[i];
+        
+        while(p!=NULL){
+            insert_last(nowa,p->w);
+            p=p->next;
+        }
+        
+    }
+    
+    
+    return nowa;
+    
+}
+
+
+
+
+int main(){
+    
+    node *head=NULL;
+    
+    create(head);
+    
+    node *t=head;
+    
+    while(t->next!=NULL){
+        cout<<t->w<<" ";
+        t=t->next;
+    }
+  
+    node *h[10];
+    
+    for(int i=0; i<10; i++){
+        h[i]=NULL;
+    }
+    
+    rozdziel(head,h);
+    
+    cout<<endl;
+    for(int i=0; i<10; i++){
+        
+        node *p=h[i];
+        
+        while(p!=NULL){
+            cout<<p->w<<" ";
+            p=p->next;
+        }
+        cout<<endl;
+        
+    }
+  
+    node *l=polacz(h);
+    
+    t=l;
+    while(t!=NULL){
+        cout<<t->w<<" ";
+        t=t->next;
+    }
+    
+    
+    
+    return 0;
+}
+
+
+
+
+
+
+
