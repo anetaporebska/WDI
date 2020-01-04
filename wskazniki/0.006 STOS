@@ -1,0 +1,75 @@
+
+
+
+
+#include <iostream>
+
+using namespace std;
+
+
+
+//STOS
+
+//LIFO - Last In - First Out
+//odczytujemy elementy w kolejnosci odwrtotnej do ich wstawiania.
+
+//Operacje:
+//1) Sprawdzenie, czy stos jest pusty - opreracja empty zwraca true, jeśli stos nie zawiera
+//żadnego elementu
+//2) Odczyt szczutu stosu - operacja top zwraca element (zwykle jest to wskaźnik) znajdujacy się 
+//na szczycie stosu, sam element pozostaje na stosie
+//3) Zapis na stos - operacja push umieszcza na szczycie stosu nowy element
+//4) Usunięcie ze stosu - operacja pop usuwa ze szczytu stosu  znajdujący się tam element
+
+
+//Lista jako stos
+//Szczyt stosu będzie pierwszym elementem listy
+
+
+//********************************************************
+
+struct stos{
+    int val;
+    stos *next;
+};
+
+
+//1)
+bool empty(stos *s){
+    if(s==NULL) return true;
+    return false;
+}
+
+//2)
+int top(stos *s){
+    if(empty(s)) return -1;
+    else return s->val;
+}
+
+//3)
+void push(stos *&s, int n){
+    
+    stos *dodaj=new stos;
+    dodaj->val=n;
+    dodaj->next=s;
+    s=dodaj;
+    
+}
+
+//4)
+void pop(stos *&s){
+    
+    if(empty(s)) return;
+    stos *tmp=s;
+    s=s->next;
+    delete tmp;
+    
+}
+
+
+int main()
+{
+    
+
+    return 0;
+}
