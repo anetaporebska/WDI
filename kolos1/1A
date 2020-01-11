@@ -1,0 +1,126 @@
+
+#include <iostream>
+#include <time.h>
+
+using namespace std;
+
+
+//KOLOS zad 1 A
+//Dane są dwie tablice int t1[N], int t2[N] wypełnione liczbami naturalnymi.
+//Proszę napisać funkcję, która sprawdza czy z każdej z tablic można wyciąć po jednym kawałku, 
+//tak aby suma elementów w obu kawałkach była: co najmniej drugą potęgą dowolnej liczby naturalnej. 
+//Łączna długośc obu kawałków powinna wynosić 24.
+
+
+
+const int N=30;
+
+int t[5];
+
+bool czy_potega(int n){
+    
+    if(n==1) return true;
+    
+    for(int i=2; i*i<=n; i++){
+        
+        int pom=n;
+        
+        while(pom>1){
+            if(pom%i==0){
+                pom/=i;
+            }
+            else break;
+            
+        }
+        
+        if(pom==1) return true;
+        
+    }
+    
+    return false;
+    
+}
+
+
+
+int kawalek(int t[N], int i, int dlugosc){
+    int suma=0;
+    
+    for(int k=i; k<i+dlugosc; k++){
+        suma+=t[k];
+    }
+    
+    
+    return suma;
+    
+}
+
+
+
+bool sprawdz(int t1[N], int t2[N]){
+    
+    int suma=0;
+    
+    for(int i=0; i<=24; i++){
+        for(int j=0; j<N-i; j++){
+            suma=kawalek(t1,j,i);       //kawalek dlugości i; począwszy od j-tego indeksu
+            
+            for(int k=0; k<N-24+i; k++){            //ostatni indeks jaki będziemy sprawdzać jak na przykład chcemy kawalek dlugosci 5 to N-5
+                suma+=kawalek(t2,k,24-i);
+                if(czy_potega(suma)) {
+                    t[0]=i;                 //do testowania czy działa 
+                    t[1]=j;
+                    t[2]=24-i;
+                    t[3]=k;
+                    t[4]=suma;
+                    return true;
+                }
+            }
+            
+        }
+    }
+    
+    return false;
+    
+}
+
+bool func(int t1[N], int t2[N]){
+    
+    return sprawdz(t1,t2) || sprawdz(t2,t1);
+    
+}
+
+
+
+
+int main()
+{
+    srand(time(NULL));
+    int t1[N];
+    int t2[N];
+    
+    for(int i=0; i<N; i++){
+        t1[i]=rand()%10+1;
+        t2[i]=rand()%12+1;
+    }
+    
+    for(int i=0; i<N; i++){
+        cout<<t1[i]<<" ";
+    }
+    
+    cout<<endl;
+    
+    
+    for(int i=0; i<N; i++){
+        cout<<t2[i]<<" ";
+    }
+    
+    cout<<endl;
+    if(func(t1,t2)) cout<<"jest kawalek";
+    
+    for(int i=0; i<5; i++){
+        cout<<t[i]<<" ";
+    }
+    
+    return 0;
+}
