@@ -1,0 +1,120 @@
+
+#include <iostream>
+#include <time.h>
+
+using namespace std;
+
+
+//KOLOS zad 3B
+//Dana jest tablica t[N][N] wypełniona liczbami całkowitymi. Tablica reprezentuje szachownicę.
+//Proszę napisać funkcję, która sprawdza czy da się umieścić w każdym wierszu jednego hetmana szachowego 
+//aby żaden hetman nie zagrażał hetmanowi z sąsiedniego wiersza.
+//Dodatkowo, suma wartości pól zajmowanych przez wszystkie figury była równa zero. 
+
+const int N=5;
+
+void wyzeruj(int tab[N][N]){
+    for(int i=0; i<N; i++){
+        for(int j=0; j<N; j++){
+            tab[i][j]=0;
+        }
+    }
+}
+
+bool suma(int t[N][N], int hetmany[N][N]){
+    int s=0;
+    for(int i=0; i<N; i++){
+        for(int j=0; j<N; j++){
+            if(hetmany[i][j]==2){
+                s+=t[i][j];
+            }
+        }
+    }
+    
+    return s==0;
+}
+
+
+bool mozliwe(int w, int k){
+    
+    return w>=0 && w<N && k>=0 && k<N;
+    
+}
+
+void zaznacz(int pom[N][N], int hetmany[N][N]){
+    for(int i=0; i<N; i++){
+        for(int j=0; j<N; j++){
+            if(hetmany[i][j]==2){
+                pom[i][j]=1;
+                if(mozliwe(i+1,j-1)) pom[i+1][j-1]=1;
+                if(mozliwe(i+1,j)) pom[i+1][j]=1;
+                if(mozliwe(i+1,j+1)) pom[i+1][j+1]=1;
+            }
+        }
+    }
+}
+
+
+
+bool hetman(int t[N][N], int pom[N][N], int hetmany[N][N], int w){
+    
+    if(w==N){
+        if(suma(t,hetmany)) return true;
+        return false;
+    }
+    wyzeruj(pom);
+    zaznacz(pom,hetmany);
+    
+    for(int i=0; i<N; i++){
+        if(pom[w][i]==0){
+            hetmany[w][i]=2;
+            if(hetman(t,pom,hetmany,w+1)) return true;
+            hetmany[w][i]=0;
+        }
+    }
+    
+    return false;
+    
+}
+
+
+
+bool wywolanie(int t[N][N]){
+    
+    int hetmany[N][N];          //będę zaznaczać gdzie jest hetman jako 2
+    int pom[N][N];              //będę zaznaczać gdzie nie mogę już postawić następnego jako 1
+    wyzeruj(hetmany);
+    wyzeruj(pom);
+    
+    if(hetman(t,pom,hetmany,0)){
+        for(int i=0; i<N; i++){
+            for(int j=0; j<N; j++){
+                cout<<hetmany[i][j]<<" ";
+            }
+            cout<<endl;
+        }
+        return true;
+    }
+    return false;
+}
+
+
+
+int main()
+{   
+    int t[N][N];
+    
+    for(int i=0; i<N; i++){
+        for(int j=0; j<N; j++){
+            t[i][j]=rand()%20-10;
+            cout<<t[i][j]<<" ";
+        }
+        cout<<endl;
+    }
+    
+    if(wywolanie(t)) cout<<"tak";
+    else cout<<"nie";
+    
+    
+    return 0;
+}
