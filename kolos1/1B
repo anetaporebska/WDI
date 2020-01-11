@@ -1,0 +1,103 @@
+
+#include <iostream>
+#include <time.h>
+
+using namespace std;
+
+
+//KOLOS zad 1B
+//Dane są dwie tablice int t1[N], int t2[N] wypełnione liczbami naturalnymi.
+//Proszę napisać funkcję,która sprawdza czy z każdej z tablic można wyciąć po jednym kawałku,  tak aby suma elementów w obu kawałkach była:  
+//iloczynem dokładnie dwóch liczb pierwszych. Oba kawałki powinny być jednakowej długości.
+
+const int N=5;
+
+bool czy_pierwsza(int n){
+    
+    if(n==0 || n==1) return false;
+    if(n==2) return true;
+    
+    for(int i=2; i*i<=n; i++){
+        if(n%i==0) return false;
+    }
+    return true;
+}
+
+
+bool czy_iloczyn_pierwszych(int n){
+    
+    for(int i=2; i*i<=n; i++){
+        if(n%i==0){
+            if(czy_pierwsza(n/i) && czy_pierwsza(i)) return true;
+        }
+    }
+    return false;
+    
+}
+
+
+
+int suma(int poczatek, int tab[N], int dlugosc){
+    int s=0;
+    for(int i=poczatek; i<poczatek+dlugosc; i++){
+        s+=tab[i];
+    }
+    return s;
+}
+
+
+bool kawalki(int t1[N], int t2[N]){
+    
+    
+    for(int i=1; i<=N; i++){                //dlugosc kawalka 
+        
+        for(int j=0; j<=N-i; j++){                //kawalki z t1, poczatek 
+            
+            int s1=suma(j,t1,i);
+            
+            for(int m=0; m<=N-i; m++){          //kawalki z t2
+                int s2=suma(m,t2,i);
+                if(czy_iloczyn_pierwszych(s1+s2)) {cout<<s1+s2; return true;}
+                
+                
+            }
+            
+            
+        }    
+        
+        
+    }
+    
+    
+    return false;
+    
+}
+
+
+
+
+
+
+int main()
+{   
+    
+    int t1[N];
+    int t2[N];
+    srand(time(NULL));
+    for(int i=0; i<N; i++){
+        t1[i]=rand()%10+1;
+        t2[i]=rand()%20+10;
+        cout<<t1[i]<<" ";
+    }
+    
+    cout<<endl;
+    for(int i=0; i<N; i++){
+        cout<<t2[i]<<" ";
+    }
+    cout<<endl;
+    
+    if(kawalki(t1,t2)) cout<<"tak";
+    else cout<<"nie";
+    
+    return 0;
+}
