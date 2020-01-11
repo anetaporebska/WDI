@@ -1,0 +1,128 @@
+
+#include <iostream>
+#include <time.h>
+
+using namespace std;
+
+
+//KOLOS zad 2B
+//Dana jest tablica int t[N][N] zawierająca liczby naturalne. Proszę napisać funkcję, 
+//która sprawdza  czy z tablicy można usunąć jeden wiersz i dwie kolumny, tak aby każdy z pozostałych  elementów  
+//tablicy był wielokrotnością  (co najmniej dwukrotnością) kwadratu dowolnej liczby naturalnej większej od 1
+
+const int N=3;
+
+
+bool kwadrat(int n){
+    
+    for(int i=2; i*i<=n; i++){
+        if(n%i==0){
+            if(n/i==i) return true;
+        }
+    }
+    return false;
+}
+
+bool czy_wielokrotnosc(int n){
+    
+    for(int i=4; i<n; i++){
+        if(kwadrat(i)){
+            if(n%i==0) return true;
+        }
+    }
+    return false;
+}
+
+
+void wyzeruj(int tab[N][N]){
+    
+    for(int i=0; i<N; i++){
+        for(int j=0; j<N; j++){
+            tab[i][j]=0;
+        }
+    }
+}
+
+void zaznacz(int w, int k1, int k2, int pom[N][N]){
+    
+    for(int i=0; i<N; i++){
+        pom[w][i]=1;
+        pom[i][k1]=1;
+        pom[i][k2]=1;
+    }
+    
+}
+
+
+bool pozostale(int pom[N][N], int t[N][N]){
+    
+    
+    for(int i=0; i<N; i++){
+        for(int j=0; j<N; j++){
+            if(pom[i][j]==0){
+                if(!czy_wielokrotnosc(t[i][j])) return false;
+            }
+        }
+    }
+    return true;
+}
+
+
+int tablica[3];
+
+
+bool usun(int t[N][N]){
+    
+    int pom[N][N];
+    wyzeruj(pom);
+    
+    for(int i=0; i<N; i++){             //wiersz do usuniecia
+        for(int j=0; j<N-1; j++){
+            for(int m=j+1; m<N; m++){
+                zaznacz(i,j,m,pom);
+                if(pozostale(pom,t)){
+                    tablica[0]=i;
+                    tablica[1]=j;
+                    tablica[2]=m;
+                    return true;
+                }
+                wyzeruj(pom);
+            }
+        }
+        
+        
+    }
+    
+    return false;
+    
+    
+    
+}
+
+
+
+
+
+
+int main()
+{   
+    int t[N][N];
+    srand(time(NULL));
+    for(int i=0; i<N; i++){
+        for(int j=0; j<N; j++){
+            t[i][j]=rand()%20+1;
+            cout<<t[i][j]<<" ";
+        }
+        cout<<endl;
+    }
+    
+    if(usun(t)) cout<<"tak";
+    else cout<<"nie";
+    
+    for(int i=0; i<3; i++){
+        cout<<tablica[i]<<endl;
+    }
+    
+    
+    return 0;
+}
