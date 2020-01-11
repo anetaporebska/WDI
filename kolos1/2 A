@@ -1,0 +1,113 @@
+
+#include <iostream>
+#include <time.h>
+
+using namespace std;
+
+
+//KOLOS zad 2 A
+//Dana jest tablica int t[N][N] zawierająca liczby naturalne. 
+//Proszę napisać funkcję, która sprawdza czy z tablicy można usunąć jeden wiersz i dwie kolumny, 
+//tak aby każdy z pozostałych  elementów tablicy w zapisie dwójkowym posiadał nieparzystą liczbę jedynek.
+
+const int N=4;
+
+bool czy_niep1(int n){
+    
+    int l=0;
+    while(n>0){
+        if(n%2==1) l++;
+        n/=2;
+    }
+    if(l%2==1) return true;
+    else return false;
+    
+}
+
+void wyzeruj(int tab[N][N]){
+    for(int i=0; i<N; i++){
+        for(int j=0; j<N; j++){
+            tab[i][j]=0;
+        }
+    }
+}
+
+
+void zaznacz(int tab[N][N], int w, int k1, int k2){
+    
+    for(int i=0; i<N; i++){
+        tab[w][i]=1;
+        tab[i][k1]=1;
+        tab[i][k2]=1;
+    }
+    
+}
+
+bool warunek(int t[N][N], int pom[N][N]){
+    
+    for(int i=0; i<N; i++){
+        for(int j=0; j<N; j++){
+            if(pom[i][j]==0 && !czy_niep1(t[i][j])) return false;
+        }
+    }
+    
+    return true;
+}
+
+
+
+bool czy_mozna(int t[N][N]){
+    
+    int pom[N][N];                  //będę zaznaczać 1 jeśli dany element jest usunięty 
+    wyzeruj(pom);
+    
+    for(int i=0; i<N; i++){         //wiersz do usunięcia
+        for(int j=0; j<N-1; j++){     //I kolumna
+            for(int m=j+1; m<N; m++){   //II kolumna
+                zaznacz(pom,i,j,m);
+                if(warunek(t,pom)) {
+                    cout<<"wiersz: "<<i;
+                    cout<<endl;
+                    cout<<"kolumna: "<<j;
+                    cout<<endl;
+                    cout<<"kolumna: "<<m;
+                    return true;
+                }
+                wyzeruj(pom);
+                
+            }
+        }
+    }
+    return false;
+    
+}
+
+
+
+
+
+
+
+
+int main()
+{
+    int t[N][N];
+    srand(time(NULL));
+    for(int i=0; i<N; i++){
+        for(int j=0; j<N; j++){
+            t[i][j]=rand()%5+1;
+            cout<<t[i][j]<<" ";
+        }
+        cout<<endl;
+    }
+    
+    if(czy_mozna(t)) cout<<" tak";
+    else cout<<"NIE";
+    
+    
+    
+    
+  
+    
+    return 0;
+}
