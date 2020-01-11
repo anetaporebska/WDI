@@ -1,0 +1,130 @@
+
+#include <iostream>
+#include <time.h>
+
+using namespace std;
+
+
+//KOLOS zad 3A
+//Dana jest tablica t[N][N] wypełniona liczbami całkowitymi. 
+//Tablica reprezentuje szachownicę. Proszę napisać funkcję, która sprawdza czy da się umieścić w każdym wierszu
+//jednego króla szachowego tak aby żadne dwa króle nie stały w odległości mniejszej niż dwa ruchy króla. 
+//Dodatkowo, suma wartości pól zajmowanych przez wszystkie figury była równa zero.
+
+const int N=5;
+
+void wyzeruj(int tab[N][N]){
+    for(int i=0; i<N; i++){
+        for(int j=0; j<N; j++){
+            tab[i][j]=0;
+        }
+    }
+}
+
+bool mozliwe(int w, int k){
+    return w>=0 && w<N && k>=0 && k<N;
+}
+
+void zaznacz_ruchy(int w, int k, int pom[N][N]){           //będę zaznaczać pola na które się nie można ruszyć jako 1
+    
+    int dw[9]={-1,-1,-1,0,0,1,1,1,0};
+    int dk[9]={-1,0,1,-1,1,-1,0,1,0};
+    
+    for(int i=0; i<9; i++){
+        if(mozliwe(w+dw[i],k+dk[i])){
+            pom[w+dw[i]][k+dk[i]]=1;
+        }    
+    }
+}
+
+
+void zaznacz_zajete(int krole[N][N], int pom[N][N]){
+    
+    for(int i=0; i<N; i++){
+        for(int j=0; j<N; j++){
+            if(krole[i][j]==2){
+                zaznacz_ruchy(i,j,pom);
+            }
+        }
+    }
+    
+}
+
+
+bool suma(int t[N][N], int krole[N][N]){
+    
+    int suma=0;
+    for(int i=0; i<N; i++){
+        for(int j=0; j<N; j++){
+            if(krole[i][j]==2){
+                suma+=t[i][j];
+            }
+        }
+    }
+    
+    return suma==0;
+    
+}
+
+
+bool krol(int t[N][N], int pom[N][N], int krole[N][N], int w){
+    
+    
+    if(w==N){
+        if(suma(t,krole)) return true;
+        else return false;
+    }
+    wyzeruj(pom);
+    zaznacz_zajete(krole,pom);
+    
+    for(int i=0; i<N; i++){     //wiersze po kolei
+        
+        if(pom[w][i]!=1){
+            krole[w][i]=2;
+            if(krol(t,pom,krole,w+1)) return true;
+            krole[w][i]=0;
+        }
+        
+    }
+    
+    return false;
+}
+
+
+bool wywolanie(int t[N][N]){
+    
+    int pom[N][N];
+    int krole[N][N];
+    wyzeruj(pom);
+    wyzeruj(krole);
+    
+    if(krol(t,pom,krole,0)){
+        for(int i=0; i<N; i++){
+            for(int j=0; j<N; j++){
+                cout<<krole[i][j]<<" ";
+            }
+            cout<<endl;
+        }
+        return true;
+    }
+    return false;
+}
+
+
+int main()
+{   
+    int t[N][N];
+    srand(time(NULL));
+    for(int i=0; i<N; i++){
+        for(int j=0; j<N; j++){
+            t[i][j]=rand()%30-10;
+            cout<<t[i][j]<<" ";
+        }
+        cout<<endl;
+    }
+    
+    if(wywolanie(t)) cout<<"prawda";
+    else cout<<"nei";
+    
+    return 0;
+}
